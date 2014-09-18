@@ -37,6 +37,7 @@ public class JDParameter extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
 
@@ -64,7 +65,9 @@ public class JDParameter extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2))
         );
         jPanel1Layout.setVerticalGroup(
@@ -73,7 +76,8 @@ public class JDParameter extends javax.swing.JDialog {
                 .addContainerGap(229, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)))
+                    .addComponent(jButton2)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Журнал работы"));
@@ -139,6 +143,7 @@ public class JDParameter extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);
             }
         }
+        jLabel1.setText("Конфигурация сохранена.");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -187,6 +192,7 @@ public class JDParameter extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

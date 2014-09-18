@@ -141,8 +141,12 @@ public class AdSearch {
      * @param attr return attrIDs
      */
     public static void getUser(String userSearch) {
-        AdSearch UserAttr = new AdSearch();        
-        UserAttr.getUserBasicAttributes(userSearch, UserAttr.getLdapContext());       
+        try {
+            AdSearch UserAttr = new AdSearch();        
+            UserAttr.getUserBasicAttributes(userSearch, UserAttr.getLdapContext());
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }
     
     /**

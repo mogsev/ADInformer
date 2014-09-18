@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 public class AdUtil {
     private static String hostname;
     
-    public static String getUser(String ip) {
+    public static String getUser(String str) {
         String result = "";        
         try {
             File file = File.createTempFile("realhowto",".vbs");
@@ -29,7 +29,7 @@ public class AdUtil {
             FileWriter fw = new java.io.FileWriter(file);
             String vbs = 
             //"strComputer = \"172.16.0.50\" \n" +
-            "strComputer = \"" + ip + "\" \n" +
+            "strComputer = \"" + str + "\" \n" +
             "Set objWMIService = GetObject(\"winmgmts:\" _ \n" +
             "& \"{impersonationLevel=impersonate}!\\\\\" & strComputer & \"\\root\\cimv2\") \n" +
             "Set colComputer = objWMIService.ExecQuery _ \n" +
@@ -62,11 +62,10 @@ public class AdUtil {
      * @param ip
      * @return hostname - FQDN host
      * @throws UnknownHostException 
-     */
+     */    
     public static String getDnsName(String ip) throws UnknownHostException { 
         InetAddress addr = InetAddress.getByName(ip);
         hostname = addr.getHostName();
         return hostname;
     }
-    
 }

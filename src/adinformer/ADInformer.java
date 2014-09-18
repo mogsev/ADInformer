@@ -424,20 +424,36 @@ public class ADInformer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        System.exit(0);
+        try {
+            System.exit(0);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        getFormSearch();        
+        try {
+            getFormSearch();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        getFormSearch();        
+        try {
+            getFormSearch();
+        } catch (Exception ex) {
+            JOptionPane.showConfirmDialog(null, ex);
+        }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        JDialogAbout jDialogAbout = new JDialogAbout(new javax.swing.JFrame(), true);
-        jDialogAbout.setVisible(rootPaneCheckingEnabled);
+        try {
+            JDialogAbout jDialogAbout = new JDialogAbout(new javax.swing.JFrame(), true);
+            jDialogAbout.setVisible(rootPaneCheckingEnabled);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed

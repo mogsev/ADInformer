@@ -82,26 +82,34 @@ public class JFScanner extends javax.swing.JFrame {
         System.setErr(new PrintStream(out, true)); 
     }
     
+    private void isScan() {
+        try {
+            jLabel2.setText("Сканирование... подождите");
+            jButton1.setEnabled(false);
+            jButton2.setEnabled(false);
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));            
+            setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+            //run task
+            scan = new Scanner();
+            scan.execute();
+        } catch (Exception ex) {
+            try {
+                JOptionPane.showMessageDialog(null,"Ошибка в модуле сканирования\n"+ex);
+                log.writeLog(ex.getMessage());                
+            } catch (IOException ex1) {
+                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
+            }
+        }
+    }
     
-    public void isScanner() {
+    private void isScanner() {
         try {
             ip=jTextField1.getText();
             System.out.println("IPv4: "+ip);
             try {
                 //получаем DNS name
                 dnsname = AdUtil.getDnsName(ip);
-            } catch (UnknownHostException ex) {            
-                JOptionPane.showMessageDialog(null,"Ошибка обработки DNS name\n"+ex);
-                try {
-                    log.writeLog(ex.getMessage());                
-                } catch (IOException ex1) {
-                    JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-                }
-            }            
-            if (dnsname.equals(localhost)) {
-                System.out.println("Ошибка. Проверте IP address");
-            } else {              
-                System.out.println("DNS name: " + dnsname);
+                System.out.println(dnsname);
                 //получаем пользователя
                 username = AdUtil.getUser(ip);
                 System.out.println("Login: " + username);
@@ -129,8 +137,15 @@ public class JFScanner extends javax.swing.JFrame {
                     System.out.println("Mail: "+mail);
                     System.out.println("IpPhone: "+ipphone);
                 }
-            }
             
+        } catch (UnknownHostException ex) {
+            System.out.println("Ошибка обработки DNS name\n"+ex);         
+            try {
+                log.writeLog(ex.getMessage());                
+            } catch (IOException ex1) {
+                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
+            }
+        }
         } catch (Exception ex) {
             try {
                 JOptionPane.showMessageDialog(null,"Ошибка в модуле сканирования\n"+ex);
@@ -140,14 +155,12 @@ public class JFScanner extends javax.swing.JFrame {
             }
         }
     }
-    
 
     /**
      * Creates new form JFSanner
      */
     public JFScanner() {
         initComponents();
-        
     }
 
     /**
@@ -193,6 +206,12 @@ public class JFScanner extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -254,74 +273,28 @@ public class JFScanner extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        dispose();
+        try {
+            dispose();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            jLabel2.setText("Сканирование... подождите");
-            jButton1.setEnabled(false);
-            jButton2.setEnabled(false);
-            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));            
-            setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-            //run task
-            scan = new Scanner();
-            scan.execute();
-            
-            /**
-            System.out.println(jTextField1.getText());
-            try {
-                //получаем DNS name
-                dnsname = AdUtil.getDnsName(ip);
-            } catch (UnknownHostException ex) {            
-                JOptionPane.showMessageDialog(null,"Ошибка обработки DNS name\n"+ex);
-                try {
-                    log.writeLog(ex.getMessage());                
-                } catch (IOException ex1) {
-                    JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-                }
-            }
-            System.out.print(" DNS name: " + dnsname + "\t");
-            //получаем пользователя
-            username = AdUtil.getUser(ip);
-            System.out.print("Login: " + username + "\t");
-            if (username.isEmpty() && username.equals("")) {                
-                username = "";            
-                System.out.println("Имя пользователя не найдено");
-            } else {
-                int in = username.indexOf("\\");
-                username = username.substring(in+1);
-                try {
-                    AdSearch.getUser(username);                                
-                } catch (NullPointerException ex) {
-                    System.out.print(ex);
-                    username = null;
-                }
-                fullname = AdSearch.getUserName();
-                telephonenumber = AdSearch.getUserTelephone();
-                mobile = AdSearch.getUserMobile();
-                mail = AdSearch.getUserMail();
-                ipphone = AdSearch.getUserIpPhone();
-            
-                System.out.print("fullname: "+fullname+"\t");
-                System.out.print("Tel: "+telephonenumber+"\t");
-                System.out.print("Mobile: "+mobile+"\t");
-                System.out.print("Mail: "+mail+"\t");
-                System.out.print("IpPhone: "+ipphone+"\t");
-                
-                
-            }*/
-            
-            
-        } catch (Exception ex) {
-            try {
-                JOptionPane.showMessageDialog(null,"Ошибка в модуле сканирования\n"+ex);
-                log.writeLog(ex.getMessage());                
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-            }
+            isScan();
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
         }        
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        try {
+            isScan();
+        } catch(Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments
