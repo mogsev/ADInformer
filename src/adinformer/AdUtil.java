@@ -63,8 +63,8 @@ public class AdUtil {
      * @return hostname - FQDN host
      * @throws UnknownHostException 
      */
-    public static String getDnsName(String ip) throws UnknownHostException {        
-        InetAddress addr = InetAddress.getByName(ip);        
+    public static String getDnsName(String ip) throws UnknownHostException { 
+        InetAddress addr = InetAddress.getByName(ip);
         hostname = addr.getHostName();
         return hostname;
     }

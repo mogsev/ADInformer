@@ -23,6 +23,7 @@ import javax.swing.SwingWorker;
  * @author zhenya
  */
 public class JFScanner extends javax.swing.JFrame {
+    private final String localhost = "localhost";
     private static OutputStream out;
     private static Scanner scan;
     private static String ip;
@@ -83,7 +84,8 @@ public class JFScanner extends javax.swing.JFrame {
     
     public void isScanner() {
         try {
-            System.out.println("IPv4: "+jTextField1.getText());
+            ip=jTextField1.getText();
+            System.out.println("IPv4: "+ip);
             try {
                 //получаем DNS name
                 dnsname = AdUtil.getDnsName(ip);
@@ -94,38 +96,39 @@ public class JFScanner extends javax.swing.JFrame {
                 } catch (IOException ex1) {
                     JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
                 }
-            }
-            System.out.println(" DNS name: " + dnsname);
-            //получаем пользователя
-            username = AdUtil.getUser(ip);
-            System.out.println("Login: " + username);
-            if (username.isEmpty() && username.equals("")) {                
-                username = "";            
-                System.out.println("Имя пользователя не найдено");
-            } else {
-                int in = username.indexOf("\\");
-                username = username.substring(in+1);
-                try {
-                    AdSearch.getUser(username);                                
-                } catch (NullPointerException ex) {
-                    System.out.println(ex);
-                    username = null;
+            }            
+            if (dnsname.equals(localhost)) {
+                System.out.println("Ошибка. Проверте IP address");
+            } else {              
+                System.out.println("DNS name: " + dnsname);
+                //получаем пользователя
+                username = AdUtil.getUser(ip);
+                System.out.println("Login: " + username);
+                if (username.isEmpty() && username.equals("")) {                
+                    username = "";            
+                    System.out.println("Имя пользователя не найдено");
+                } else {
+                    int in = username.indexOf("\\");
+                    username = username.substring(in+1);
+                    try {
+                        AdSearch.getUser(username);                                
+                    } catch (NullPointerException ex) {
+                        System.out.println(ex);
+                        username = null;
+                    }
+                    fullname = AdSearch.getUserName();
+                    telephonenumber = AdSearch.getUserTelephone();
+                    mobile = AdSearch.getUserMobile();
+                    mail = AdSearch.getUserMail();
+                    ipphone = AdSearch.getUserIpPhone();
+            
+                    System.out.println("fullname: "+fullname);
+                    System.out.println("Tel: "+telephonenumber);
+                    System.out.println("Mobile: "+mobile);
+                    System.out.println("Mail: "+mail);
+                    System.out.println("IpPhone: "+ipphone);
                 }
-                fullname = AdSearch.getUserName();
-                telephonenumber = AdSearch.getUserTelephone();
-                mobile = AdSearch.getUserMobile();
-                mail = AdSearch.getUserMail();
-                ipphone = AdSearch.getUserIpPhone();
-            
-                System.out.println("fullname: "+fullname);
-                System.out.println("Tel: "+telephonenumber);
-                System.out.println("Mobile: "+mobile);
-                System.out.println("Mail: "+mail);
-                System.out.println("IpPhone: "+ipphone);
-                
-                
             }
-            
             
         } catch (Exception ex) {
             try {
@@ -159,10 +162,10 @@ public class JFScanner extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Сканер IPv4");
@@ -203,12 +206,12 @@ public class JFScanner extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 179, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
