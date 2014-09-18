@@ -341,7 +341,7 @@ public class ADInformer extends javax.swing.JFrame {
 
         jMenu4.setText("Инструменты");
 
-        jMenuItem7.setText("Сканер");
+        jMenuItem7.setText("Сканер IPv4");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);
@@ -456,14 +456,13 @@ public class ADInformer extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        // TODO add your handling code here:
         JDParameter jDialogParameter = new JDParameter(new javax.swing.JFrame(),true);
         jDialogParameter.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        // TODO add your handling code here:
-        
+        JFScanner fScanner = new JFScanner();
+        fScanner.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
