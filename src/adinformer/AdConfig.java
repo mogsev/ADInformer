@@ -17,12 +17,12 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author zhenya
+ * @author zhenya mogsev@gmail.com
  */
 public class AdConfig {
     private static StringBuilder in;
     private static StringBuilder out;
-    private static String file = "adinformer.cfg";
+    private final String file = "adinformer.cfg";
     
     private static String domainname = "";
     private static String domainsn = "";
