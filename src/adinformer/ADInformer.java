@@ -369,6 +369,11 @@ public class ADInformer extends javax.swing.JFrame {
         jMenu3.add(jSeparator1);
 
         jMenuItem6.setText("Параметры");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem6);
 
         jMenuBar1.add(jMenu3);
@@ -439,6 +444,12 @@ public class ADInformer extends javax.swing.JFrame {
         JDialogMsSQL jDialogMsSQL = new JDialogMsSQL(new javax.swing.JFrame(), true);
         jDialogMsSQL.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        JDParameter jDialogParameter = new JDParameter(new javax.swing.JFrame(),true);
+        jDialogParameter.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments

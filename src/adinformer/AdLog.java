@@ -18,7 +18,7 @@ import java.util.Date;
  */
 public class AdLog {    
     private static StringBuilder out;
-    private static String file = "adinformer.log";
+    private final String file = "adinformer.log";
     private static String t = "\t";
     private static String rn = "\r\n";
     private static String time;    
@@ -40,16 +40,18 @@ public class AdLog {
      * @throws IOException 
      */
     public void writeLog(String str) throws IOException {    
-        File filelog = new File(file);        
-        if (!filelog.exists()) {            
-            filelog.createNewFile();            
-        }
-        BufferedWriter wr = new BufferedWriter(new FileWriter(file,true)); //выходной файл        
-        out = new StringBuilder();  //буфер для обработанного текста                                
-        out.append(getTime()+str+rn);        
-        wr.write(out.toString());
-        wr.flush();
+        if (ADInformer.config.getLog().equals("1")) {
+            File filelog = new File(file);        
+            if (!filelog.exists()) {            
+                filelog.createNewFile();            
+            }
+            BufferedWriter wr = new BufferedWriter(new FileWriter(file,true)); //выходной файл        
+            out = new StringBuilder();  //буфер для обработанного текста                                
+            out.append(getTime()).append(str).append(rn);        
+            wr.write(out.toString());
+            wr.flush();
         wr.close();             
+        }
     }
     
 }

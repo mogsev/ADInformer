@@ -23,6 +23,7 @@ public class AdConfig {
     private static StringBuilder out;
     private final String file = "adinformer.cfg";
     
+    private static String logenable = "";
     private static String domainname = "";
     private static String domainsn = "";
     private static String domainlogin = "";
@@ -37,6 +38,7 @@ public class AdConfig {
     private static String mssqllogin = "";
     private static String mssqlpassword = "";
     
+    private final String conf_log_enable = "log_enable";
     private final String conf_domain_name = "domain_name";
     private final String conf_domain_sn = "domain_sn";
     private final String conf_domain_login = "domain_login";
@@ -128,6 +130,9 @@ public class AdConfig {
             if (line.indexOf(conf_mssql_password)==0) {
                 mssqlpassword = line.substring(line.indexOf(an)+1, l);                
             }
+            if (line.indexOf(conf_log_enable)==0) {
+                logenable = line.substring(line.indexOf(an)+1, l);                
+            }
             i=a;
         }
     }
@@ -153,10 +158,20 @@ public class AdConfig {
         out.append(conf_mssql_port).append(an).append(mssqlserverport).append(rn);
         out.append(conf_mssql_login).append(an).append(mssqllogin).append(rn);
         out.append(conf_mssql_password).append(an).append(mssqlpassword).append(rn);
+        out.append("[ADInformer]").append(rn);
+        out.append(conf_log_enable).append(an).append(logenable).append(rn);
         // сохраняем
         writer.write(out.toString());
         writer.flush();
         writer.close();
+    }
+    
+    public String getLog() {
+        return logenable;
+    }
+    
+    public void  setLog(String str) {
+        logenable=str;
     }
     
     /**
