@@ -24,36 +24,36 @@ public class AdConfig {
     private static StringBuilder out;
     private static String file = "adinformer.cfg";
     
-    public static String domainname = "";
-    public static String domainsn = "";
-    public static String domainlogin = "";
-    public static String domainpassword = "";
-    public static String mysqlserver = "";
-    public static String mysqlserverport = "";
-    public static String mysqldatabase = "";
-    public static String mysqllogin = "";
-    public static String mysqlpassword = "";
-    public static String mssqlserver = "";
-    public static String mssqlserverport = "";
-    public static String mssqllogin = "";
-    public static String mssqlpassword = "";
+    private static String domainname = "";
+    private static String domainsn = "";
+    private static String domainlogin = "";
+    private static String domainpassword = "";
+    private static String mysqlserver = "";
+    private static String mysqlserverport = "";
+    private static String mysqldatabase = "";
+    private static String mysqllogin = "";
+    private static String mysqlpassword = "";
+    private static String mssqlserver = "";
+    private static String mssqlserverport = "";
+    private static String mssqllogin = "";
+    private static String mssqlpassword = "";
     
-    private static String conf_domain_name = "domain_name";
-    private static String conf_domain_sn = "domain_sn";
-    private static String conf_domain_login = "domain_login";
-    private static String conf_domain_password = "domain_password";
-    private static String conf_mysql_server = "mysql_server";
-    private static String conf_mysql_database = "mysql_database";
-    private static String conf_mysql_port = "mysql_port";
-    private static String conf_mysql_login = "mysql_login";
-    private static String conf_mysql_password = "mysql_password";
-    private static String conf_mssql_server = "mssql_server";
-    private static String conf_mssql_port = "mssql_port";
-    private static String conf_mssql_login = "mssql_login";
-    private static String conf_mssql_password = "mssql_password";
-    private static String n = "\n";    
-    private static String an = "=";
-    private static String rn = "\r\n";
+    private final String conf_domain_name = "domain_name";
+    private final String conf_domain_sn = "domain_sn";
+    private final String conf_domain_login = "domain_login";
+    private final String conf_domain_password = "domain_password";
+    private final String conf_mysql_server = "mysql_server";
+    private final String conf_mysql_database = "mysql_database";
+    private final String conf_mysql_port = "mysql_port";
+    private final String conf_mysql_login = "mysql_login";
+    private final String conf_mysql_password = "mysql_password";
+    private final String conf_mssql_server = "mssql_server";
+    private final String conf_mssql_port = "mssql_port";
+    private final String conf_mssql_login = "mssql_login";
+    private final String conf_mssql_password = "mssql_password";
+    private final String n = "\n";    
+    private final String an = "=";
+    private final String rn = "\r\n";
     
     public void readConfig() throws FileNotFoundException, IOException {
         File fileconf = new File(file);
@@ -62,16 +62,17 @@ public class AdConfig {
             writeConfig();
         }
         
-        BufferedReader reader = new BufferedReader(new FileReader(file)); //входной файл
-        in = new StringBuilder(); //буфер для входного текста        
-        while (true) {   //цикл для вычитывания файла
-            String buffer = reader.readLine();
-            if (buffer == null){
-                break;
+        //входной файл
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            in = new StringBuilder(); //буфер для входного текста
+            while (true) {   //цикл для вычитывания файла
+                String buffer = reader.readLine();
+                if (buffer == null){
+                    break;
+                }
+                in.append(buffer).append(n); //заполняем буфер вычитанным текстом
             }
-            in.append(buffer + "\n"); //заполняем буфер вычитанным текстом
-        }        
-        reader.close();                        
+        } 
         int i = 0;
         int e = in.length(); //вычисляем длину входного текста
         while (i!=e) {
@@ -132,27 +133,27 @@ public class AdConfig {
         }
     }
     
-    public void writeConfig() throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file)); //выходной файл        
+    public void writeConfig() throws IOException {        
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file)); //выходной файл
         out = new StringBuilder();  //буфер для обработанного текста                
         //Наполняем буфер конфигурационными данными
         out.append("#Do not delete and edit this config file").append(rn);
         out.append("[DOMAIN]").append(rn);
         out.append(conf_domain_name).append(an).append(domainname).append(rn);
         out.append(conf_domain_sn).append(an).append(domainsn).append(rn);
-        StringBuilder append = out.append(conf_domain_login + an + domainlogin + rn);
-        out.append(conf_domain_password + an + domainpassword + rn);
-        out.append("[MYSQL]" + rn);
-        out.append(conf_mysql_server + an + mysqlserver + rn);
-        out.append(conf_mysql_port + an + mysqlserverport + rn);
-        out.append(conf_mysql_database + an + mysqldatabase + rn);
-        out.append(conf_mysql_login + an + mysqllogin + rn);
-        out.append(conf_mysql_password + an + mysqlpassword + rn);
-        out.append("[MSSQL]" + rn);
-        out.append(conf_mssql_server + an + mssqlserver + rn);
-        out.append(conf_mssql_port + an + mssqlserverport + rn);
-        out.append(conf_mssql_login + an + mssqllogin + rn);
-        out.append(conf_mssql_password + an + mssqlpassword + rn);
+        out.append(conf_domain_login).append(an).append(domainlogin).append(rn);
+        out.append(conf_domain_password).append(an).append(domainpassword).append(rn);
+        out.append("[MYSQL]").append(rn);
+        out.append(conf_mysql_server).append(an).append(mysqlserver).append(rn);
+        out.append(conf_mysql_port).append(an).append(mysqlserverport).append(rn);
+        out.append(conf_mysql_database).append(an).append(mysqldatabase).append(rn);
+        out.append(conf_mysql_login).append(an).append(mysqllogin).append(rn);
+        out.append(conf_mysql_password).append(an).append(mysqlpassword).append(rn);
+        out.append("[MSSQL]").append(rn);
+        out.append(conf_mssql_server).append(an).append(mssqlserver).append(rn);
+        out.append(conf_mssql_port).append(an).append(mssqlserverport).append(rn);
+        out.append(conf_mssql_login).append(an).append(mssqllogin).append(rn);
+        out.append(conf_mssql_password).append(an).append(mssqlpassword).append(rn);
         // сохраняем
         writer.write(out.toString());
         writer.flush();

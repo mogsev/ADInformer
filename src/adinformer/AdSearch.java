@@ -21,7 +21,7 @@ import javax.naming.ldap.LdapContext;
 import javax.swing.JOptionPane;
 
 /**
- * @author zhenya
+ * @author zhenya mogsev@gmail.com
  */
 public class AdSearch { 
     private static String userName;
@@ -42,9 +42,9 @@ public class AdSearch {
             Hashtable env = new Hashtable();
             env.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");
             env.put(Context.SECURITY_AUTHENTICATION, "simple");
-            env.put(Context.SECURITY_PRINCIPAL, "rud\\shop");   //Login Ldap
-            env.put(Context.SECURITY_CREDENTIALS, "");          //Password Ldap
-            env.put(Context.PROVIDER_URL, "ldap://rud.ua:389");
+            env.put(Context.SECURITY_PRINCIPAL, ADInformer.config.getDomainSN()+"\\"+ADInformer.config.getDomainLogin());   //Login Ldap
+            env.put(Context.SECURITY_CREDENTIALS, ADInformer.config.getDomainPassword());          //Password Ldap
+            env.put(Context.PROVIDER_URL, "ldap://"+ADInformer.config.getDomainName()+":389");
             ctx = new InitialLdapContext(env, null);
             //System.out.println("Connection Successful.");            
         }
@@ -138,8 +138,9 @@ public class AdSearch {
     }
    
     /**
-     * @param userSearch
-     * @param attr 
+     * Look for the user in LDAP and gets its attributes
+     * @param userSearch String LDAP login
+     * @param attr return attrIDs
      */
     public static void getUser(String userSearch) {
         AdSearch UserAttr = new AdSearch();        
@@ -147,7 +148,8 @@ public class AdSearch {
     }
     
     /**
-     * @return 
+     * Return user attribute "distinguishedName"
+     * @return String userDN
      */
     public static String getUserDN() {
         return userDN;
@@ -161,7 +163,7 @@ public class AdSearch {
     }
     
     /**
-     * @see get user attribute "name"
+     * Return user attribute "name"
      * @return String userName
      */
     public static String getUserName() {              
@@ -169,6 +171,7 @@ public class AdSearch {
     }
    
     /**
+     * Return user attribute "cn"
      * @return userCN
      */
     public static String getUserCN() {
@@ -176,6 +179,7 @@ public class AdSearch {
     }
     
     /**
+     * Return user attribute "sn"
      * @return 
      */
     public static String getSN() {

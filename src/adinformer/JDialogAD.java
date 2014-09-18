@@ -11,8 +11,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- *
- * @author zhenya
+ * @author zhenya mogsev@gmail.com
  */
 public class JDialogAD extends javax.swing.JDialog {    
     
@@ -154,7 +153,6 @@ public class JDialogAD extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -171,13 +169,12 @@ public class JDialogAD extends javax.swing.JDialog {
             try {
                 ADInformer.log.writeLog(ex.getMessage());
             } catch (IOException ex1) {
-                Logger.getLogger(JDialogAD.class.getName()).log(Level.SEVERE, null, ex1);
+                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton1FocusLost
-        // TODO add your handling code here:
         jLabel5.setText("");
     }//GEN-LAST:event_jButton1FocusLost
 

@@ -6,13 +6,11 @@
 package adinformer;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author zhenya
+ * @author zhenya mogsev@gmail.com
  */
 public class JDialogMySQL extends javax.swing.JDialog {    
     
@@ -79,12 +77,6 @@ public class JDialogMySQL extends javax.swing.JDialog {
         jLabel1.setText("Server:");
 
         jLabel2.setText("Port:");
-
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
-            }
-        });
 
         jLabel3.setText("Login:");
 
@@ -171,12 +163,10 @@ public class JDialogMySQL extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:        
         ADInformer.config.setMysqlServer(jTextField1.getText());        
         ADInformer.config.setMysqlServerPort(jTextField2.getText());
         ADInformer.config.setMysqlLogin(jTextField3.getText());
@@ -190,19 +180,14 @@ public class JDialogMySQL extends javax.swing.JDialog {
             try {
                 ADInformer.log.writeLog(ex.getMessage());
             } catch (IOException ex1) {
-                Logger.getLogger(JDialogMySQL.class.getName()).log(Level.SEVERE, null, ex1);
+                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton1FocusLost
-        // TODO add your handling code here:
         jLabel5.setText("");
     }//GEN-LAST:event_jButton1FocusLost
-
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments

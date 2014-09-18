@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author zhenya
+ * @author zhenya mogsev@gmail.com
  */
 public class AdUtil {
     private static String hostname;
