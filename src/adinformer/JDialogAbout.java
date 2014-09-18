@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author zhenya
+ * @author zhenya mogsev@gmail.com
  */
 public class JDialogAbout extends javax.swing.JDialog {
     
@@ -31,7 +31,9 @@ public class JDialogAbout extends javax.swing.JDialog {
         initComponents();
         jLabel1.setText(ADInformer.programname + " " + ADInformer.programversion);
         jLabel7.setText("EMail: " + ADInformer.email);
-        // display link to https://github.com
+        jLabel3.setText(ADInformer.sourceforgeurl);
+        jLabel4.setText(ADInformer.githuburl);
+        // display link to url https://github.com
         jLabel4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jLabel4.setForeground(new java.awt.Color(0, 0, 204));
         jLabel4.addMouseListener(new MouseAdapter() {
@@ -52,7 +54,7 @@ public class JDialogAbout extends javax.swing.JDialog {
         }
         });
         
-        // display link to http://sourceforge.net/
+        // display link to url http://sourceforge.net/
         jLabel3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jLabel3.setForeground(new java.awt.Color(0, 0, 204));
         jLabel3.addMouseListener(new MouseAdapter() {
@@ -117,10 +119,9 @@ public class JDialogAbout extends javax.swing.JDialog {
         jLabel3.setText("http://sourceforge.net");
         jLabel3.setFocusable(false);
 
-        jLabel4.setText("https://github.com/mogsev/adinfo");
+        jLabel4.setText("https://github.com");
         jLabel4.setFocusable(false);
 
-        jTextArea3.setBackground(java.awt.SystemColor.control);
         jTextArea3.setColumns(20);
         jTextArea3.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextArea3.setLineWrap(true);
@@ -129,7 +130,6 @@ public class JDialogAbout extends javax.swing.JDialog {
         jTextArea3.setFocusable(false);
         jScrollPane3.setViewportView(jTextArea3);
 
-        jTextArea4.setBackground(java.awt.SystemColor.control);
         jTextArea4.setColumns(20);
         jTextArea4.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         jTextArea4.setLineWrap(true);
@@ -157,18 +157,18 @@ public class JDialogAbout extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButton1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jLabel3))
                             .addComponent(jLabel7)
                             .addComponent(jLabel6)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4)))
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -218,7 +218,6 @@ public class JDialogAbout extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -11,8 +11,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,6 +21,8 @@ public class ADInformer extends javax.swing.JFrame {
     public static String programname = "Active Directory Informer";
     public static String programversion = "1.1.3";
     public static String email = "mogsev@gmail.com";
+    public static String sourceforgeurl = "http://sourceforge.net";
+    public static String githuburl = "https://github.com/mogsev/ADInformer";
     public static AdLog log;
     public static AdConfig config;
     
@@ -66,7 +66,7 @@ public class ADInformer extends javax.swing.JFrame {
     }
     
     /**
-     * Display info
+     * Display information
      */
     private void getForm() {
         jModelIP = ADInformer.getTableIP(jTable1, jScrollPane1);
@@ -105,6 +105,9 @@ public class ADInformer extends javax.swing.JFrame {
         jModelIP.fireTableDataChanged();
     }
     
+    /**
+     * Search form
+     */
     private void getFormSearch() {
         jModelIP = ADInformer.getTableIP(jTable1, jScrollPane1);
         jTable1.setModel(jModelIP);
@@ -406,40 +409,33 @@ public class ADInformer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:        
         getFormSearch();        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
         getFormSearch();        
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
         JDialogAbout jDialogAbout = new JDialogAbout(new javax.swing.JFrame(), true);
         jDialogAbout.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
         JDialogMySQL jDialogMySQL = new JDialogMySQL(new javax.swing.JFrame(), true);
         jDialogMySQL.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        // TODO add your handling code here:
         JDialogAD jDialogAD = new JDialogAD(new javax.swing.JFrame(), true);
         jDialogAD.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        // TODO add your handling code here:
         JDialogMsSQL jDialogMsSQL = new JDialogMsSQL(new javax.swing.JFrame(), true);
         jDialogMsSQL.setVisible(rootPaneCheckingEnabled);
     }//GEN-LAST:event_jMenuItem5ActionPerformed
