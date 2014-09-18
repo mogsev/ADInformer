@@ -62,7 +62,6 @@ public class AdConfig {
             System.out.println("File do not exist");
             writeConfig();
         }
-        
         //входной файл
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             in = new StringBuilder(); //буфер для входного текста
