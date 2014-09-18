@@ -13,8 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * @author zhenya mogsev@gmail.com
@@ -53,7 +52,7 @@ public class AdUtil {
             try {
                 ADInformer.log.writeLog(ex.toString());
             } catch (IOException ex1) {
-                Logger.getLogger(AdUtil.class.getName()).log(Level.SEVERE, null, ex1);
+                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);
             }
         }           
         return result.trim();    
