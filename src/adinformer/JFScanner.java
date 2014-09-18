@@ -82,6 +82,7 @@ public class JFScanner extends javax.swing.JFrame {
         System.setErr(new PrintStream(out, true)); 
     }
     
+    
     public void isScanner() {
         try {
             ip=jTextField1.getText();
