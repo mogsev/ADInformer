@@ -109,9 +109,10 @@ public class JFScanner extends javax.swing.JFrame {
             try {
                 //получаем DNS name
                 dnsname = AdUtil.getDnsName(ip);
-                System.out.println(dnsname);
+                System.out.println("DNS name: " + dnsname);
                 //получаем пользователя
-                username = AdUtil.getUser(ip);
+                //username = AdUtil.getUser(ip);
+                username = AdUtil.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
                 System.out.println("Login: " + username);
                 if (username.isEmpty() && username.equals("")) {                
                     username = "";            
@@ -200,6 +201,7 @@ public class JFScanner extends javax.swing.JFrame {
 
         jLabel1.setText("IPv4 address:");
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTextArea1.setRows(5);
@@ -230,8 +232,7 @@ public class JFScanner extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(

@@ -21,6 +21,48 @@ import javax.swing.JOptionPane;
 public class AdUtil {
     private static String hostname;
     
+     public static String getUserAuth(String str, String domain, String user, String pass) {
+        String result = "";
+        String users = domain+"\\"+user;
+        try {
+            File file = File.createTempFile("realhowto",".vbs");
+            file.deleteOnExit();
+            FileWriter fw = new java.io.FileWriter(file);
+            String vbs =             
+            "strComputer = \"" + str + "\" \n" +            
+            "strUser = \"" + users + "\" \n" +
+            "strPass = \"" + pass + "\" \n" +            
+            "Set objSWbemLocator = CreateObject(\"WbemScripting.SWbemLocator\") \n" +
+            "Set objWMIService = objSWbemLocator.ConnectServer _ \n" +
+            "(strComputer, \"root\\cimv2\", strUser, strPass) \n" +
+            "Set colComputer = objWMIService.ExecQuery _ \n" +
+            "(\"Select * from Win32_ComputerSystem\") \n" + 
+            "For Each objComputer in colComputer \n" +
+            "Wscript.Echo objComputer.UserName \n" +              
+            "Next \n";
+            
+            fw.write(vbs);
+            fw.close();      
+            Process p = Runtime.getRuntime().exec("cscript //NoLogo " + file.getPath());
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream(), "Cp866"));
+            String line;
+            while ((line = input.readLine()) != null) {
+                result += line;
+            }
+            input.close();
+            System.out.println(result);
+        } catch(Exception ex)  {
+            System.out.println(ex);
+            try {
+                ADInformer.log.writeLog(ex.toString());
+            } catch (IOException ex1) {
+                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);
+            }
+        }        
+        return result.trim();
+    }
+    
+    
     public static String getUser(String str) {
         String result = "";        
         try {
@@ -28,7 +70,6 @@ public class AdUtil {
             file.deleteOnExit();
             FileWriter fw = new java.io.FileWriter(file);
             String vbs = 
-            //"strComputer = \"172.16.0.50\" \n" +
             "strComputer = \"" + str + "\" \n" +
             "Set objWMIService = GetObject(\"winmgmts:\" _ \n" +
             "& \"{impersonationLevel=impersonate}!\\\\\" & strComputer & \"\\root\\cimv2\") \n" +
