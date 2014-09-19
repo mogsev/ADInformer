@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ADInformer extends javax.swing.JFrame {
     public static String programname = "Active Directory Informer";
-    public static String programversion = "1.1.3";
+    public static String programversion = "1.1.23";
     public static String email = "mogsev@gmail.com";
     public static String sourceforgeurl = "http://sourceforge.net";
     public static String githuburl = "https://github.com/mogsev/ADInformer";
@@ -214,6 +214,7 @@ public class ADInformer extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -349,6 +350,14 @@ public class ADInformer extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem7);
 
+        jMenuItem8.setText("Сканер IPv4 Lan");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem8);
+
         jMenuBar1.add(jMenu4);
 
         jMenu3.setText("Настройка");
@@ -457,29 +466,59 @@ public class ADInformer extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        JDialogMySQL jDialogMySQL = new JDialogMySQL(new javax.swing.JFrame(), true);
-        jDialogMySQL.setVisible(rootPaneCheckingEnabled);
+        try {
+            JDialogMySQL jDialogMySQL = new JDialogMySQL(new javax.swing.JFrame(), true);
+            jDialogMySQL.setVisible(rootPaneCheckingEnabled);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
-        JDialogAD jDialogAD = new JDialogAD(new javax.swing.JFrame(), true);
-        jDialogAD.setVisible(rootPaneCheckingEnabled);
+        try {
+            JDialogAD jDialogAD = new JDialogAD(new javax.swing.JFrame(), true);
+            jDialogAD.setVisible(rootPaneCheckingEnabled);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        JDialogMsSQL jDialogMsSQL = new JDialogMsSQL(new javax.swing.JFrame(), true);
-        jDialogMsSQL.setVisible(rootPaneCheckingEnabled);
+        try {
+            JDialogMsSQL jDialogMsSQL = new JDialogMsSQL(new javax.swing.JFrame(), true);
+            jDialogMsSQL.setVisible(rootPaneCheckingEnabled);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }    
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        JDParameter jDialogParameter = new JDParameter(new javax.swing.JFrame(),true);
-        jDialogParameter.setVisible(rootPaneCheckingEnabled);
+        try {
+            JDParameter jDialogParameter = new JDParameter(new javax.swing.JFrame(),true);
+            jDialogParameter.setVisible(rootPaneCheckingEnabled);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        JFScanner fScanner = new JFScanner();
-        fScanner.setVisible(rootPaneCheckingEnabled);
+        try {
+            JFScanner ipScanner = new JFScanner();
+            ipScanner.setVisible(rootPaneCheckingEnabled);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+        
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        try {
+            JFLanScanner lanScanner = new JFLanScanner();
+            lanScanner.setVisible(rootPaneCheckingEnabled);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, ex);
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -532,6 +571,7 @@ public class ADInformer extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

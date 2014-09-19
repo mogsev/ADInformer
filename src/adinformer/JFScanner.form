@@ -109,7 +109,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="IPv4 address:"/>
+            <Property name="text" type="java.lang.String" value="IPv4 or DNS address:"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">

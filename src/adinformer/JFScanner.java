@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -29,7 +29,7 @@ public class JFScanner extends javax.swing.JFrame {
     private static String ip;
     private static String dnsname;
     private static String username;
-    private static String fullname;
+    private static String name;
     private static String telephonenumber;
     private static String mobile;
     private static String mail;
@@ -110,33 +110,33 @@ public class JFScanner extends javax.swing.JFrame {
                 //получаем DNS name
                 dnsname = AdUtil.getDnsName(ip);
                 System.out.println("DNS name: " + dnsname);
-                //получаем пользователя
-                //username = AdUtil.getUser(ip);
+                //получаем пользователя                
                 username = AdUtil.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
                 System.out.println("Login: " + username);
                 if (username.isEmpty() && username.equals("")) {                
                     username = "";            
-                    System.out.println("Имя пользователя не найдено");
+                    System.out.println("Имя пользователя не найдено\n");
                 } else {
                     int in = username.indexOf("\\");
                     username = username.substring(in+1);
                     try {
-                        AdSearch.getUser(username);                                
+                        AdSearch.getUser(username);
                     } catch (NullPointerException ex) {
                         System.out.println(ex);
                         username = null;
                     }
-                    fullname = AdSearch.getUserName();
+                    name = AdSearch.getUserName();
                     telephonenumber = AdSearch.getUserTelephone();
                     mobile = AdSearch.getUserMobile();
                     mail = AdSearch.getUserMail();
                     ipphone = AdSearch.getUserIpPhone();
             
-                    System.out.println("fullname: "+fullname);
+                    System.out.println("name: "+name);
                     System.out.println("Tel: "+telephonenumber);
                     System.out.println("Mobile: "+mobile);
                     System.out.println("Mail: "+mail);
                     System.out.println("IpPhone: "+ipphone);
+                    System.out.println();
                 }
             
         } catch (UnknownHostException ex) {
@@ -199,7 +199,7 @@ public class JFScanner extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("IPv4 address:");
+        jLabel1.setText("IPv4 or DNS address:");
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);

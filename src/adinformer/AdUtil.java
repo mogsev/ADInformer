@@ -21,7 +21,16 @@ import javax.swing.JOptionPane;
 public class AdUtil {
     private static String hostname;
     
-     public static String getUserAuth(String str, String domain, String user, String pass) {
+    /**
+     * This metod work with autentication LDAP
+     * Return String value login name on remote computer
+     * @param str IPv4 or DNS address remote computer
+     * @param domain domain short name
+     * @param user String domain user
+     * @param pass String domain password
+     * @return String login name format "DOMAIN\USER"
+     */
+    public static String getUserAuth(String str, String domain, String user, String pass) {
         String result = "";
         String users = domain+"\\"+user;
         try {
@@ -50,7 +59,6 @@ public class AdUtil {
                 result += line;
             }
             input.close();
-            System.out.println(result);
         } catch(Exception ex)  {
             System.out.println(ex);
             try {
@@ -58,11 +66,17 @@ public class AdUtil {
             } catch (IOException ex1) {
                 JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);
             }
-        }        
+        }
         return result.trim();
     }
     
-    
+     
+    /**
+     * This metod work without autentication LDAP
+     * Return String value login name on remote computer
+     * @param str IPv4 or DNS address remote computer
+     * @return String login name format "DOMAIN\USER"  
+     */
     public static String getUser(String str) {
         String result = "";        
         try {
@@ -100,8 +114,8 @@ public class AdUtil {
     }
     
     /**
-     * @param ip
-     * @return hostname - FQDN host
+     * @param ip IPv4 address
+     * @return hostname FQDN host and return IP address host if null result
      * @throws UnknownHostException 
      */    
     public static String getDnsName(String ip) throws UnknownHostException { 
