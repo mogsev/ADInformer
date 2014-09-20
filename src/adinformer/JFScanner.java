@@ -35,7 +35,7 @@ public class JFScanner extends javax.swing.JFrame {
     private static String mail;
     private static String ipphone;
     
-    class Scanner extends SwingWorker<Void, Void> {
+    private class Scanner extends SwingWorker<Void, Void> {
         @Override
         public Void doInBackground() {
             redirectSystemStreams();
@@ -137,8 +137,7 @@ public class JFScanner extends javax.swing.JFrame {
                     System.out.println("Mail: "+mail);
                     System.out.println("IpPhone: "+ipphone);
                     System.out.println();
-                }
-            
+                }            
         } catch (UnknownHostException ex) {
             System.out.println("Ошибка обработки DNS name\n"+ex);         
             try {

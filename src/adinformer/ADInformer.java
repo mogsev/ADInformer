@@ -32,7 +32,22 @@ public class ADInformer extends javax.swing.JFrame {
     private static Connection conn = null;
     private static ResultSet rs = null;
     
-    private static DefaultTableModel getTableIP(javax.swing.JTable jTable1, javax.swing.JScrollPane jScrollPane1) {
+    /**
+     * output Error Description and Exception in JOptionPane.showMessageDialog
+     * This result is write in log file
+     * @param str String error description
+     * @param ex Exception 
+     */
+    public static void isError(String str, Exception ex) {
+        JOptionPane.showMessageDialog(null, str + ex);
+        try {
+                log.writeLog(str + ex.getMessage());                
+            } catch (IOException ex1) {
+                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
+            }
+    }
+    
+    public static DefaultTableModel getTableIP(javax.swing.JTable jTable1, javax.swing.JScrollPane jScrollPane1) {
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {},

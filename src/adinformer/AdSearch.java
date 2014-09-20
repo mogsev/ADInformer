@@ -138,7 +138,6 @@ public class AdSearch {
     /**
      * Look for the user in LDAP and gets its attributes
      * @param userSearch String LDAP login
-     * @param attr return attrIDs
      */
     public static void getUser(String userSearch) {
         try {
@@ -150,46 +149,48 @@ public class AdSearch {
     }
     
     /**
-     * Return user attribute "distinguishedName"
-     * @return String userDN
+     * Return user LDAP attribute "distinguishedName"
+     * @return a String value userDN
      */
     public static String getUserDN() {
         return userDN;
     }
     
     /**
-     * @return 
+     * Return user LDAP attirbute "givenname"
+     * @return a String value userGivenName
      */
     public static String getUserGivenName() {
         return userGivenName;
     }
     
     /**
-     * Return user attribute "name"
-     * @return String userName
+     * Return user LDAP attribute "name"
+     * @return a String value userName
      */
     public static String getUserName() {              
-        return userName;        
+        return userName;    
     }
    
     /**
-     * Return user attribute "cn"
-     * @return userCN
+     * Return user LDAP attribute "cn"
+     * @return a String value userCN
      */
-    public static String getUserCN() {
+    public static String getUserCN() {        
         return userCN;
     }
     
     /**
-     * Return user attribute "sn"
-     * @return 
+     * Return user LDAP attribute "sn"
+     * @return a String value userSN
      */
     public static String getSN() {
         return userSN;
     }
     
     /**
-     * @return 
+     * Return user LDAP attribute "telephonenumber"
+     * @return a String value userTelephoneNumber
      */
     public static String getUserTelephone() {
         return userTelephoneNumber;

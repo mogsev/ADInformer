@@ -10,6 +10,85 @@ package adinformer;
  * @author zhenya
  */
 public class JFLanScanner extends javax.swing.JFrame {
+    private static String lanbegin;
+    private static String lanend;
+    
+    /**
+     * 
+     */
+    private class Octets {
+        private int octet;
+        private int octet1;
+        private int octet2;
+        private int octet3;
+        private int octet4;
+        private boolean result;
+        private String lan;
+        private String ip;
+        
+        /**
+         * This method checks ip address and shared on octets
+         * @param str String ip address
+         */
+        private void check(String str) {
+            //Check ip address 4 octet
+            int i4 = str.lastIndexOf(".");
+            String ip4 = str.substring(i4+1);
+            octet4 = Integer.parseInt(ip4);
+            lan = str.substring(0, i4+1);
+            
+            //Check ip address 1 octet
+            int i1 = str.indexOf(".");
+            String ip1 = str.substring(0,i1);
+            octet1 = Integer.parseInt(ip1);
+            
+            //Check ipaddress 2 octet
+            String oct = str.substring(i1+1,str.length());
+            int i2 = oct.indexOf(".");
+            String oct2 = oct.substring(0,i2);
+            octet2 = Integer.parseInt(oct2);
+            
+            //check ipaddress 3 octet
+            String oct3 = str.substring(i1+1+i2+1, str.length());
+            int i3 = oct3.indexOf(".");
+            String oct4 = oct3.substring(0, i3);
+            octet3 = Integer.parseInt(oct4);
+            
+            if( (octet1>0) && (octet1<255) &&
+                (octet2>0) && (octet2<255) &&
+                (octet3>=0) && (octet3<255) &&
+                (octet4>0) && (octet4<255) ) {
+                result = true;
+            } else {
+                result = false;
+            }
+        }
+        
+        public void setIpAddress(String str) {
+            ip = str;
+            check(ip);
+        }
+        
+        public int getOctet(int i) {
+            if (i==1) { octet = octet1; }
+            if (i==2) { octet = octet2; }
+            if (i==3) { octet = octet3; }
+            if (i==4) { octet = octet4; }
+            return octet;
+        } 
+        
+        public String getLan() {
+            return lan;
+        }
+        
+        public String getIp() {
+            return ip;
+        }
+        
+        public boolean isIp() {            
+            return result;
+        }
+    }
 
     /**
      * Creates new form JFGlobalSearch
@@ -48,17 +127,27 @@ public class JFLanScanner extends javax.swing.JFrame {
         jLabel2.setText("-");
 
         jButton1.setText("Search");
+        jButton1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jButton1FocusLost(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jTable2.setAutoCreateRowSorter(true);
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Заголовок 5", "Заголовок 6", "Заголовок 7", "Заголовок 8", "Заголовок 9"
             }
         ));
         jScrollPane2.setViewportView(jTable2);
@@ -95,14 +184,14 @@ public class JFLanScanner extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE))
         );
 
-        jButton2.setText("Закрыть");
+        jButton2.setText("Exit");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("Сохранить");
+        jButton3.setText("Save");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -119,12 +208,12 @@ public class JFLanScanner extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -153,8 +242,88 @@ public class JFLanScanner extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        dispose();
+        try {
+            dispose();
+        } catch (Exception ex) {
+            ADInformer.isError("Error close JFLanScanner", ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            lanbegin = jTextField1.getText();
+            lanend = jTextField2.getText();
+            JFLanScanner.Octets ip1 = new JFLanScanner.Octets();
+            ip1.setIpAddress(lanbegin);
+            JFLanScanner.Octets ip2 = new JFLanScanner.Octets();
+            ip2.setIpAddress(lanend);
+            
+            if (!(ip1.getLan().equals(ip2.getLan())) ||
+                    (ip1.getOctet(4)>ip2.getOctet(4)) ||
+                    !(ip1.isIp()) ||
+                    !(ip2.isIp())) {
+                jLabel3.setText("Is not a single network range");
+            } else {               
+                int ipb = ip1.getOctet(4);
+                while (ipb <= ip2.getOctet(4)) {                
+                    String ip = ip1.getLan()+ipb;
+                
+                    adinformer.AdSearch ads = new adinformer.AdSearch();                
+                    String dnsname = AdUtil.getDnsName(ip);
+                    System.out.println("DNS name: " + dnsname);
+                
+                    String username = AdUtil.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
+                    System.out.println("Login: " + username);
+                    if (username.isEmpty() && username.equals("")) {                
+                        username = "";            
+                        System.out.println("Имя пользователя не найдено\n");
+                    } else {
+                        int in = username.indexOf("\\");
+                        username = username.substring(in+1);
+                        try {
+                            AdSearch.getUser(username);
+                        } catch (NullPointerException ex) {
+                            System.out.println(ex);
+                            username = null;
+                        }
+                        
+                        String name = AdSearch.getUserName();
+                        String telephonenumber = AdSearch.getUserTelephone();
+                        String mobile = AdSearch.getUserMobile();
+                        String mail = AdSearch.getUserMail();
+                        String ipphone = AdSearch.getUserIpPhone();
+            
+                        System.out.println("name: "+name);
+                        System.out.println("Tel: "+telephonenumber);
+                        System.out.println("Mobile: "+mobile);
+                        System.out.println("Mail: "+mail);
+                        System.out.println("IpPhone: "+ipphone);
+                        System.out.println();
+                    }
+                    jTable2.setModel(ADInformer.getTableIP(jTable2, jScrollPane2));
+                    
+                    /**
+                    Object[] row = { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone };
+                    jModelIP.addRow(row);
+                    
+                    */
+                    
+                    ipb++;
+                }
+            }            
+        } catch (Exception ex) {
+            ADInformer.isError("Error ActionPerformed in Search LAN", ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton1FocusLost
+        // TODO add your handling code here:
+        try {
+            jLabel3.setText("");
+        } catch (Exception ex) {
+            
+        }
+    }//GEN-LAST:event_jButton1FocusLost
 
     /**
      * @param args the command line arguments
