@@ -268,11 +268,14 @@ public class JFLanScanner extends javax.swing.JFrame {
                 while (ipb <= ip2.getOctet(4)) {                
                     String ip = ip1.getLan()+ipb;
                 
-                    adinformer.AdSearch ads = new adinformer.AdSearch();                
-                    String dnsname = AdUtil.getDnsName(ip);
+                    adinformer.AdSearch ads = new adinformer.AdSearch();
+                    adinformer.AdUtil adu = new adinformer.AdUtil();
+                    String dnsname = adu.getDnsName(ip);
+                    
                     System.out.println("DNS name: " + dnsname);
                 
-                    String username = AdUtil.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
+                    //String username = AdUtil.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
+                    String username = adu.getUser(ip);
                     System.out.println("Login: " + username);
                     if (username.isEmpty() && username.equals("")) {                
                         username = "";            

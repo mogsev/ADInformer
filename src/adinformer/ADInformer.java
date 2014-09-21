@@ -39,7 +39,7 @@ public class ADInformer extends javax.swing.JFrame {
      * @param ex Exception 
      */
     public static void isError(String str, Exception ex) {
-        JOptionPane.showMessageDialog(null, str + ex);
+        JOptionPane.showMessageDialog(null, str + "\n" + ex);
         try {
                 log.writeLog(str + ex.getMessage());                
             } catch (IOException ex1) {

@@ -92,13 +92,8 @@ public class JFScanner extends javax.swing.JFrame {
             //run task
             scan = new Scanner();
             scan.execute();
-        } catch (Exception ex) {
-            try {
-                JOptionPane.showMessageDialog(null,"Ошибка в модуле сканирования\n"+ex);
-                log.writeLog(ex.getMessage());                
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-            }
+        } catch (Exception ex) {            
+                ADInformer.isError("Ошибка в модуле сканирования", ex);
         }
     }
     
@@ -107,11 +102,15 @@ public class JFScanner extends javax.swing.JFrame {
             ip=jTextField1.getText();
             System.out.println("IPv4: "+ip);
             try {
+                adinformer.AdUtil adu = new adinformer.AdUtil();
                 //получаем DNS name
-                dnsname = AdUtil.getDnsName(ip);
+                //dnsname = AdUtil.getDnsName(ip);
+                dnsname = adu.getDnsName(ip);
                 System.out.println("DNS name: " + dnsname);
                 //получаем пользователя                
-                username = AdUtil.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
+                //username = AdUtil.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
+                //username = AdUtil.getUser(ip);
+                username = adu.getUser(ip);
                 System.out.println("Login: " + username);
                 if (username.isEmpty() && username.equals("")) {                
                     username = "";            
@@ -138,21 +137,11 @@ public class JFScanner extends javax.swing.JFrame {
                     System.out.println("IpPhone: "+ipphone);
                     System.out.println();
                 }            
-        } catch (UnknownHostException ex) {
-            System.out.println("Ошибка обработки DNS name\n"+ex);         
-            try {
-                log.writeLog(ex.getMessage());                
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
+            } catch (UnknownHostException ex) {
+                ADInformer.isError("Ошибка обработки DNS name", ex);
             }
-        }
         } catch (Exception ex) {
-            try {
-                JOptionPane.showMessageDialog(null,"Ошибка в модуле сканирования\n"+ex);
-                log.writeLog(ex.getMessage());                
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-            }
+            ADInformer.isError("Ошибка в модуле сканирования\n", ex);
         }
     }
 
@@ -276,7 +265,7 @@ public class JFScanner extends javax.swing.JFrame {
         try {
             dispose();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Ошибка закрытия окна\n", ex);            
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

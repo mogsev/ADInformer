@@ -28,6 +28,7 @@ public class AdConfig {
     private static String domainsn = "";
     private static String domainlogin = "";
     private static String domainpassword = "";
+    private static String domainconnection = "";    
     private static String mysqlserver = "";
     private static String mysqlserverport = "";
     private static String mysqldatabase = "";
@@ -43,6 +44,7 @@ public class AdConfig {
     private final String conf_domain_sn = "domain_sn";
     private final String conf_domain_login = "domain_login";
     private final String conf_domain_password = "domain_password";
+    private final String conf_domain_connection = "domain_connection";
     private final String conf_mysql_server = "mysql_server";
     private final String conf_mysql_database = "mysql_database";
     private final String conf_mysql_port = "mysql_port";
@@ -95,6 +97,12 @@ public class AdConfig {
             if (line.indexOf(conf_domain_password)==0) {
                 domainpassword = line.substring(line.indexOf(an)+1, l);                
             }
+            if (line.indexOf(conf_domain_connection)==0) {
+                domainconnection = line.substring(line.indexOf(an)+1, l);
+                if (domainconnection.isEmpty()) {
+                    domainconnection = "1";
+                }
+            }
             if (line.indexOf(conf_mysql_server)==0) {
                 mysqlserver = line.substring(line.indexOf(an)+1, l);                
             }
@@ -106,8 +114,7 @@ public class AdConfig {
             }
             if (line.indexOf(conf_mysql_database)==0) {
                 mysqldatabase = line.substring(line.indexOf(an)+1, l);                
-            }
-            
+            }            
             if (line.indexOf(conf_mysql_login)==0) {
                 mysqllogin = line.substring(line.indexOf(an)+1, l);                
             }
@@ -130,7 +137,10 @@ public class AdConfig {
                 mssqlpassword = line.substring(line.indexOf(an)+1, l);                
             }
             if (line.indexOf(conf_log_enable)==0) {
-                logenable = line.substring(line.indexOf(an)+1, l);                
+                logenable = line.substring(line.indexOf(an)+1, l);
+                if (logenable.isEmpty()) {
+                    logenable = "1";
+                }
             }
             i=a;
         }
@@ -146,6 +156,7 @@ public class AdConfig {
         out.append(conf_domain_sn).append(an).append(domainsn).append(rn);
         out.append(conf_domain_login).append(an).append(domainlogin).append(rn);
         out.append(conf_domain_password).append(an).append(domainpassword).append(rn);
+        out.append(conf_domain_connection).append(an).append(domainconnection).append(rn);        
         out.append("[MYSQL]").append(rn);
         out.append(conf_mysql_server).append(an).append(mysqlserver).append(rn);
         out.append(conf_mysql_port).append(an).append(mysqlserverport).append(rn);
@@ -165,6 +176,10 @@ public class AdConfig {
         writer.close();
     }
     
+    /**
+     * Return value is log enable or disable
+     * @return String value logenable
+     */
     public String getLog() {
         return logenable;
     }
@@ -227,6 +242,14 @@ public class AdConfig {
      */
     public void setDomainPassword(String str) {
         domainpassword = str;
+    }
+    
+    public String getDomainConnection() {
+        return domainconnection;
+    }
+    
+    public void setDomainConnection(String str) {
+        domainconnection = str;
     }
     
     /**

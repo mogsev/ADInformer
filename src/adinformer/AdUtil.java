@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author zhenya mogsev@gmail.com
  */
 public class AdUtil {
-    private static String hostname;
+    private String hostname;
     
     /**
      * This metod work with autentication LDAP
@@ -30,7 +30,7 @@ public class AdUtil {
      * @param pass String domain password
      * @return String login name format "DOMAIN\USER"
      */
-    public static String getUserAuth(String str, String domain, String user, String pass) {
+    public String getUserAuth(String str, String domain, String user, String pass) {
         String result = "";
         String users = domain+"\\"+user;
         try {
@@ -43,7 +43,7 @@ public class AdUtil {
             "strPass = \"" + pass + "\" \n" +            
             "Set objSWbemLocator = CreateObject(\"WbemScripting.SWbemLocator\") \n" +
             "Set objWMIService = objSWbemLocator.ConnectServer _ \n" +
-            "(strComputer, \"root\\cimv2\", strUser, strPass) \n" +
+            "(strComputer, \"root\\cimv2\", strUser, strPass) \n" +            
             "Set colComputer = objWMIService.ExecQuery _ \n" +
             "(\"Select * from Win32_ComputerSystem\") \n" + 
             "For Each objComputer in colComputer \n" +
@@ -60,12 +60,7 @@ public class AdUtil {
             }
             input.close();
         } catch(Exception ex)  {
-            System.out.println(ex);
-            try {
-                ADInformer.log.writeLog(ex.toString());
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);
-            }
+            ADInformer.isError("Ошибка в получении пользователя\n", ex);            
         }
         return result.trim();
     }
@@ -77,7 +72,7 @@ public class AdUtil {
      * @param str IPv4 or DNS address remote computer
      * @return String login name format "DOMAIN\USER"  
      */
-    public static String getUser(String str) {
+    public String getUser(String str) {
         String result = "";        
         try {
             File file = File.createTempFile("realhowto",".vbs");
@@ -103,12 +98,7 @@ public class AdUtil {
             }
             input.close();
         } catch(Exception ex)  {
-            System.out.println(ex);
-            try {
-                ADInformer.log.writeLog(ex.toString());
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);
-            }
+            ADInformer.isError("Ошибка в получении пользователя\n", ex);
         }           
         return result.trim();    
     }
@@ -118,9 +108,15 @@ public class AdUtil {
      * @return hostname FQDN host and return IP address host if null result
      * @throws UnknownHostException 
      */    
-    public static String getDnsName(String ip) throws UnknownHostException { 
-        InetAddress addr = InetAddress.getByName(ip);
-        hostname = addr.getHostName();
+    public String getDnsName(String ip) throws UnknownHostException { 
+        try {
+            InetAddress addr = InetAddress.getByName(ip);
+            hostname = addr.getHostName();
+            
+        } catch (Exception ex) {
+            ADInformer.isError("Ошибка получения DNS name\n", ex);
+        }
         return hostname;
     }
 }
+
