@@ -96,25 +96,15 @@ public class ADInformer extends javax.swing.JFrame {
                 jModelIP.addRow(row);
             }
             jLabel1.setText("Найдено "+jModelIP.getRowCount()+" значений");
-        } catch(Exception ex) {            
-            JOptionPane.showMessageDialog(null,"Ошибка в соединении с сервером MySql\n"+ex);
-            try {
-                log.writeLog(ex.getMessage());                
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-            }
+        } catch(Exception ex) { 
+            ADInformer.isError("Ошибка в соединении с сервером MySql", ex);
         }
         finally { //Обязательно необходимо закрыть соединение
             try {
                 if(conn != null)
                 conn.close();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Ошибка закрытия сединения\n"+ex);
-                try {                    
-                    log.writeLog(ex.getMessage());                
-                } catch (IOException ex1) {
-                    JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-                }
+                ADInformer.isError("Ошибка закрытия сединения", ex);
             }
         }
         jModelIP.fireTableDataChanged();
@@ -138,24 +128,14 @@ public class ADInformer extends javax.swing.JFrame {
             }
             jLabel1.setText("Найдено "+jModelIP.getRowCount()+" значений");
         } catch(Exception ex){
-            JOptionPane.showMessageDialog(null,"Ошибка MySQL\n"+ex);
-            try {                
-                log.writeLog(ex.toString());                
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-            }
+            ADInformer.isError("Ошибка MySQL", ex);
         }
         finally { //Обязательно необходимо закрыть соединение
             try {
                 if(conn != null)
                 conn.close();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Ошибка закрытия сединения\n"+ex);
-                try {                
-                    log.writeLog(ex.toString());                
-                } catch (IOException ex1) {
-                    JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-                }                
+                ADInformer.isError("Ошибка закрытия сединения", ex);
             }
         }
         jModelIP.fireTableDataChanged();
@@ -166,10 +146,10 @@ public class ADInformer extends javax.swing.JFrame {
      */
     public ADInformer() {
         initComponents();
-        //Подключаем логирование
-        log = new AdLog();
         //Загружаем конфигурацию
         config = new AdConfig();
+        //Подключаем логирование
+        log = new AdLog();
         try {
             config.readConfig();            
             if (config.getDomainName().isEmpty() 
@@ -185,23 +165,13 @@ public class ADInformer extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Отсутствуют настройки MySql\nВнесите данные в настройках - База данных MySql и перезапустите приложение");
             }
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null,"Ошибка при открытии файла конфигурации: " + ex);
-            try {                    
-                log.writeLog(ex.getMessage());                
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-            }
+            ADInformer.isError("Ошибка при открытии файла конфигурации", ex);
         }
         //Регистрируем драйвер MySql
         try {
             Class.forName(drivermysql);  
-        } catch (ClassNotFoundException ex) {                        
-            JOptionPane.showMessageDialog(null,"Ошибка иницилизации MySQL драйвера: " + ex);
-            try {                    
-                log.writeLog(ex.getMessage());                
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-            }            
+        } catch (ClassNotFoundException ex) {
+            ADInformer.isError("Ошибка иницилизации MySQL драйвера", ex);            
         }
         mysqlurl = "jdbc:mysql://"+config.getMysqlServer()+"/"+config.getMysqlDatabase()+"?user="+config.getMysqlLogin()+"&password="+config.getMysqlPassword()+"";//URL адрес        
         getForm(); 
@@ -467,7 +437,7 @@ public class ADInformer extends javax.swing.JFrame {
         try {
             getFormSearch();
         } catch (Exception ex) {
-            JOptionPane.showConfirmDialog(null, ex);
+            JOptionPane.showMessageDialog(null, ex);
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
 

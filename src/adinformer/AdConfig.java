@@ -34,6 +34,7 @@ public class AdConfig {
     private static String mysqldatabase = "";
     private static String mysqllogin = "";
     private static String mysqlpassword = "";
+    private static String mysqlautosave = "";
     private static String mssqlserver = "";
     private static String mssqlserverport = "";
     private static String mssqllogin = "";
@@ -50,6 +51,7 @@ public class AdConfig {
     private final String conf_mysql_port = "mysql_port";
     private final String conf_mysql_login = "mysql_login";
     private final String conf_mysql_password = "mysql_password";
+    private final String conf_mysql_autosave = "mysql_autosave";
     private final String conf_mssql_server = "mssql_server";
     private final String conf_mssql_port = "mssql_port";
     private final String conf_mssql_login = "mssql_login";
@@ -121,6 +123,12 @@ public class AdConfig {
             if (line.indexOf(conf_mysql_password)==0) {
                 mysqlpassword = line.substring(line.indexOf(an)+1, l);                
             }
+            if (line.indexOf(conf_mysql_autosave)==0) {
+                mysqlautosave = line.substring(line.indexOf(an)+1, l);
+                if (mysqlautosave.isEmpty()) {
+                    mysqlautosave = "0";
+                }
+            }
             if (line.indexOf(conf_mssql_server)==0) {
                 mssqlserver = line.substring(line.indexOf(an)+1, l);                
             }
@@ -146,9 +154,13 @@ public class AdConfig {
         }
     }
     
+    /**
+     * This method read and load configuration file
+     * @throws IOException 
+     */
     public void writeConfig() throws IOException {        
         BufferedWriter writer = new BufferedWriter(new FileWriter(file)); //выходной файл
-        out = new StringBuilder();  //буфер для обработанного текста                
+        out = new StringBuilder();  //буфер для обработанного текста        
         //Наполняем буфер конфигурационными данными
         out.append("#Do not delete and edit this config file").append(rn);
         out.append("[DOMAIN]").append(rn);
@@ -163,6 +175,7 @@ public class AdConfig {
         out.append(conf_mysql_database).append(an).append(mysqldatabase).append(rn);
         out.append(conf_mysql_login).append(an).append(mysqllogin).append(rn);
         out.append(conf_mysql_password).append(an).append(mysqlpassword).append(rn);
+        out.append(conf_mysql_autosave).append(an).append(mysqlautosave).append(rn);
         out.append("[MSSQL]").append(rn);
         out.append(conf_mssql_server).append(an).append(mssqlserver).append(rn);
         out.append(conf_mssql_port).append(an).append(mssqlserverport).append(rn);
@@ -170,7 +183,7 @@ public class AdConfig {
         out.append(conf_mssql_password).append(an).append(mssqlpassword).append(rn);
         out.append("[ADInformer]").append(rn);
         out.append(conf_log_enable).append(an).append(logenable).append(rn);
-        // сохраняем
+        // save config file
         writer.write(out.toString());
         writer.flush();
         writer.close();
@@ -244,12 +257,29 @@ public class AdConfig {
         domainpassword = str;
     }
     
-    public String getDomainConnection() {
-        return domainconnection;
+    /**
+     * Return config attribute "mysql_autosave". Is value Domain connection. 
+     * Default result true.
+     * @return boolean result
+     */
+    public boolean getDomainConnection() {
+        boolean result = true;
+        if (domainconnection.equals("0")) {
+            result = false;
+        }
+        return result;
     }
     
-    public void setDomainConnection(String str) {
-        domainconnection = str;
+    /**
+     * 
+     * @param result 
+     */
+    public void setDomainConnection(boolean result) {
+        if (result) {
+            domainconnection = "1";
+        } else {
+            domainconnection = "0";
+        }
     }
     
     /**
@@ -320,6 +350,22 @@ public class AdConfig {
      */
     public void setMysqlPassword(String str) {
         mysqlpassword = str;
+    }
+    
+    public boolean getMysqlAutosave() {
+        boolean result = true;
+        if (mysqlautosave.equals("0")) {
+            result = false;
+        }
+        return result;
+    }
+    
+    public void setMysqlAutosave(boolean result) {
+        if (result) {
+            mysqlautosave = "1";
+        } else {
+            mysqlautosave = "0";
+        }
     }
     
     /**

@@ -5,11 +5,6 @@
  */
 package adinformer;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
-
 /**
  * @author zhenya mogsev@gmail.com
  */
@@ -24,7 +19,10 @@ public class JDialogAD extends javax.swing.JDialog {
         jTextField1.setText(ADInformer.config.getDomainName());
         jTextField2.setText(ADInformer.config.getDomainSN());
         jTextField3.setText(ADInformer.config.getDomainLogin());
-        jPasswordField1.setText(ADInformer.config.getDomainPassword());        
+        jPasswordField1.setText(ADInformer.config.getDomainPassword());
+        if (ADInformer.config.getDomainConnection()) {
+            jCheckBox2.doClick();
+        }
     }
 
     /**
@@ -195,24 +193,28 @@ public class JDialogAD extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        dispose();
+        try {
+            dispose();
+        } catch (Exception ex) {
+            ADInformer.isError("Ошибка закрытия окна", ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ADInformer.config.setDomainName(jTextField1.getText());
-        ADInformer.config.setDomainSN(jTextField2.getText());
-        ADInformer.config.setDomainLogin(jTextField3.getText());
-        ADInformer.config.setDomainPassword(jPasswordField1.getText());
-        try {            
+        try {
+            ADInformer.config.setDomainName(jTextField1.getText());
+            ADInformer.config.setDomainSN(jTextField2.getText());
+            ADInformer.config.setDomainLogin(jTextField3.getText());
+            ADInformer.config.setDomainPassword(jPasswordField1.getText());
+            if (jCheckBox2.isSelected()) {
+                ADInformer.config.setDomainConnection(true);
+            } else {
+                ADInformer.config.setDomainConnection(false);
+            }
             ADInformer.config.writeConfig();
             jLabel5.setText("Конфигурация сохранена.");
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null,"Ошибка при сохранении файла конфигурации: " + ex);
-            try {
-                ADInformer.log.writeLog(ex.getMessage());
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
-            }
+        } catch (Exception ex) {
+            ADInformer.isError("Ошибка при сохранении файла конфигурации", null);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
