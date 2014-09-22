@@ -35,8 +35,8 @@ public class AdConfig {
     private static String mysqllogin = "";
     private static String mysqlpassword = "";
     private static String mysqlautosave = "0";
-    private static String mssqlserver = "1433";
-    private static String mssqlserverport = "";
+    private static String mssqlserver = "";
+    private static String mssqlserverport = "1433";
     private static String mssqllogin = "";
     private static String mssqlpassword = "";
     
