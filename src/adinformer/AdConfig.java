@@ -62,6 +62,7 @@ public class AdConfig {
     
     public void readConfig() throws FileNotFoundException, IOException {
         File fileconf = new File(file);
+        AdCrypt adc = new AdCrypt();
         if (!fileconf.exists()) {
             System.out.println("File do not exist");
             writeConfig();
@@ -93,11 +94,11 @@ public class AdConfig {
             if (line.indexOf(conf_domain_sn)==0) {
                 domainsn = line.substring(line.indexOf(an)+1, l);                
             }
-            if (line.indexOf(conf_domain_login)==0) {
-                domainlogin = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_domain_login)==0) {                
+                domainlogin = adc.decrypt(line.substring(line.indexOf(an)+1, l));
             }
-            if (line.indexOf(conf_domain_password)==0) {
-                domainpassword = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_domain_password)==0) {                
+                domainpassword = adc.decrypt(line.substring(line.indexOf(an)+1, l));
             }
             if (line.indexOf(conf_domain_connection)==0) {
                 domainconnection = line.substring(line.indexOf(an)+1, l);
@@ -117,11 +118,11 @@ public class AdConfig {
             if (line.indexOf(conf_mysql_database)==0) {
                 mysqldatabase = line.substring(line.indexOf(an)+1, l);                
             }            
-            if (line.indexOf(conf_mysql_login)==0) {
-                mysqllogin = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_mysql_login)==0) {                
+                mysqllogin = adc.decrypt(line.substring(line.indexOf(an)+1, l));
             }
-            if (line.indexOf(conf_mysql_password)==0) {
-                mysqlpassword = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_mysql_password)==0) {                
+                mysqlpassword = adc.decrypt(line.substring(line.indexOf(an)+1, l));
             }
             if (line.indexOf(conf_mysql_autosave)==0) {
                 mysqlautosave = line.substring(line.indexOf(an)+1, l);
@@ -158,23 +159,24 @@ public class AdConfig {
      * This method read and load configuration file
      * @throws IOException 
      */
-    public void writeConfig() throws IOException {        
+    public void writeConfig() throws IOException {
+        AdCrypt adc = new AdCrypt();
         BufferedWriter writer = new BufferedWriter(new FileWriter(file)); //выходной файл
         out = new StringBuilder();  //буфер для обработанного текста        
         //Наполняем буфер конфигурационными данными
         out.append("#Do not delete and edit this config file").append(rn);
         out.append("[DOMAIN]").append(rn);
         out.append(conf_domain_name).append(an).append(domainname).append(rn);
-        out.append(conf_domain_sn).append(an).append(domainsn).append(rn);
-        out.append(conf_domain_login).append(an).append(domainlogin).append(rn);
-        out.append(conf_domain_password).append(an).append(domainpassword).append(rn);
+        out.append(conf_domain_sn).append(an).append(domainsn).append(rn);        
+        out.append(conf_domain_login).append(an).append(adc.encrypt(domainlogin)).append(rn);        
+        out.append(conf_domain_password).append(an).append(adc.encrypt(domainpassword)).append(rn);
         out.append(conf_domain_connection).append(an).append(domainconnection).append(rn);        
         out.append("[MYSQL]").append(rn);
         out.append(conf_mysql_server).append(an).append(mysqlserver).append(rn);
         out.append(conf_mysql_port).append(an).append(mysqlserverport).append(rn);
-        out.append(conf_mysql_database).append(an).append(mysqldatabase).append(rn);
-        out.append(conf_mysql_login).append(an).append(mysqllogin).append(rn);
-        out.append(conf_mysql_password).append(an).append(mysqlpassword).append(rn);
+        out.append(conf_mysql_database).append(an).append(mysqldatabase).append(rn);        
+        out.append(conf_mysql_login).append(an).append(adc.encrypt(mysqllogin)).append(rn);        
+        out.append(conf_mysql_password).append(an).append(adc.encrypt(mysqlpassword)).append(rn);
         out.append(conf_mysql_autosave).append(an).append(mysqlautosave).append(rn);
         out.append("[MSSQL]").append(rn);
         out.append(conf_mssql_server).append(an).append(mssqlserver).append(rn);
@@ -182,7 +184,7 @@ public class AdConfig {
         out.append(conf_mssql_login).append(an).append(mssqllogin).append(rn);
         out.append(conf_mssql_password).append(an).append(mssqlpassword).append(rn);
         out.append("[ADInformer]").append(rn);
-        out.append(conf_log_enable).append(an).append(logenable).append(rn);
+        out.append(conf_log_enable).append(an).append(logenable).append(rn);        
         // save config file
         writer.write(out.toString());
         writer.flush();
