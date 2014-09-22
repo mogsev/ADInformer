@@ -198,8 +198,8 @@
                   <Table columnCount="8" rowCount="0">
                     <Column editable="false" title="IP" type="java.lang.String"/>
                     <Column editable="false" title="FQDN" type="java.lang.String"/>
-                    <Column editable="false" title="Login" type="java.lang.String"/>
-                    <Column editable="false" title="Full name" type="java.lang.String"/>
+                    <Column editable="false" title="Domain Login" type="java.lang.String"/>
+                    <Column editable="false" title="Full Name" type="java.lang.String"/>
                     <Column editable="false" title="Mail" type="java.lang.String"/>
                     <Column editable="false" title="Telephone" type="java.lang.String"/>
                     <Column editable="false" title="Mobile" type="java.lang.String"/>

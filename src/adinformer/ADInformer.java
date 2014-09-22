@@ -229,7 +229,7 @@ public class ADInformer extends javax.swing.JFrame {
 
             },
             new String [] {
-                "IP", "FQDN", "Login", "Full name", "Mail", "Telephone", "Mobile", "IpPhone"
+                "IP", "FQDN", "Domain Login", "Full Name", "Mail", "Telephone", "Mobile", "IpPhone"
             }
         ) {
             Class[] types = new Class [] {
