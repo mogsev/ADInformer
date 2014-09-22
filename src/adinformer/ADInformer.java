@@ -32,6 +32,9 @@ public class ADInformer extends javax.swing.JFrame {
     private static Connection conn = null;
     private static ResultSet rs = null;
     
+    public final String[] names = new String[] { "ip", "dnsname", "username", "name", "mail", "telephonenumber", "mobile", "ipphone" };
+    
+    
     /**
      * output Error Description and Exception in JOptionPane.showMessageDialog
      * This result is write in log file

@@ -23,19 +23,19 @@ public class AdConfig {
     private static StringBuilder out;
     private final String file = "adinformer.cfg";
     
-    private static String logenable = "";
+    private static String logenable = "1";
     private static String domainname = "";
     private static String domainsn = "";
     private static String domainlogin = "";
     private static String domainpassword = "";
-    private static String domainconnection = "";    
+    private static String domainconnection = "0";    
     private static String mysqlserver = "";
-    private static String mysqlserverport = "";
+    private static String mysqlserverport = "3306";
     private static String mysqldatabase = "";
     private static String mysqllogin = "";
     private static String mysqlpassword = "";
-    private static String mysqlautosave = "";
-    private static String mssqlserver = "";
+    private static String mysqlautosave = "0";
+    private static String mssqlserver = "1433";
     private static String mssqlserverport = "";
     private static String mssqllogin = "";
     private static String mssqlpassword = "";
@@ -64,7 +64,6 @@ public class AdConfig {
         File fileconf = new File(file);
         AdCrypt adc = new AdCrypt();
         if (!fileconf.exists()) {
-            System.out.println("File do not exist");
             writeConfig();
         }
         //входной файл
@@ -87,57 +86,52 @@ public class AdConfig {
             line = line.replace("\t", ""); 
             line = line.replace(n, ""); 
             int l = line.length();            
-            //System.out.println(line);            
             if (line.indexOf(conf_domain_name)==0) {
                 domainname = line.substring(line.indexOf(an)+1, l);                
             }
             if (line.indexOf(conf_domain_sn)==0) {
                 domainsn = line.substring(line.indexOf(an)+1, l);                
             }
-            if (line.indexOf(conf_domain_login)==0) {                
-                domainlogin = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+            if (line.indexOf(conf_domain_login)==0) {
+                if (!line.substring(line.indexOf(an)+1, l).isEmpty()) {
+                    domainlogin = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+                }
             }
-            if (line.indexOf(conf_domain_password)==0) {                
-                domainpassword = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+            if (line.indexOf(conf_domain_password)==0) {
+                if (!line.substring(line.indexOf(an)+1, l).isEmpty()) {
+                    domainpassword = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+                }
             }
             if (line.indexOf(conf_domain_connection)==0) {
-                domainconnection = line.substring(line.indexOf(an)+1, l);
-                if (domainconnection.isEmpty()) {
-                    domainconnection = "1";
-                }
+                domainconnection = line.substring(line.indexOf(an)+1, l);                
             }
             if (line.indexOf(conf_mysql_server)==0) {
                 mysqlserver = line.substring(line.indexOf(an)+1, l);                
             }
             if (line.indexOf(conf_mysql_port)==0) {                
-                mysqlserverport = line.substring(line.indexOf(an)+1, l);
-                if (mysqlserverport.isEmpty()) {
-                    mysqlserverport = "3306";
-                }
+                mysqlserverport = line.substring(line.indexOf(an)+1, l);                
             }
             if (line.indexOf(conf_mysql_database)==0) {
                 mysqldatabase = line.substring(line.indexOf(an)+1, l);                
             }            
-            if (line.indexOf(conf_mysql_login)==0) {                
-                mysqllogin = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+            if (line.indexOf(conf_mysql_login)==0) { 
+                if (!line.substring(line.indexOf(an)+1, l).isEmpty()) {
+                    mysqllogin = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+                }
             }
-            if (line.indexOf(conf_mysql_password)==0) {                
-                mysqlpassword = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+            if (line.indexOf(conf_mysql_password)==0) {
+                if (!line.substring(line.indexOf(an)+1, l).isEmpty()) {
+                    mysqlpassword = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+                }
             }
             if (line.indexOf(conf_mysql_autosave)==0) {
-                mysqlautosave = line.substring(line.indexOf(an)+1, l);
-                if (mysqlautosave.isEmpty()) {
-                    mysqlautosave = "0";
-                }
+                mysqlautosave = line.substring(line.indexOf(an)+1, l);                
             }
             if (line.indexOf(conf_mssql_server)==0) {
                 mssqlserver = line.substring(line.indexOf(an)+1, l);                
             }
             if (line.indexOf(conf_mssql_port)==0) {
-                mssqlserverport = line.substring(line.indexOf(an)+1, l);
-                if (mssqlserverport.isEmpty()) {
-                    mssqlserverport = "1433";
-                }
+                mssqlserverport = line.substring(line.indexOf(an)+1, l);                
             }
             if (line.indexOf(conf_mssql_login)==0) {
                 mssqllogin = line.substring(line.indexOf(an)+1, l);                
@@ -146,10 +140,7 @@ public class AdConfig {
                 mssqlpassword = line.substring(line.indexOf(an)+1, l);                
             }
             if (line.indexOf(conf_log_enable)==0) {
-                logenable = line.substring(line.indexOf(an)+1, l);
-                if (logenable.isEmpty()) {
-                    logenable = "1";
-                }
+                logenable = line.substring(line.indexOf(an)+1, l);                
             }
             i=a;
         }
