@@ -22,7 +22,7 @@ public class AdCrypt {
     private String encryptedValue;
     private String decryptedValue;
     private static Key key;
-
+    
     public String encrypt(String valueToEnc) {
         try {
         Key key = generateKey();
@@ -31,7 +31,7 @@ public class AdCrypt {
         byte[] encValue = cip.doFinal(valueToEnc.getBytes());                
         encryptedValue = new BASE64Encoder().encode(encValue);
         } catch (Exception ex) {
-            ADInformer.isError("Encrypt error", ex);
+            ADInformer.isError("Error in encrypt", ex);
         }
         return encryptedValue;
     }
@@ -45,7 +45,7 @@ public class AdCrypt {
             byte[] decValue = cip.doFinal(decordedValue);
             decryptedValue = new String(decValue);        
         } catch (Exception ex) {
-            ADInformer.isError("Decript error", ex);
+            ADInformer.isError("Error in decrypt", ex);
         }
         return decryptedValue;
     }
@@ -54,7 +54,7 @@ public class AdCrypt {
         try {
             key = new SecretKeySpec(keyValue, ALGORITHM);
         } catch (Exception ex) {
-            ADInformer.isError("generateKey error", ex);
+            ADInformer.isError("Error in generateKey", ex);
         }
         return key;
     }
