@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
@@ -21,25 +22,15 @@ import javax.swing.SwingWorker;
  */
 public class JFScanner extends javax.swing.JFrame {
     private ArrayList<Object[]> result = new ArrayList<Object[]>();
-    private Object[] resultrow = new Object[] {};
-    
-    private final String localhost = "localhost";
     private static OutputStream out;
     private static Scanner scan;
-    private String ip;
-    private String dnsname;
-    private String username;
-    private String name;
-    private String telephonenumber;
-    private String mobile;
-    private String mail;
-    private String ipphone;
+    private String ip, dnsname, username, name, telephonenumber, mobile, mail, ipphone;
     
     private class Scanner extends SwingWorker<Void, Void> {
         @Override
         public Void doInBackground() {
             redirectSystemStreams();
-            isScanner();
+            isScanner();            
             return null;
         }
         
@@ -99,13 +90,15 @@ public class JFScanner extends javax.swing.JFrame {
     
     private void isScanner() {
         try {
+            long st, en;
+            st = System.nanoTime();
             ip=jTextField1.getText();
             System.out.println("IPv4: "+ip);
             try {
                 adinformer.AdUtil adu = new adinformer.AdUtil();
                 dnsname = adu.getDnsName(ip);
                 System.out.println("DNS name: " + dnsname);
-                //получаем пользователя
+                //получаем пользователя                
                 if (ADInformer.config.getDomainConnection()) {                                    
                     username = adu.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
                 } else {
@@ -128,23 +121,20 @@ public class JFScanner extends javax.swing.JFrame {
                     telephonenumber = AdSearch.getUserTelephone();
                     mobile = AdSearch.getUserMobile();
                     mail = AdSearch.getUserMail();
-                    ipphone = AdSearch.getUserIpPhone();
-            
+                    ipphone = AdSearch.getUserIpPhone();            
                     System.out.println("name: "+name);
                     System.out.println("Tel: "+telephonenumber);
                     System.out.println("Mobile: "+mobile);
                     System.out.println("Mail: "+mail);
-                    System.out.println("IpPhone: "+ipphone);
-                    System.out.println();
-                    
-                    Object[] row = { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone };
-                    result.add(row);
-                    
+                    System.out.println("IpPhone: "+ipphone);                    
+                    result.add(new Object[] { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone });                    
+                    en = System.nanoTime();
+                    System.out.println("Scan time: "+(en-st)/1000000 +" ms");
+                    System.out.println();                    
                 }            
             } catch (UnknownHostException ex) {
                 ADInformer.isError("Ошибка обработки DNS name", ex);
-            }
-            
+            }            
         } catch (Exception ex) {
             ADInformer.isError("Ошибка в модуле сканирования\n", ex);
         }
@@ -203,6 +193,11 @@ public class JFScanner extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
+        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextField1FocusLost(evt);
+            }
+        });
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -210,6 +205,11 @@ public class JFScanner extends javax.swing.JFrame {
         });
 
         jButton3.setText("Save result as...");
+        jButton3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jButton3FocusLost(evt);
+            }
+        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -225,7 +225,7 @@ public class JFScanner extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton3)
-                        .addGap(20, 20, 20)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
@@ -305,11 +305,29 @@ public class JFScanner extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             ADInformer.autosave.saveXML(result);
+            ADInformer.autosave.saveCsv(result);
+            jLabel2.setText("The result is stored");
         } catch (Exception ex) {
             ADInformer.isError("Ошибка сохранения", ex);
         }
         
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton3FocusLost
+        try {
+            jLabel2.setText("");
+        } catch (Exception ex) {
+            ADInformer.isError("FocusLost", ex);
+        }
+    }//GEN-LAST:event_jButton3FocusLost
+
+    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+        try {
+            jLabel2.setText("");
+        } catch (Exception ex) {
+            ADInformer.isError("FocusLost", ex);
+        }
+    }//GEN-LAST:event_jTextField1FocusLost
 
     /**
      * @param args the command line arguments

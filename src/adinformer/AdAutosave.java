@@ -5,8 +5,10 @@
  */
 package adinformer;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -24,24 +26,29 @@ import org.jdom2.output.XMLOutputter;
 public class AdAutosave {
     private static Document doc;
     private static String time;
-    private static Element root;
-    //public final String[] names = new String[] { "ip", "dnsname", "username", "name", "mail", "telephonenumber", "mobile", "ipphone" };
-    private static void writeXml(Document savingDocument, String filePath) {
+    private static Element root;    
+    
+    private void writeXml(Document savingDocument, String filePath) {
         try {
             XMLOutputter outputter = new XMLOutputter();
             outputter.setFormat(Format.getPrettyFormat());            
             try {
                 OutputStreamWriter out = new java.io.OutputStreamWriter(new java.io.FileOutputStream(filePath),"UTF-8");
                 out.write(outputter.outputString(savingDocument));
+                out.flush();
                 out.close();
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ADInformer.isError("Error in writeXml", ex);
         } 
     }
     
+    /**
+     * Return the system date format "ddMMyyyy-HHmmss"
+     * @return String value system date
+     */
     private static String getTime() {
         Date now = new Date();
         DateFormat formatter = new SimpleDateFormat("ddMMyyyy-HHmmss");
@@ -49,41 +56,65 @@ public class AdAutosave {
         return time;                
     }
     
-    public void saveXML(ArrayList<Object[]> obj) {
-        root = new Element("ipaddress");
-        doc = new Document(root);
-        for (Object objto:obj) {
-            Object[] row = obj.iterator().next();
-            Element ipxml = new Element("ip");
-            for (int i = 0; i<=ADInformer.names.length-1; i++) {
-                String name = ADInformer.names[i];
-                Object data = row[i];
-                ipxml.addContent(new Element(name).addContent(data.toString()));
-            }
-            root.addContent(ipxml);
-        }
-        writeXml(doc, new String(getTime() + ".xml"));
-    }
-    
-    private void test() {
-        
-    }
-    
     /**
-     * @param args the command line arguments
+     * Save result to XML format and write in file
+     * @param obj ArrayList<Object[]> result
      */
-    /**
-    public static void main(String[] args) {
-        
-        ArrayList<Object[]> result = new ArrayList<Object[]>();
-        
-        for (int i = 0; i<=5; i++) {
-            Object[] row = new Object[] { "ip", "dnsname", "username", "name", "mail", "tel", "mobile", "ipphone" };
-            result.add(i, row); 
+    public void saveXML(ArrayList<Object[]> obj) {
+        try {
+            if (ADInformer.config.getXmlAutosave()) {
+                root = new Element("ipaddress");
+                doc = new Document(root);
+                for (Object[] objto:obj) {            
+                    Element ipxml = new Element("host");
+                    for (int i = 0; i<ADInformer.names.length; i++) {
+                        String name = ADInformer.names[i];
+                        Object data = objto[i];
+                        ipxml.addContent(new Element(name).addContent(data.toString()));
+                    }
+                    root.addContent(ipxml);
+                }
+                writeXml(doc, new String(getTime() + ".xml"));
+            }
+        } catch (Exception ex) {
+            ADInformer.isError("Error in saveXML", ex);
         }
-        
-        Adxml xml = new Adxml();
-        xml.saveXML(result);        
-    }*/
+    }
     
+    /**
+     * Save result to CSV format and write in file
+     * @param obj ArrayList<Object[]> result
+     */
+    public void saveCsv(ArrayList<Object[]> obj) {
+        try {
+            StringBuilder out = new StringBuilder();
+            if (ADInformer.config.getCsvAutosave()) {
+                out.append("IP;FQDN;DomainLogin;FullName;Mail;Telephone;Mobile;IpPhone\r\n");
+                for(Object[] objto:obj) {
+                    for(int i = 0; i<objto.length; i++) {
+                        if (objto[i]==null||objto[i].equals(null)||objto[i].equals("")) {objto[i] = " ";}                            
+                        if (!(i==objto.length-1)) {
+                            out.append(objto[i]).append(";");
+                        } else {
+                            out.append(objto[i]).append("\r\n");
+                        }
+                    }
+                }
+                writeCsv(out, new String(getTime() + ".csv"));
+            }
+        } catch (Exception ex) {
+            ADInformer.isError("Error in saveCsv", ex);
+        }
+    }
+    
+    private void writeCsv(StringBuilder sb, String filename) {
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filename), "windows-1251");
+            osw.write(sb.toString());
+            osw.flush();
+            osw.close();
+        } catch (Exception ex) {
+            ADInformer.isError("Error in writeCsv", ex);
+        }
+    }
 }

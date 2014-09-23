@@ -7,6 +7,7 @@ package adinformer;
 
 import java.awt.Cursor;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,10 +16,19 @@ import javax.swing.table.DefaultTableModel;
  * @author zhenya mogsev@gmail.com
  */
 public class JFLanScanner extends javax.swing.JFrame {
+    private ArrayList<Object[]> result = new ArrayList<Object[]>();
     private static String lanbegin;
     private static String lanend;
     private static DefaultTableModel jModelIP;
-    private static Scanner scan;
+    private static Scanner scan;    
+    private String ip;
+    private String dnsname;
+    private String username;
+    private String name;
+    private String telephonenumber;
+    private String mobile;
+    private String mail;
+    private String ipphone;
     
     private class Scanner extends SwingWorker<Void, Void> {
         @Override
@@ -143,12 +153,11 @@ public class JFLanScanner extends javax.swing.JFrame {
                 jLabel3.setText("Is not a single network range");
             } else {               
                 int ipb = ip1.getOctet(4);
-                while (ipb <= ip2.getOctet(4)) {
-                    String username;
-                    String ip = ip1.getLan()+ipb;
+                while (ipb <= ip2.getOctet(4)) {                    
+                    ip = ip1.getLan()+ipb;
                     adinformer.AdSearch ads = new adinformer.AdSearch();
                     adinformer.AdUtil adu = new adinformer.AdUtil();
-                    String dnsname = adu.getDnsName(ip);
+                    dnsname = adu.getDnsName(ip);
                     System.out.println("IP: "+ip);
                     System.out.println("DNS name: " + dnsname);
                     if(ADInformer.config.getDomainConnection()) {
@@ -169,11 +178,11 @@ public class JFLanScanner extends javax.swing.JFrame {
                             System.out.println(ex);
                             username = null;
                         }
-                        String name = AdSearch.getUserName();
-                        String telephonenumber = AdSearch.getUserTelephone();
-                        String mobile = AdSearch.getUserMobile();
-                        String mail = AdSearch.getUserMail();
-                        String ipphone = AdSearch.getUserIpPhone();
+                        name = AdSearch.getUserName();
+                        telephonenumber = AdSearch.getUserTelephone();
+                        mobile = AdSearch.getUserMobile();
+                        mail = AdSearch.getUserMail();
+                        ipphone = AdSearch.getUserIpPhone();
             
                         System.out.println("name: "+name);
                         System.out.println("Tel: "+telephonenumber);
@@ -183,6 +192,7 @@ public class JFLanScanner extends javax.swing.JFrame {
                         System.out.println();
                         Object[] row = new Object[] { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone };
                         jModelIP.addRow(row);
+                        result.add(row);
                         
                         if (ADInformer.config.getMysqlAutosave()) {
                             System.out.println("save result to mysql");
@@ -356,6 +366,16 @@ public class JFLanScanner extends javax.swing.JFrame {
         });
 
         jButton3.setText("Save result as...");
+        jButton3.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jButton3FocusLost(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -436,6 +456,24 @@ public class JFLanScanner extends javax.swing.JFrame {
             ADInformer.isError("FocusLost", ex);
         }
     }//GEN-LAST:event_jTextField2FocusLost
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            ADInformer.autosave.saveXML(result);
+            jLabel3.setText("The result is stored");
+        } catch (Exception ex) {
+            ADInformer.isError("Error in save", ex);
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton3FocusLost
+        try {
+            jLabel3.setText("");
+        } catch (Exception ex) {
+            ADInformer.isError("FocusLost", ex);
+        }
+    }//GEN-LAST:event_jButton3FocusLost
 
     /**
      * @param args the command line arguments
