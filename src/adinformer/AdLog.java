@@ -40,17 +40,17 @@ public class AdLog {
      * @throws IOException 
      */
     public void writeLog(String str) throws IOException {    
-        if (ADInformer.config.getLog().equals("1")) {
+        if (ADInformer.config.getLog()) {
             File filelog = new File(file);        
             if (!filelog.exists()) {            
                 filelog.createNewFile();            
             }
-            BufferedWriter wr = new BufferedWriter(new FileWriter(file,true)); //выходной файл        
+            BufferedWriter wr = new BufferedWriter(new FileWriter(file,true)); //output file        
             out = new StringBuilder();  //буфер для обработанного текста                                
             out.append(getTime()).append(str).append(rn);        
             wr.write(out.toString());
             wr.flush();
-        wr.close();             
+            wr.close();             
         }
     }
     

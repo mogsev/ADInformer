@@ -21,16 +21,15 @@ import org.jdom2.output.XMLOutputter;
  *
  * @author zhenya mogsev@gmail.com
  */
-public class AdXml {
-    private final String[] names = new String[] { "ip", "dnsname", "username", "name", "mail", "telephonenumber", "mobile", "ipphone" };
+public class AdAutosave {
     private static Document doc;
     private static String time;
     private static Element root;
-    
+    //public final String[] names = new String[] { "ip", "dnsname", "username", "name", "mail", "telephonenumber", "mobile", "ipphone" };
     private static void writeXml(Document savingDocument, String filePath) {
         try {
             XMLOutputter outputter = new XMLOutputter();
-            outputter.setFormat(Format.getPrettyFormat());
+            outputter.setFormat(Format.getPrettyFormat());            
             try {
                 OutputStreamWriter out = new java.io.OutputStreamWriter(new java.io.FileOutputStream(filePath),"UTF-8");
                 out.write(outputter.outputString(savingDocument));
@@ -55,15 +54,19 @@ public class AdXml {
         doc = new Document(root);
         for (Object objto:obj) {
             Object[] row = obj.iterator().next();
-            Element ipxml = new Element("ip").setAttribute("address", "ip_address");
-            for (int i = 0; i<=names.length-1; i++) {
-                String name = names[i];
+            Element ipxml = new Element("ip");
+            for (int i = 0; i<=ADInformer.names.length-1; i++) {
+                String name = ADInformer.names[i];
                 Object data = row[i];
                 ipxml.addContent(new Element(name).addContent(data.toString()));
             }
             root.addContent(ipxml);
         }
         writeXml(doc, new String(getTime() + ".xml"));
+    }
+    
+    private void test() {
+        
     }
     
     /**

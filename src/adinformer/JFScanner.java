@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
@@ -19,17 +20,20 @@ import javax.swing.SwingWorker;
  * @author zhenya
  */
 public class JFScanner extends javax.swing.JFrame {
+    private ArrayList<Object[]> result = new ArrayList<Object[]>();
+    private Object[] resultrow = new Object[] {};
+    
     private final String localhost = "localhost";
     private static OutputStream out;
     private static Scanner scan;
-    private static String ip;
-    private static String dnsname;
-    private static String username;
-    private static String name;
-    private static String telephonenumber;
-    private static String mobile;
-    private static String mail;
-    private static String ipphone;
+    private String ip;
+    private String dnsname;
+    private String username;
+    private String name;
+    private String telephonenumber;
+    private String mobile;
+    private String mail;
+    private String ipphone;
     
     private class Scanner extends SwingWorker<Void, Void> {
         @Override
@@ -132,10 +136,15 @@ public class JFScanner extends javax.swing.JFrame {
                     System.out.println("Mail: "+mail);
                     System.out.println("IpPhone: "+ipphone);
                     System.out.println();
+                    
+                    Object[] row = { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone };
+                    result.add(row);
+                    
                 }            
             } catch (UnknownHostException ex) {
                 ADInformer.isError("Ошибка обработки DNS name", ex);
             }
+            
         } catch (Exception ex) {
             ADInformer.isError("Ошибка в модуле сканирования\n", ex);
         }
@@ -201,6 +210,11 @@ public class JFScanner extends javax.swing.JFrame {
         });
 
         jButton3.setText("Save result as...");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -287,6 +301,15 @@ public class JFScanner extends javax.swing.JFrame {
             ADInformer.isError("Ошибка сканирования", ex);
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {
+            ADInformer.autosave.saveXML(result);
+        } catch (Exception ex) {
+            ADInformer.isError("Ошибка сохранения", ex);
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

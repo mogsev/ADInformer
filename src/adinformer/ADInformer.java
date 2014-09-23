@@ -25,15 +25,14 @@ public class ADInformer extends javax.swing.JFrame {
     public static String githuburl = "https://github.com/mogsev/ADInformer";
     public static AdLog log;
     public static AdConfig config;
+    public static AdAutosave autosave;
+    public static String[] names = new String[] { "ip", "dnsname", "username", "name", "mail", "telephonenumber", "mobile", "ipphone" };
     
     private final String drivermysql = "com.mysql.jdbc.Driver";    //Имя драйвера MySql
     private static DefaultTableModel jModelIP;    
     private static String mysqlurl;    
     private static Connection conn = null;
     private static ResultSet rs = null;
-    
-    public final String[] names = new String[] { "ip", "dnsname", "username", "name", "mail", "telephonenumber", "mobile", "ipphone" };
-    
     
     /**
      * output Error Description and Exception in JOptionPane.showMessageDialog
@@ -44,7 +43,7 @@ public class ADInformer extends javax.swing.JFrame {
     public static void isError(String str, Exception ex) {
         JOptionPane.showMessageDialog(null, str + "\n" + ex);
         try {
-                log.writeLog(str + ex.getMessage());                
+            log.writeLog(str + ex.getMessage());                
             } catch (IOException ex1) {
                 JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
             }
@@ -54,7 +53,7 @@ public class ADInformer extends javax.swing.JFrame {
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {},
-        new String [] {"IP", "FQDN", "Login", "Full name", "Mail", "Telephone", "Mobile", "IpPhone" }) {
+        new String [] {"IP", "FQDN", "Domain Login", "Full name", "Mail", "Telephone", "Mobile", "IpPhone" }) {
         Class[] types = new Class [] {
             java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
         };
@@ -153,6 +152,7 @@ public class ADInformer extends javax.swing.JFrame {
         config = new AdConfig();
         //Подключаем логирование
         log = new AdLog();
+        autosave = new AdAutosave();
         try {
             config.readConfig();            
             if (config.getDomainName().isEmpty() 

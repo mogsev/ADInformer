@@ -24,6 +24,9 @@ public class AdConfig {
     private final String file = "adinformer.cfg";
     
     private static String logenable = "1";
+    private static String xmlautosave = "0";
+    private static String csvautosave = "0";
+    private static String jsonautosave = "0";
     private static String domainname = "";
     private static String domainsn = "";
     private static String domainlogin = "";
@@ -41,6 +44,9 @@ public class AdConfig {
     private static String mssqlpassword = "";
     
     private final String conf_log_enable = "log_enable";
+    private final String conf_xml_autosave = "xml_autosave";
+    private final String conf_csv_autosave = "csv_autosave";
+    private final String conf_json_autosave = "json_autosave";
     private final String conf_domain_name = "domain_name";
     private final String conf_domain_sn = "domain_sn";
     private final String conf_domain_login = "domain_login";
@@ -142,6 +148,15 @@ public class AdConfig {
             if (line.indexOf(conf_log_enable)==0) {
                 logenable = line.substring(line.indexOf(an)+1, l);                
             }
+            if (line.indexOf(conf_xml_autosave)==0) {
+                xmlautosave = line.substring(line.indexOf(an)+1, l);                
+            }
+            if (line.indexOf(conf_csv_autosave)==0) {
+                csvautosave = line.substring(line.indexOf(an)+1, l);                
+            }
+            if (line.indexOf(conf_json_autosave)==0) {
+                jsonautosave = line.substring(line.indexOf(an)+1, l);                
+            }
             i=a;
         }
     }
@@ -176,6 +191,9 @@ public class AdConfig {
         out.append(conf_mssql_password).append(an).append(mssqlpassword).append(rn);
         out.append("[ADInformer]").append(rn);
         out.append(conf_log_enable).append(an).append(logenable).append(rn);        
+        out.append(conf_xml_autosave).append(an).append(xmlautosave).append(rn);
+        out.append(conf_csv_autosave).append(an).append(csvautosave).append(rn);
+        out.append(conf_json_autosave).append(an).append(jsonautosave).append(rn);
         // save config file
         writer.write(out.toString());
         writer.flush();
@@ -186,12 +204,20 @@ public class AdConfig {
      * Return value is log enable or disable
      * @return String value logenable
      */
-    public String getLog() {
-        return logenable;
+    public boolean getLog() {
+        boolean result = true;
+        if (logenable.equals("0")) {
+            result = false;
+        }
+        return result;        
     }
     
-    public void  setLog(String str) {
-        logenable=str;
+    public void  setLog(boolean result) {
+        if (result) {
+            logenable = "1";
+        } else {
+            logenable = "0";
+        }
     }
     
     /**
@@ -237,7 +263,8 @@ public class AdConfig {
     }
     
     /**
-     * @return config attribute "domain_password"
+     * Return config attribute "domain_password". Is value Domain password. 
+     * @return String result
      */
     public String getDomainPassword() {
         return domainpassword;
@@ -387,5 +414,83 @@ public class AdConfig {
      */
     public String getMssqlPassword() {
         return mssqlpassword;
+    }
+    
+    /**
+     * Return config attribute "xml_autosave"
+     * Is value enable or disable autosave result in xml file
+     * Default result false
+     * @return boolean result
+     */
+    public boolean getXmlAutosave() {
+        boolean result = true;
+        if (xmlautosave.equals("0")) {
+            result = false;
+        }
+        return result;
+    }
+    
+    /**
+     * Set value enable or disable config attribute "xml_autosave"
+     * @param result boolean
+     */
+    public void setXmlAutosave(boolean result) {
+        if (result) {
+            xmlautosave = "1";
+        } else {
+            xmlautosave = "0";
+        }
+    }
+    
+    /**
+     * Return config attribute "csv_autosave"
+     * Is value enable or disable autosave result in csv file
+     * Default result false
+     * @return boolean result
+     */
+    public boolean getCsvAutosave() {
+        boolean result = true;
+        if (csvautosave.equals("0")) {
+            result = false;
+        }
+        return result;
+    }
+    
+    /**
+     * Set value enable or disable config attribute "csv_autosave"
+     * @param result boolean
+     */
+    public void setCsvAutosave(boolean result) {
+        if (result) {
+            csvautosave = "1";
+        } else {
+            csvautosave = "0";
+        }
+    }
+    
+    /**
+     * Return config attribute "json_autosave"
+     * Is value enable or disable autosave result in json file 
+     * Default result false
+     * @return boolean result
+     */
+    public boolean getJsonAutosave() {
+        boolean result = true;
+        if (jsonautosave.equals("0")) {
+            result = false;
+        }
+        return result;
+    }
+    
+    /**
+     * Set value enable or disable config attribute "json_autosave"
+     * @param result boolean 
+     */
+    public void setJsonAutosave(boolean result) {
+        if (result) {
+            jsonautosave = "1";
+        } else {
+            jsonautosave = "0";
+        }
     }
 }
