@@ -314,6 +314,7 @@ public class JFScanner extends javax.swing.JFrame {
         try {
             ADInformer.autosave.saveXML(result);
             ADInformer.autosave.saveCsv(result);
+            ADInformer.saveMySql(result);
             jLabel2.setText("The result is stored");
         } catch (Exception ex) {
             ADInformer.isError("Ошибка сохранения", ex);

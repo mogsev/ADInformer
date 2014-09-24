@@ -17,18 +17,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JFLanScanner extends javax.swing.JFrame {
     private ArrayList<Object[]> result = new ArrayList<Object[]>();
-    private static String lanbegin;
-    private static String lanend;
+    private static String lanbegin, lanend;
     private static DefaultTableModel jModelIP;
     private static Scanner scan;    
-    private String ip;
-    private String dnsname;
-    private String username;
-    private String name;
-    private String telephonenumber;
-    private String mobile;
-    private String mail;
-    private String ipphone;
+    private String ip, dnsname, username, name, telephonenumber, mobile, mail, ipphone, description, title, department, company;
     
     private class Scanner extends SwingWorker<Void, Void> {
         @Override
@@ -53,14 +45,9 @@ public class JFLanScanner extends javax.swing.JFrame {
      * 
      */
     private class Octets {
-        private int octet;
-        private int octet1;
-        private int octet2;
-        private int octet3;
-        private int octet4;
+        private int octet, octet1, octet2, octet3,octet4;
         private boolean result;
-        private String lan;
-        private String ip;
+        private String lan, ip;
         
         /**
          * This method checks ip address and shared on octets
@@ -144,8 +131,7 @@ public class JFLanScanner extends javax.swing.JFrame {
             JFLanScanner.Octets ip1 = new JFLanScanner.Octets();
             ip1.setIpAddress(lanbegin);
             JFLanScanner.Octets ip2 = new JFLanScanner.Octets();
-            ip2.setIpAddress(lanend);
-            
+            ip2.setIpAddress(lanend);            
             if (!(ip1.getLan().equals(ip2.getLan())) ||
                     (ip1.getOctet(4)>ip2.getOctet(4)) ||
                     !(ip1.isIp()) ||
@@ -157,18 +143,14 @@ public class JFLanScanner extends javax.swing.JFrame {
                     ip = ip1.getLan()+ipb;
                     adinformer.AdSearch ads = new adinformer.AdSearch();
                     adinformer.AdUtil adu = new adinformer.AdUtil();
-                    dnsname = adu.getDnsName(ip);
-                    System.out.println("IP: "+ip);
-                    System.out.println("DNS name: " + dnsname);
+                    dnsname = adu.getDnsName(ip);                    
                     if(ADInformer.config.getDomainConnection()) {
                         username = adu.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
                     } else {
                         username = adu.getUser(ip);
-                    }
-                    System.out.println("Login: " + username);
+                    }                    
                     if (username.isEmpty() && username.equals("")) {                
-                        username = "";            
-                        System.out.println("Имя пользователя не найдено\n");
+                        username = "";                                    
                     } else {
                         int in = username.indexOf("\\");
                         username = username.substring(in+1);
@@ -183,22 +165,13 @@ public class JFLanScanner extends javax.swing.JFrame {
                         mobile = AdSearch.getUserMobile();
                         mail = AdSearch.getUserMail();
                         ipphone = AdSearch.getUserIpPhone();
-            
-                        System.out.println("name: "+name);
-                        System.out.println("Tel: "+telephonenumber);
-                        System.out.println("Mobile: "+mobile);
-                        System.out.println("Mail: "+mail);
-                        System.out.println("IpPhone: "+ipphone);
-                        System.out.println();
-                        Object[] row = new Object[] { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone };
+                        description = AdSearch.getUserDescription();
+                        title = AdSearch.getUserTitle();
+                        department = AdSearch.getUserDepartment();
+                        company = AdSearch.getUserCompany();
+                        Object[] row = new Object[] { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone, description, title, department, company };
                         jModelIP.addRow(row);
                         result.add(row);
-                        
-                        if (ADInformer.config.getMysqlAutosave()) {
-                            System.out.println("save result to mysql");
-                        } else {
-                            System.out.println("do not save to mysql");
-                        }
                     }
                     jModelIP.fireTableDataChanged();
                     jLabel4.setText("Найдено: " + jTable2.getRowCount());
@@ -438,6 +411,8 @@ public class JFLanScanner extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
             ADInformer.autosave.saveXML(result);
+            ADInformer.autosave.saveCsv(result);
+            ADInformer.saveMySql(result);
             jLabel3.setText("The result is stored");
         } catch (Exception ex) {
             ADInformer.isError("Error in save", ex);

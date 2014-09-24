@@ -11,6 +11,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -33,6 +36,31 @@ public class ADInformer extends javax.swing.JFrame {
     private static String mysqlurl;    
     private static Connection conn = null;
     private static ResultSet rs = null;
+    
+    /**
+     * 
+     * @param obj 
+     */
+    public static void saveMySql(ArrayList<Object[]> obj) {
+        try {
+            if (ADInformer.config.getMysqlAutosave()) {
+                for (Object[] objto:obj) {            
+                    conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД                        
+                    Statement st = conn.createStatement(); //Готовим запрос
+                    rs = st.executeQuery("select * from history where ip = '"+objto[0]+"'");
+                    if (rs.next()) { // если запись уже существует в БД                        
+                        Statement stupdate = conn.createStatement();                        
+                        stupdate.execute("UPDATE `adinfo`.`history` SET `login`='"+objto[2]+"', `full_name`='"+objto[3]+"', `dns_name`='"+objto[1]+"', `telephonenumber`='"+objto[5]+"', `mobile`='"+objto[6]+"', `mail`='"+objto[4]+"', `ipphone`='"+objto[7]+"', `description`='"+objto[8]+"', `title`='"+objto[9]+"', `department`='"+objto[10]+"', `company`='"+objto[11]+"' WHERE `history`.`ip`='"+objto[0]+"'");                    
+                    } else { // если записи в БД не найдено                        
+                        Statement stins = conn.createStatement();
+                        stins.executeUpdate("INSERT INTO `adinfo`.`history` (`ip`, `login`, `full_name`, `dns_name`, `telephonenumber`, `mobile`, `mail`, `ipphone`, `description`, `title`, `department`, `company`) VALUES ('"+objto[0]+"', '"+objto[2]+"', '"+objto[3]+"', '"+objto[1]+"', '"+objto[5]+"', '"+objto[6]+"', '"+objto[4]+"', '"+objto[7]+"', '"+objto[8]+"', '"+objto[9]+"', '"+objto[10]+"', '"+objto[11]+"')");
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            ADInformer.isError("Error in saveMySql", ex);
+        }
+    }
     
     /**
      * output Error Description and Exception in JOptionPane.showMessageDialog
@@ -100,7 +128,7 @@ public class ADInformer extends javax.swing.JFrame {
             Statement st = conn.createStatement();  //Готовим запрос
             rs = st.executeQuery("select * from `adinfo`.`history`");   //Выполняем запрос к БД, результат в переменной rs
             while(rs.next()) {                
-                Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone") };
+                Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
                 jModelIP.addRow(row);
             }
             jLabel1.setText("Найдено: "+jModelIP.getRowCount());
@@ -129,9 +157,9 @@ public class ADInformer extends javax.swing.JFrame {
             conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД                        
             Statement st = conn.createStatement();    //Готовим запрос
             String search = jTextField1.getText();
-            rs = st.executeQuery("select * from `adinfo`.`history` where `ip` like '%"+search+"%' or `login` like '%"+search+"%' or `full_name` like '%"+search+"%' or `dns_name` like '%"+search+"%'"); //Выполняем запрос к БД, результат в переменной rs            
+            rs = st.executeQuery("select * from `adinfo`.`history` where `ip` like '%"+search+"%' or `login` like '%"+search+"%' or `full_name` like '%"+search+"%' or `dns_name` like '%"+search+"%' or `description` like '%"+search+"%' or `title` like '%"+search+"%'"); //Выполняем запрос к БД, результат в переменной rs            
             while(rs.next()) {                
-                Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone") };
+                Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
                 jModelIP.addRow(row);                    
             }
             jLabel1.setText("Найдено: "+jModelIP.getRowCount());
@@ -156,26 +184,27 @@ public class ADInformer extends javax.swing.JFrame {
         initComponents();
         //Загружаем конфигурацию
         config = new AdConfig();
-        //Подключаем логирование
-        log = new AdLog();
-        autosave = new AdAutosave();
         try {
-            config.readConfig();            
-            if (config.getDomainName().isEmpty() 
-                    || config.getDomainSN().isEmpty() 
-                    || config.getDomainLogin().isEmpty()) {
-                JOptionPane.showMessageDialog(null,"Отсутствуют настройки Active Directory\nВнесите данные в настройках - Active Directory и перезапустите приложение");                
-            }
-            if (config.getMysqlServer().isEmpty() 
-                    || config.getMysqlServerPort().isEmpty() 
-                    || config.getMysqlDatabase().isEmpty()
-                    || config.getMysqlLogin().isEmpty()
-                    || config.getMysqlPassword().isEmpty()) {
-                JOptionPane.showMessageDialog(null,"Отсутствуют настройки MySql\nВнесите данные в настройках - База данных MySql и перезапустите приложение");
-            }
+            config.readConfig();
         } catch (IOException ex) {
             ADInformer.isError("Ошибка при открытии файла конфигурации", ex);
         }
+        //Подключаем логирование
+        log = new AdLog();
+        autosave = new AdAutosave();        
+        if (config.getDomainName().isEmpty() ||
+            config.getDomainSN().isEmpty() ||
+            config.getDomainDN().isEmpty() ||
+            config.getDomainLogin().isEmpty()) {
+                JOptionPane.showMessageDialog(null,"Отсутствуют настройки Active Directory\nВнесите данные в настройках - Active Directory и перезапустите приложение");                
+        }
+        if (config.getMysqlServer().isEmpty() ||
+            config.getMysqlServerPort().isEmpty() ||
+            config.getMysqlDatabase().isEmpty() ||
+            config.getMysqlLogin().isEmpty() ||
+            config.getMysqlPassword().isEmpty()) {
+                JOptionPane.showMessageDialog(null,"Отсутствуют настройки MySql\nВнесите данные в настройках - База данных MySql и перезапустите приложение");
+        }        
         //Регистрируем драйвер MySql
         try {
             Class.forName(drivermysql);  

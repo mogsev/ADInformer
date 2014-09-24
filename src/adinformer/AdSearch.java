@@ -63,20 +63,7 @@ public class AdSearch {
    
     private String getUserBasicAttributes(String username, LdapContext ctx) {   
         String user = null;
-        if (username.isEmpty() || username.equals("null")) {
-            /**
-            userName = "";
-            userCN = "";
-            userTelephoneNumber = "";
-            userMail = "";
-            userSN = "";
-            userDN = "";
-            userMobile = "";
-            userIpPhone = "";
-            userDescription = "";
-            userTitle = "";
-            userDepartment = "";
-            */
+        if (username.isEmpty() || username.equals("null")) {            
             return user;            
         } else {
             try { 
@@ -84,8 +71,8 @@ public class AdSearch {
                 constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
                 String[] attrIDs = { "distinguishedName", "sn", "givenname", "mail", "telephonenumber", "cn", "name", "mobile", "ipphone", "description", "title", "department", "company" };            
                 constraints.setReturningAttributes(attrIDs);                        
-                NamingEnumeration answer;
-                answer = ctx.search("DC=RUD,DC=UA", "sAMAccountName=" + username, constraints);
+                NamingEnumeration answer;                
+                answer = ctx.search("\""+ADInformer.config.getDomainDN()+"\"" , "sAMAccountName=" + username, constraints);
                 if (answer.hasMore()) {                    
                     attrs = ((SearchResult) answer.next()).getAttributes();
                     userDN = attrs.get("distinguishedName").toString();

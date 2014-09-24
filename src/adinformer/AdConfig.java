@@ -29,6 +29,7 @@ public class AdConfig {
     private static String jsonautosave = "0";
     private static String domainname = "";
     private static String domainsn = "";
+    private static String domaindn = "";
     private static String domainlogin = "";
     private static String domainpassword = "";
     private static String domainconnection = "0";    
@@ -49,6 +50,7 @@ public class AdConfig {
     private final String conf_json_autosave = "json_autosave";
     private final String conf_domain_name = "domain_name";
     private final String conf_domain_sn = "domain_sn";
+    private final String conf_domain_dn = "domain_dn";
     private final String conf_domain_login = "domain_login";
     private final String conf_domain_password = "domain_password";
     private final String conf_domain_connection = "domain_connection";
@@ -97,6 +99,9 @@ public class AdConfig {
             }
             if (line.indexOf(conf_domain_sn)==0) {
                 domainsn = line.substring(line.indexOf(an)+1, l);                
+            }
+            if (line.indexOf(conf_domain_dn)==0) {
+                domaindn = line.substring(line.indexOf(an)+1, l);                
             }
             if (line.indexOf(conf_domain_login)==0) {
                 if (!line.substring(line.indexOf(an)+1, l).isEmpty()) {
@@ -173,7 +178,8 @@ public class AdConfig {
         out.append("#Do not delete and edit this config file").append(rn);
         out.append("[DOMAIN]").append(rn);
         out.append(conf_domain_name).append(an).append(domainname).append(rn);
-        out.append(conf_domain_sn).append(an).append(domainsn).append(rn);        
+        out.append(conf_domain_sn).append(an).append(domainsn).append(rn);
+        out.append(conf_domain_dn).append(an).append(domaindn).append(rn);
         out.append(conf_domain_login).append(an).append(adc.encrypt(domainlogin)).append(rn);        
         out.append(conf_domain_password).append(an).append(adc.encrypt(domainpassword)).append(rn);
         out.append(conf_domain_connection).append(an).append(domainconnection).append(rn);        
@@ -248,6 +254,20 @@ public class AdConfig {
         domainsn = str;
     }
     
+    /**
+     * @return config attribute "domain_dn"
+     */
+    public String getDomainDN() {        
+        return domaindn;
+    }
+    
+    /**
+     * @param str 
+     */
+    public void setDomainDN(String str) {
+        domaindn = str;
+    }
+        
     /**
      * @return config attribute "domain_login"
      */
