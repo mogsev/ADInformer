@@ -177,6 +177,11 @@ public class JFScanner extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Сканер IPv4");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jButton1.setText("Закрыть");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -313,9 +318,25 @@ public class JFScanner extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
-            ADInformer.autosave.saveXML(result);
-            ADInformer.autosave.saveCsv(result);
-            ADInformer.saveMySql(result);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ADInformer.autosave.saveXML(result);
+                }
+            }).start();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ADInformer.autosave.saveCsv(result);
+                }
+            }).start();
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ADInformer.saveMySql(result);
+                }
+            }).start();
+            
             jLabel2.setText("The result is stored");
         } catch (Exception ex) {
             ADInformer.isError("Ошибка сохранения", ex);
@@ -338,6 +359,11 @@ public class JFScanner extends javax.swing.JFrame {
             ADInformer.isError("FocusLost", ex);
         }
     }//GEN-LAST:event_jTextField1FocusLost
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        ADInformer.isJFScanner = false;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

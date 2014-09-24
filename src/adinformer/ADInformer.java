@@ -5,6 +5,7 @@
  */
 package adinformer;
 
+import java.awt.Window;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -22,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ADInformer extends javax.swing.JFrame {
     public static String programname = "Active Directory Informer";
-    public static String programversion = "1.2.6";
+    public static String programversion = "1.2.7";
     public static String email = "mogsev@gmail.com";
     public static String sourceforgeurl = "http://sourceforge.net";
     public static String githuburl = "https://github.com/mogsev/ADInformer";
@@ -30,12 +31,15 @@ public class ADInformer extends javax.swing.JFrame {
     public static AdConfig config;
     public static AdAutosave autosave;
     public static String[] names = new String[] {"IP", "FQDN", "DomainLogin", "FullName", "Mail", "Telephone", "Mobile", "IpPhone", "Description", "Title", "Department", "Company" };
+    public static boolean isJFScanner = false;
+    public static boolean isJFLanScanner = false;
     
     private final String drivermysql = "com.mysql.jdbc.Driver";    //Имя драйвера MySql
     private static DefaultTableModel jModelIP;    
     private static String mysqlurl;    
     private static Connection conn = null;
     private static ResultSet rs = null;
+    
     
     /**
      * 
@@ -59,6 +63,14 @@ public class ADInformer extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ADInformer.isError("Error in saveMySql", ex);
+        }
+        finally { //Обязательно необходимо закрыть соединение
+            try {
+                if(conn != null)
+                conn.close();
+            } catch (SQLException ex) {
+                ADInformer.isError("Ошибка закрытия сединения", ex);
+            }
         }
     }
     
@@ -509,8 +521,11 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         try {
-            JFScanner ipScanner = new JFScanner();
-            ipScanner.setVisible(rootPaneCheckingEnabled);
+            if (!isJFScanner) {
+                JFScanner ipScanner = new JFScanner();            
+                ipScanner.setVisible(rootPaneCheckingEnabled);
+                isJFScanner = true;
+            }             
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
@@ -519,8 +534,11 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         try {
-            JFLanScanner lanScanner = new JFLanScanner();
-            lanScanner.setVisible(rootPaneCheckingEnabled);
+            if (!isJFLanScanner) {
+                JFLanScanner lanScanner = new JFLanScanner();
+                lanScanner.setVisible(rootPaneCheckingEnabled);
+                isJFLanScanner = true;
+            }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex);
         }
