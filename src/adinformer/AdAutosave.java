@@ -89,10 +89,12 @@ public class AdAutosave {
         try {
             StringBuilder out = new StringBuilder();
             if (ADInformer.config.getCsvAutosave()) {
-                out.append("IP;FQDN;DomainLogin;FullName;Mail;Telephone;Mobile;IpPhone\r\n");
+                for (String strto:ADInformer.names) {
+                    out.append(strto).append(";");
+                }
+                out.append("\r\n");
                 for(Object[] objto:obj) {
-                    for(int i = 0; i<objto.length; i++) {
-                        if (objto[i]==null||objto[i].equals(null)||objto[i].equals("")) {objto[i] = " ";}                            
+                    for(int i = 0; i<objto.length; i++) {                        
                         if (!(i==objto.length-1)) {
                             out.append(objto[i]).append(";");
                         } else {

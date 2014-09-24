@@ -25,7 +25,7 @@ public class AdConfig {
     
     private static String logenable = "1";
     private static String xmlautosave = "0";
-    private static String csvautosave = "0";
+    private static String csvautosave = "0";    
     private static String jsonautosave = "0";
     private static String domainname = "";
     private static String domainsn = "";
@@ -45,7 +45,7 @@ public class AdConfig {
     
     private final String conf_log_enable = "log_enable";
     private final String conf_xml_autosave = "xml_autosave";
-    private final String conf_csv_autosave = "csv_autosave";
+    private final String conf_csv_autosave = "csv_autosave";    
     private final String conf_json_autosave = "json_autosave";
     private final String conf_domain_name = "domain_name";
     private final String conf_domain_sn = "domain_sn";
@@ -192,7 +192,7 @@ public class AdConfig {
         out.append("[ADInformer]").append(rn);
         out.append(conf_log_enable).append(an).append(logenable).append(rn);        
         out.append(conf_xml_autosave).append(an).append(xmlautosave).append(rn);
-        out.append(conf_csv_autosave).append(an).append(csvautosave).append(rn);
+        out.append(conf_csv_autosave).append(an).append(csvautosave).append(rn);        
         out.append(conf_json_autosave).append(an).append(jsonautosave).append(rn);
         // save config file
         writer.write(out.toString());
@@ -466,7 +466,7 @@ public class AdConfig {
         } else {
             csvautosave = "0";
         }
-    }
+    }    
     
     /**
      * Return config attribute "json_autosave"
@@ -478,7 +478,7 @@ public class AdConfig {
         boolean result = true;
         if (jsonautosave.equals("0")) {
             result = false;
-        }
+}
         return result;
     }
     

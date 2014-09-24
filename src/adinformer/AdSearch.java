@@ -22,15 +22,19 @@ import javax.swing.JOptionPane;
  * @author zhenya mogsev@gmail.com
  */
 public class AdSearch { 
-    private static String userName;
-    private static String userCN;
-    private static String userDN;
-    private static String userSN;
-    private static String userMail;
-    private static String userTelephoneNumber;
-    private static String userGivenName;
-    private static String userMobile;
-    private static String userIpPhone;
+    private static String userName = "";
+    private static String userCN = "";
+    private static String userDN = "";
+    private static String userSN = "";
+    private static String userMail = "";
+    private static String userTelephoneNumber = "";
+    private static String userGivenName = "";
+    private static String userMobile = "";
+    private static String userIpPhone = "";
+    private static String userDescription = "";
+    private static String userTitle = "";
+    private static String userDepartment = "";
+    private static String userCompany = "";    
     private static Attributes attrs;
     
     @SuppressWarnings("unchecked")
@@ -60,6 +64,7 @@ public class AdSearch {
     private String getUserBasicAttributes(String username, LdapContext ctx) {   
         String user = null;
         if (username.isEmpty() || username.equals("null")) {
+            /**
             userName = "";
             userCN = "";
             userTelephoneNumber = "";
@@ -68,12 +73,16 @@ public class AdSearch {
             userDN = "";
             userMobile = "";
             userIpPhone = "";
+            userDescription = "";
+            userTitle = "";
+            userDepartment = "";
+            */
             return user;            
         } else {
             try { 
                 SearchControls constraints = new SearchControls();
                 constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
-                String[] attrIDs = { "distinguishedName", "sn", "givenname", "mail", "telephonenumber", "cn", "name", "mobile", "ipphone" };            
+                String[] attrIDs = { "distinguishedName", "sn", "givenname", "mail", "telephonenumber", "cn", "name", "mobile", "ipphone", "description", "title", "department", "company" };            
                 constraints.setReturningAttributes(attrIDs);                        
                 NamingEnumeration answer;
                 answer = ctx.search("DC=RUD,DC=UA", "sAMAccountName=" + username, constraints);
@@ -119,6 +128,26 @@ public class AdSearch {
                         userIpPhone = "";
                     } else {
                         userIpPhone = attrs.get("ipphone").toString().substring(9);
+                    }
+                    if (attrs.get("description")==null) {
+                        userDescription = "";
+                    } else {
+                        userDescription = attrs.get("description").toString().substring(13);
+                    }
+                    if (attrs.get("title")==null) {
+                        userTitle = "";
+                    } else {
+                        userTitle = attrs.get("title").toString().substring(7);
+                    }
+                    if (attrs.get("department")==null) {
+                        userDepartment = "";
+                    } else {
+                        userDepartment = attrs.get("department").toString().substring(12);
+                    }
+                    if (attrs.get("company")==null) {
+                        userCompany = "";
+                    } else {
+                        userCompany = attrs.get("company").toString().substring(9);
                     }
                 } else {
                     throw new Exception("Invalid User");
@@ -197,23 +226,58 @@ public class AdSearch {
     }
    
     /**
-     * @return userMail
+     * Return user LDAP attribute "mail"
+     * @return a String value userMail
      */
     public static String getUserMail() {
         return userMail;
     }
     
     /**
-     * @return userMobile
+     * Return user LDAP attribute "mobile"
+     * @return a String value userMobile
      */
     public static String getUserMobile() {
         return userMobile;
     }
    
     /**
-     * @return userIpPhone
+     * Return user LDAP attribute "ipphone"
+     * @return a String value userIpPhone
      */
     public static String getUserIpPhone() {
         return userIpPhone;
+    }
+    
+    /**
+     * Return user LDAP attribute "description"
+     * @return a String value userDescription
+     */
+    public static String getUserDescription() {
+        return userDescription;
+    }
+    
+    /**
+     * Return user LDAP attribute "title"
+     * @return a String value userTitle
+     */
+    public static String getUserTitle() {
+        return userTitle;
+    }
+    
+    /**
+    * Return user LDAP attribute "department"
+     * @return a String value userDepartment
+     */
+    public static String getUserDepartment() {
+        return userDepartment;
+    }
+    
+    /**
+     * Return user LDAP attribute "company"
+     * @return a String value userCompany
+     */
+    public static String getUserCompany() {
+        return userCompany;
     }
 }

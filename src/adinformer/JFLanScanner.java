@@ -293,34 +293,12 @@ public class JFLanScanner extends javax.swing.JFrame {
 
             },
             new String [] {
-                "IP", "FQDN", "Domen login", "Full Name", "Mail", "Telephone", "Mobile", "IpPhone"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, true
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
+        jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTable2.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(0).setMinWidth(80);
-            jTable2.getColumnModel().getColumn(1).setMinWidth(120);
-            jTable2.getColumnModel().getColumn(2).setMinWidth(100);
-            jTable2.getColumnModel().getColumn(4).setMinWidth(80);
-            jTable2.getColumnModel().getColumn(5).setMinWidth(80);
-            jTable2.getColumnModel().getColumn(6).setMinWidth(80);
-            jTable2.getColumnModel().getColumn(7).setMinWidth(80);
-        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

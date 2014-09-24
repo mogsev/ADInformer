@@ -19,14 +19,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ADInformer extends javax.swing.JFrame {
     public static String programname = "Active Directory Informer";
-    public static String programversion = "1.2.4";
+    public static String programversion = "1.2.6";
     public static String email = "mogsev@gmail.com";
     public static String sourceforgeurl = "http://sourceforge.net";
     public static String githuburl = "https://github.com/mogsev/ADInformer";
     public static AdLog log;
     public static AdConfig config;
     public static AdAutosave autosave;
-    public static String[] names = new String[] {"IP", "FQDN", "DomainLogin", "Fullname", "Mail", "Telephone", "Mobile", "IpPhone" };
+    public static String[] names = new String[] {"IP", "FQDN", "DomainLogin", "FullName", "Mail", "Telephone", "Mobile", "IpPhone", "Description", "Title", "Department", "Company" };
     
     private final String drivermysql = "com.mysql.jdbc.Driver";    //Имя драйвера MySql
     private static DefaultTableModel jModelIP;    
@@ -53,12 +53,12 @@ public class ADInformer extends javax.swing.JFrame {
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][] {},
-        new String [] {"IP", "FQDN", "Domain Login", "Full name", "Mail", "Telephone", "Mobile", "IpPhone" }) {
+        new String [] {"IP", "FQDN", "Domain Login", "Full Name", "Mail", "Telephone", "Mobile", "IpPhone", "Description", "Job Title", "Department", "Company" }) {
         Class[] types = new Class [] {
-            java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
         };
         boolean[] canEdit = new boolean [] {
-            false, false, false, false, false, false, false, false
+            false, false, false, false, false, false, false, false, false, false, false, false
         };
         public Class getColumnClass(int columnIndex) {
             return types [columnIndex];
@@ -69,14 +69,20 @@ public class ADInformer extends javax.swing.JFrame {
         });
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
+        
         if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(120);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(4).setMinWidth(80);
+            jTable1.getColumnModel().getColumn(0).setMinWidth(75);
+            jTable1.getColumnModel().getColumn(1).setMinWidth(110);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(90);
+            jTable1.getColumnModel().getColumn(3).setMinWidth(190);
+            jTable1.getColumnModel().getColumn(4).setMinWidth(110);
             jTable1.getColumnModel().getColumn(5).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(6).setMinWidth(80);
+            jTable1.getColumnModel().getColumn(6).setMinWidth(90);
             jTable1.getColumnModel().getColumn(7).setMinWidth(80);
+            jTable1.getColumnModel().getColumn(8).setMinWidth(140);
+            jTable1.getColumnModel().getColumn(9).setMinWidth(140);
+            jTable1.getColumnModel().getColumn(10).setMinWidth(140);
+            jTable1.getColumnModel().getColumn(11).setMinWidth(140);
         }
         jModelIP = (DefaultTableModel) jTable1.getModel();
         return jModelIP;
@@ -97,7 +103,7 @@ public class ADInformer extends javax.swing.JFrame {
                 Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone") };
                 jModelIP.addRow(row);
             }
-            jLabel1.setText("Найдено "+jModelIP.getRowCount()+" значений");
+            jLabel1.setText("Найдено: "+jModelIP.getRowCount());
         } catch(Exception ex) { 
             ADInformer.isError("Ошибка в соединении с сервером MySql", ex);
         }
@@ -128,7 +134,7 @@ public class ADInformer extends javax.swing.JFrame {
                 Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone") };
                 jModelIP.addRow(row);                    
             }
-            jLabel1.setText("Найдено "+jModelIP.getRowCount()+" значений");
+            jLabel1.setText("Найдено: "+jModelIP.getRowCount());
         } catch(Exception ex){
             ADInformer.isError("Ошибка MySQL", ex);
         }
@@ -233,35 +239,12 @@ public class ADInformer extends javax.swing.JFrame {
 
             },
             new String [] {
-                "IP", "FQDN", "Domain Login", "Full Name", "Mail", "Telephone", "Mobile", "IpPhone"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
+        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(120);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(100);
-            jTable1.getColumnModel().getColumn(4).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(5).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(6).setMinWidth(80);
-            jTable1.getColumnModel().getColumn(7).setMinWidth(80);
-        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -299,19 +282,19 @@ public class ADInformer extends javax.swing.JFrame {
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addGap(278, 278, 278)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(284, 284, 284))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton1)))
+                        .addComponent(jButton1))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 

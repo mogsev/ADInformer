@@ -24,7 +24,7 @@ public class JFScanner extends javax.swing.JFrame {
     private ArrayList<Object[]> result = new ArrayList<Object[]>();
     private static OutputStream out;
     private static Scanner scan;
-    private String ip, dnsname, username, name, telephonenumber, mobile, mail, ipphone;
+    private String ip, dnsname, username, name, telephonenumber, mobile, mail, ipphone, description, title, department, company;
     
     private class Scanner extends SwingWorker<Void, Void> {
         @Override
@@ -121,13 +121,21 @@ public class JFScanner extends javax.swing.JFrame {
                     telephonenumber = AdSearch.getUserTelephone();
                     mobile = AdSearch.getUserMobile();
                     mail = AdSearch.getUserMail();
-                    ipphone = AdSearch.getUserIpPhone();            
+                    ipphone = AdSearch.getUserIpPhone();
+                    description = AdSearch.getUserDescription();
+                    title = AdSearch.getUserTitle();
+                    department = AdSearch.getUserDepartment();
+                    company = AdSearch.getUserCompany();
                     System.out.println("name: "+name);
                     System.out.println("Tel: "+telephonenumber);
                     System.out.println("Mobile: "+mobile);
                     System.out.println("Mail: "+mail);
-                    System.out.println("IpPhone: "+ipphone);                    
-                    result.add(new Object[] { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone });                    
+                    System.out.println("IpPhone: "+ipphone);
+                    System.out.println("Description: "+description);
+                    System.out.println("Title: "+title);
+                    System.out.println("Department: "+department);
+                    System.out.println("Company: "+company);
+                    result.add(new Object[] { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone, description, title, department, company });                    
                     en = System.nanoTime();
                     System.out.println("Scan time: "+(en-st)/1000000 +" ms");
                     System.out.println();                    
