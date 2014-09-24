@@ -117,7 +117,7 @@ public class JFLanScanner extends javax.swing.JFrame {
             return ip;
         }
         
-        public boolean isIp() {            
+        public boolean isIp() {              
             return result;
         }
     }
@@ -149,7 +149,7 @@ public class JFLanScanner extends javax.swing.JFrame {
                     } else {
                         username = adu.getUser(ip);
                     }                    
-                    if (username.isEmpty() && username.equals("")) {                
+                    if (username.isEmpty() || username.equals("") || username == null || username.equals(null) || username.equals("null")) {                
                         username = "";                                    
                     } else {
                         int in = username.indexOf("\\");

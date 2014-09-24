@@ -95,6 +95,7 @@ public class JFScanner extends javax.swing.JFrame {
             ip=jTextField1.getText();
             System.out.println("IPv4: "+ip);
             try {
+                
                 adinformer.AdUtil adu = new adinformer.AdUtil();
                 dnsname = adu.getDnsName(ip);
                 System.out.println("DNS name: " + dnsname);
@@ -103,20 +104,20 @@ public class JFScanner extends javax.swing.JFrame {
                     username = adu.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
                 } else {
                     username = adu.getUser(ip);
-                }
-                System.out.println("Login: " + username);
-                if (username.isEmpty() && username.equals("")) {                
+                }                
+                if (username.isEmpty() || username.equals("") || username == null || username.equals(null) || username.equals("null")) {                
                     username = "";            
                     System.out.println("Имя пользователя не найдено\n");
-                } else {
+                } else {                    
                     int in = username.indexOf("\\");
                     username = username.substring(in+1);
+                    System.out.println("Login: " + username);
                     try {
                         AdSearch.getUser(username);
                     } catch (NullPointerException ex) {
                         System.out.println(ex);
-                        username = null;
-                    }
+                        username = "";
+                    }                    
                     name = AdSearch.getUserName();
                     telephonenumber = AdSearch.getUserTelephone();
                     mobile = AdSearch.getUserMobile();
