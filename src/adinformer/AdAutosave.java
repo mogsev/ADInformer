@@ -62,8 +62,8 @@ public class AdAutosave {
     public void saveXML(ArrayList<Object[]> obj) {
         try {
             if (ADInformer.config.getXmlAutosave()) {
-                root = new Element("ipaddress");
-                doc = new Document(root);
+                this.root = new Element("ipaddress");
+                this.doc = new Document(this.root);
                 for (Object[] objto:obj) {            
                     Element ipxml = new Element("host");
                     for (int i = 0; i<ADInformer.names.length; i++) {
@@ -71,9 +71,9 @@ public class AdAutosave {
                         Object data = objto[i];
                         ipxml.addContent(new Element(name).addContent(data.toString()));
                     }
-                    root.addContent(ipxml);
+                    this.root.addContent(ipxml);
                 }
-                writeXml(doc, new String(getTime() + ".xml"));
+                writeXml(this.doc, new String(getTime() + ".xml"));
             }
         } catch (Exception ex) {
             ADInformer.isError("Error in saveXML", ex);

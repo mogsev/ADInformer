@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author zhenya
+ * @author zhenya mogsev@gmail.com
  */
 public class JDParameter extends javax.swing.JDialog {
 
@@ -209,36 +209,31 @@ public class JDParameter extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if (jCheckBox1.isSelected()) {            
-            ADInformer.config.setLog(true);
-        } else {
-            ADInformer.config.setLog(false);            
-        } 
-        if (jCheckBox2.isSelected()) {            
-            ADInformer.config.setXmlAutosave(true);
-        } else {
-            ADInformer.config.setXmlAutosave(false);            
-        }
-        if (jCheckBox3.isSelected()) {            
-            ADInformer.config.setJsonAutosave(true);
-        } else {
-            ADInformer.config.setJsonAutosave(false);            
-        }
-        if (jCheckBox4.isSelected()) {            
-            ADInformer.config.setCsvAutosave(true);
-        } else {
-            ADInformer.config.setCsvAutosave(false);
-        }
-        try {            
-            ADInformer.config.writeConfig();
-        } catch (IOException ex) {            
-            JOptionPane.showMessageDialog(null,"Ошибка при сохранении файла конфигурации: " + ex);            
-            try {            
-                ADInformer.log.writeLog(ex.toString());
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);
+        try { 
+            if (jCheckBox1.isSelected()) {            
+                ADInformer.config.setLog(true);
+            } else {
+                ADInformer.config.setLog(false);            
+            } 
+            if (jCheckBox2.isSelected()) {            
+                ADInformer.config.setXmlAutosave(true);
+            } else {
+                ADInformer.config.setXmlAutosave(false);            
             }
-        }
+            if (jCheckBox3.isSelected()) {            
+                ADInformer.config.setJsonAutosave(true);
+            } else {
+                ADInformer.config.setJsonAutosave(false);            
+            }
+            if (jCheckBox4.isSelected()) {            
+                ADInformer.config.setCsvAutosave(true);
+            } else {
+                ADInformer.config.setCsvAutosave(false);
+            }
+            ADInformer.config.writeConfig();
+            } catch (IOException ex) {
+                ADInformer.isError("Ошибка при сохранении файла конфигурации:", ex);            
+            }
         jLabel1.setText("Конфигурация сохранена.");
     }//GEN-LAST:event_jButton1ActionPerformed
 

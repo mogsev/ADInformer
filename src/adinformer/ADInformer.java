@@ -9,6 +9,7 @@ import java.awt.Window;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -23,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ADInformer extends javax.swing.JFrame {
     public static String programname = "Active Directory Informer";
-    public static String programversion = "1.2.7";
+    public static String programversion = "1.3.0";
     public static String email = "mogsev@gmail.com";
     public static String sourceforgeurl = "http://sourceforge.net";
     public static String githuburl = "https://github.com/mogsev/ADInformer";
@@ -50,10 +51,10 @@ public class ADInformer extends javax.swing.JFrame {
             if (ADInformer.config.getMysqlAutosave()) {
                 for (Object[] objto:obj) {            
                     conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД                        
-                    Statement st = conn.createStatement(); //Готовим запрос
+                    Statement st = conn.createStatement(); //Готовим запрос                    
                     rs = st.executeQuery("select * from history where ip = '"+objto[0]+"'");
                     if (rs.next()) { // если запись уже существует в БД                        
-                        Statement stupdate = conn.createStatement();                        
+                        Statement stupdate = conn.createStatement();
                         stupdate.execute("UPDATE `adinfo`.`history` SET `login`='"+objto[2]+"', `full_name`='"+objto[3]+"', `dns_name`='"+objto[1]+"', `telephonenumber`='"+objto[5]+"', `mobile`='"+objto[6]+"', `mail`='"+objto[4]+"', `ipphone`='"+objto[7]+"', `description`='"+objto[8]+"', `title`='"+objto[9]+"', `department`='"+objto[10]+"', `company`='"+objto[11]+"' WHERE `history`.`ip`='"+objto[0]+"'");                    
                     } else { // если записи в БД не найдено                        
                         Statement stins = conn.createStatement();
@@ -454,7 +455,7 @@ public class ADInformer extends javax.swing.JFrame {
         try {
             System.exit(0);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error system exit", ex);            
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -462,7 +463,7 @@ public class ADInformer extends javax.swing.JFrame {
         try {
             getFormSearch();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error getFormSearch", ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -470,7 +471,7 @@ public class ADInformer extends javax.swing.JFrame {
         try {
             getFormSearch();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error getFormSearch", ex);
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
 
@@ -479,7 +480,7 @@ public class ADInformer extends javax.swing.JFrame {
             JDialogAbout jDialogAbout = new JDialogAbout(new javax.swing.JFrame(), true);
             jDialogAbout.setVisible(rootPaneCheckingEnabled);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error jDialogAbout", ex);
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -488,7 +489,7 @@ public class ADInformer extends javax.swing.JFrame {
             JDialogMySQL jDialogMySQL = new JDialogMySQL(new javax.swing.JFrame(), true);
             jDialogMySQL.setVisible(rootPaneCheckingEnabled);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error jDialogMySQL", ex);
         }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -497,7 +498,7 @@ public class ADInformer extends javax.swing.JFrame {
             JDialogAD jDialogAD = new JDialogAD(new javax.swing.JFrame(), true);
             jDialogAD.setVisible(rootPaneCheckingEnabled);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error jDialogAD", ex);
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -506,7 +507,7 @@ public class ADInformer extends javax.swing.JFrame {
             JDialogMsSQL jDialogMsSQL = new JDialogMsSQL(new javax.swing.JFrame(), true);
             jDialogMsSQL.setVisible(rootPaneCheckingEnabled);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error jDialogMsSQL", ex);
         }    
     }//GEN-LAST:event_jMenuItem5ActionPerformed
 
@@ -515,7 +516,7 @@ public class ADInformer extends javax.swing.JFrame {
             JDParameter jDialogParameter = new JDParameter(new javax.swing.JFrame(),true);
             jDialogParameter.setVisible(rootPaneCheckingEnabled);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error jDialogParameter", ex);
         }
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
@@ -527,7 +528,7 @@ public class ADInformer extends javax.swing.JFrame {
                 isJFScanner = true;
             }             
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error ipScanner", ex);
         }
         
     }//GEN-LAST:event_jMenuItem7ActionPerformed
@@ -540,7 +541,7 @@ public class ADInformer extends javax.swing.JFrame {
                 isJFLanScanner = true;
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error lanScanner", ex);
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 

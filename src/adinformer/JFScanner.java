@@ -12,13 +12,11 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 /**
- *
- * @author zhenya
+ * @author zhenya mogsev@gmail.com
  */
 public class JFScanner extends javax.swing.JFrame {
     private ArrayList<Object[]> result = new ArrayList<Object[]>();
@@ -84,7 +82,7 @@ public class JFScanner extends javax.swing.JFrame {
             scan = new Scanner();
             scan.execute();
         } catch (Exception ex) {            
-                ADInformer.isError("Ошибка в модуле сканирования", ex);
+            ADInformer.isError("Ошибка в модуле сканирования", ex);
         }
     }
     
@@ -94,8 +92,7 @@ public class JFScanner extends javax.swing.JFrame {
             st = System.nanoTime();
             ip=jTextField1.getText();
             System.out.println("IPv4: "+ip);
-            try {
-                
+            try {    
                 adinformer.AdUtil adu = new adinformer.AdUtil();
                 dnsname = adu.getDnsName(ip);
                 System.out.println("DNS name: " + dnsname);

@@ -50,13 +50,8 @@ public class AdSearch {
             ctx = new InitialLdapContext(env, null);
             //System.out.println("Connection Successful.");            
         }
-        catch (NamingException ex) {
-            JOptionPane.showMessageDialog(null,"Ошибка соединения LDAP\nLDAP Connection: FAILED\n"+ex);
-            try {
-                ADInformer.log.writeLog(ex.toString());
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);
-            }
+        catch (NamingException ex) {            
+            ADInformer.isError("Ошибка соединения LDAP\nLDAP Connection: FAILED", ex);
         }
         return ctx;        
     } 
@@ -140,12 +135,7 @@ public class AdSearch {
                     throw new Exception("Invalid User");
                 } 
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(null,"Ошибка получения атрибутов пользователя с LDAP\n"+ex);
-                try {
-                    ADInformer.log.writeLog(ex.toString());
-                } catch (IOException ex1) {
-                    JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);
-                }
+                ADInformer.isError("Ошибка получения атрибутов пользователя с LDAP", ex);                
             }
             return user;
         }
@@ -160,7 +150,7 @@ public class AdSearch {
             AdSearch UserAttr = new AdSearch();        
             UserAttr.getUserBasicAttributes(userSearch, UserAttr.getLdapContext());
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex);
+            ADInformer.isError("Error getUser", ex);
         }
     }
     

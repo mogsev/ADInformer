@@ -145,7 +145,6 @@ public class JDialogMsSQL extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton1FocusLost
-        // TODO add your handling code here:
         jLabel5.setText("");
     }//GEN-LAST:event_jButton1FocusLost
 

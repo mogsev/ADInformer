@@ -52,6 +52,5 @@ public class AdLog {
             wr.flush();
             wr.close();             
         }
-    }
-    
+    }    
 }

@@ -1,8 +1,17 @@
 Active Directory Informer
 
-Database
+ver 1.3.0 Stable Release
 
-history
+The program is intended for users and system administrators of enterprises and
+organizations with large IT network infrastructure. 
+The program scans the specified ranges network and displays the information
+on the host at the current time, namely, who logged into the host.
+If a user is logged on the remote host is looking for information about it
+on the server LDAP. The results can be saved in a database of MySQL or 
+data formats XML or CSV.
+
+Database
+MySQL
 
 Столбец	Тип	Null	По умолчанию	Комментарии
 id	int(5)	Нет 	 	 

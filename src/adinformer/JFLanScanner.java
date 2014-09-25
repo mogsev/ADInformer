@@ -41,9 +41,6 @@ public class JFLanScanner extends javax.swing.JFrame {
         }        
     }
     
-    /**
-     * 
-     */
     private class Octets {
         private int octet, octet1, octet2, octet3,octet4;
         private boolean result;
@@ -428,7 +425,6 @@ public class JFLanScanner extends javax.swing.JFrame {
                 }
             }).start();
             new Thread(new Runnable() {
-
                 @Override
                 public void run() {
                     ADInformer.saveMySql(result);

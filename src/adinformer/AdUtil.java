@@ -60,12 +60,11 @@ public class AdUtil {
             }
             input.close();
         } catch(Exception ex)  {
-            ADInformer.isError("Ошибка в получении пользователя\n", ex);            
+            ADInformer.isError("Ошибка в получении пользователя", ex);            
         }
         return result.trim();
     }
-    
-     
+         
     /**
      * This metod work without autentication LDAP
      * Return String value login name on remote computer
@@ -98,7 +97,7 @@ public class AdUtil {
             }
             input.close();
         } catch(Exception ex)  {
-            ADInformer.isError("Ошибка в получении пользователя\n", ex);
+            ADInformer.isError("Ошибка в получении пользователя", ex);
         }           
         return result.trim();    
     }
@@ -111,10 +110,9 @@ public class AdUtil {
     public String getDnsName(String ip) throws UnknownHostException { 
         try {
             InetAddress addr = InetAddress.getByName(ip);
-            hostname = addr.getHostName();
-            
+            hostname = addr.getHostName();            
         } catch (Exception ex) {
-            ADInformer.isError("Ошибка получения DNS name\n", ex);
+            ADInformer.isError("Ошибка получения DNS name", ex);
         }
         return hostname;
     }

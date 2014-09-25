@@ -293,3 +293,4 @@ public class JDialogMySQL extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
+
