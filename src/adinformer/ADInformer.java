@@ -5,17 +5,13 @@
  */
 package adinformer;
 
-import java.awt.Window;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -24,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ADInformer extends javax.swing.JFrame {
     public static String programname = "Active Directory Informer";
-    public static String programversion = "1.3.0";
+    public static String programversion = "1.3.1";
     public static String email = "mogsev@gmail.com";
     public static String sourceforgeurl = "http://sourceforge.net";
     public static String githuburl = "https://github.com/mogsev/ADInformer";
@@ -40,7 +36,6 @@ public class ADInformer extends javax.swing.JFrame {
     private static String mysqlurl;    
     private static Connection conn = null;
     private static ResultSet rs = null;
-    
     
     /**
      * 
@@ -67,8 +62,8 @@ public class ADInformer extends javax.swing.JFrame {
         }
         finally { //Обязательно необходимо закрыть соединение
             try {
-                if(conn != null)
-                conn.close();
+                if (rs !=null ) { rs.close(); }
+                if(conn != null) { conn.close(); }
             } catch (SQLException ex) {
                 ADInformer.isError("Ошибка закрытия сединения", ex);
             }
@@ -150,8 +145,8 @@ public class ADInformer extends javax.swing.JFrame {
         }
         finally { //Обязательно необходимо закрыть соединение
             try {
-                if(conn != null)
-                conn.close();
+                if (rs !=null) { rs.close(); }
+                if (conn != null) { conn.close(); }
             } catch (SQLException ex) {
                 ADInformer.isError("Ошибка закрытия сединения", ex);
             }
@@ -181,8 +176,8 @@ public class ADInformer extends javax.swing.JFrame {
         }
         finally { //Обязательно необходимо закрыть соединение
             try {
-                if(conn != null)
-                conn.close();
+                if (rs != null) { rs.close(); }
+                if(conn != null) { conn.close(); }
             } catch (SQLException ex) {
                 ADInformer.isError("Ошибка закрытия сединения", ex);
             }

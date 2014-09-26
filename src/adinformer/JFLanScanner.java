@@ -38,6 +38,7 @@ public class JFLanScanner extends javax.swing.JFrame {
             setCursor(null);
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             jLabel3.setText("Сканирование завершено");
+            jProgressBar1.setValue(0);
         }        
     }
     
@@ -128,7 +129,9 @@ public class JFLanScanner extends javax.swing.JFrame {
             JFLanScanner.Octets ip1 = new JFLanScanner.Octets();
             ip1.setIpAddress(lanbegin);
             JFLanScanner.Octets ip2 = new JFLanScanner.Octets();
-            ip2.setIpAddress(lanend);            
+            ip2.setIpAddress(lanend);
+            jProgressBar1.setMinimum(ip1.getOctet(4));
+            jProgressBar1.setMaximum(ip2.getOctet(4));
             if (!(ip1.getLan().equals(ip2.getLan())) ||
                     (ip1.getOctet(4)>ip2.getOctet(4)) ||
                     !(ip1.isIp()) ||
@@ -137,7 +140,9 @@ public class JFLanScanner extends javax.swing.JFrame {
             } else {               
                 int ipb = ip1.getOctet(4);
                 while (ipb <= ip2.getOctet(4)) {                    
+                    jProgressBar1.setValue(ipb);
                     ip = ip1.getLan()+ipb;
+                    jLabel3.setText("Сканирование: " + ip);
                     adinformer.AdSearch ads = new adinformer.AdSearch();
                     adinformer.AdUtil adu = new adinformer.AdUtil();
                     dnsname = adu.getDnsName(ip);                    
@@ -171,7 +176,7 @@ public class JFLanScanner extends javax.swing.JFrame {
                         result.add(row);
                     }
                     jModelIP.fireTableDataChanged();
-                    jLabel4.setText("Найдено: " + jTable2.getRowCount());
+                    jLabel4.setText("Найдено: " + jTable2.getRowCount());                    
                     ipb++;
                 }
             }            
@@ -225,6 +230,7 @@ public class JFLanScanner extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jProgressBar1 = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Сканер IPv4 Lan");
@@ -251,14 +257,14 @@ public class JFLanScanner extends javax.swing.JFrame {
         });
 
         jButton1.setText("Search");
-        jButton1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jButton1FocusLost(evt);
-            }
-        });
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+        jButton1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jButton1FocusLost(evt);
             }
         });
 
@@ -337,8 +343,10 @@ public class JFLanScanner extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 704, Short.MAX_VALUE)
-                .addGap(20, 20, 20)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2)
                 .addGap(4, 4, 4))
         );
@@ -347,6 +355,7 @@ public class JFLanScanner extends javax.swing.JFrame {
             .addComponent(jButton2)
             .addComponent(jButton3)
             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jProgressBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -388,7 +397,7 @@ public class JFLanScanner extends javax.swing.JFrame {
 
     private void jButton1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton1FocusLost
         try {
-            jLabel3.setText("");
+            jLabel3.setText("");            
         } catch (Exception ex) {
             ADInformer.isError("FocusLost", ex);
         }
@@ -498,6 +507,7 @@ public class JFLanScanner extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
