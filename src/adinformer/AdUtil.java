@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package adinformer;
 
 import java.io.BufferedReader;
@@ -48,8 +42,7 @@ public class AdUtil {
             "(\"Select * from Win32_ComputerSystem\") \n" + 
             "For Each objComputer in colComputer \n" +
             "Wscript.Echo objComputer.UserName \n" +              
-            "Next \n";
-            
+            "Next \n";            
             fw.write(vbs);
             fw.close();      
             Process p = Runtime.getRuntime().exec("cscript //NoLogo " + file.getPath());

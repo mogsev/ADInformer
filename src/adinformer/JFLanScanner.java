@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package adinformer;
 
 import java.awt.Cursor;
@@ -27,8 +22,7 @@ public class JFLanScanner extends javax.swing.JFrame {
         public Void doInBackground() {            
             isScanner();
             return null;
-        }
-        
+        }        
         @Override
         public void done() {
             Toolkit.getDefaultToolkit().beep();
@@ -442,8 +436,7 @@ public class JFLanScanner extends javax.swing.JFrame {
             jLabel3.setText("The result is stored");
         } catch (Exception ex) {
             ADInformer.isError("Error in save", ex);
-        }
-        
+        }        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton3FocusLost
@@ -455,7 +448,6 @@ public class JFLanScanner extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3FocusLost
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        // TODO add your handling code here:
         ADInformer.isJFLanScanner = false;
     }//GEN-LAST:event_formWindowClosed
 
