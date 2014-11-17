@@ -1,8 +1,7 @@
 package adinformer;
 
 /**
- *
- * @author zhenya
+ * @author zhenya mogsev@gmail.com
  */
 public class JDialogMsSQL extends javax.swing.JDialog {
 

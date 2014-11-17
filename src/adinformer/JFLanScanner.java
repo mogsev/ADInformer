@@ -7,7 +7,6 @@ import javax.swing.SwingWorker;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
  * @author zhenya mogsev@gmail.com
  */
 public class JFLanScanner extends javax.swing.JFrame {
