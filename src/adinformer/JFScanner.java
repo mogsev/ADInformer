@@ -30,8 +30,7 @@ public class JFScanner extends javax.swing.JFrame {
             redirectSystemStreams();
             isScanner();            
             return null;
-        }
-        
+        }        
         @Override
         public void done() {
             Toolkit.getDefaultToolkit().beep();
@@ -332,13 +331,11 @@ public class JFScanner extends javax.swing.JFrame {
                 public void run() {
                     ADInformer.saveMySql(result);
                 }
-            }).start();
-            
+            }).start();            
             jLabel2.setText("The result is stored");
         } catch (Exception ex) {
             ADInformer.isError("Ошибка сохранения", ex);
-        }
-        
+        }        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton3FocusLost
@@ -358,7 +355,6 @@ public class JFScanner extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        // TODO add your handling code here:
         ADInformer.isJFScanner = false;
     }//GEN-LAST:event_formWindowClosed
 
