@@ -160,7 +160,7 @@ public class ADInformer extends javax.swing.JFrame {
             conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД                        
             Statement st = conn.createStatement();    //Готовим запрос
             String search = jTextField1.getText();
-            rs = st.executeQuery("select * from `adinfo`.`history` where `ip` like '%"+search+"%' or `login` like '%"+search+"%' or `full_name` like '%"+search+"%' or `dns_name` like '%"+search+"%' or `description` like '%"+search+"%' or `title` like '%"+search+"%'"); //Выполняем запрос к БД, результат в переменной rs            
+            rs = st.executeQuery("select * from `adinfo`.`history` where `ip` like '%"+search+"%' or `login` like '%"+search+"%' or `full_name` like '%"+search+"%' or `dns_name` like '%"+search+"%' or `telephonenumber` like '%"+search+"%' or `mobile` like '%"+search+"%' or `ipphone` like '%"+search+"%' or `mail` like '%"+search+"%' or `description` like '%"+search+"%' or `title` like '%"+search+"%'"); //Выполняем запрос к БД, результат в переменной rs            
             while(rs.next()) {                
                 Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
                 jModelIP.addRow(row);                    
