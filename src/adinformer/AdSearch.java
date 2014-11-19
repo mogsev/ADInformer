@@ -42,6 +42,7 @@ public class AdSearch {
             env.put(Context.SECURITY_CREDENTIALS, ADInformer.config.getDomainPassword());          //Password Ldap
             env.put(Context.PROVIDER_URL, "ldap://"+ADInformer.config.getDomainName()+":389");
             ctx = new InitialLdapContext(env, null);
+            ADInformer.saveLog("LDAP connection Successful");
             //System.out.println("Connection Successful.");            
         }
         catch (NamingException ex) {            
@@ -62,7 +63,7 @@ public class AdSearch {
                 constraints.setReturningAttributes(attrIDs);                        
                 try {
                     NamingEnumeration answer = ctx.search("\""+ADInformer.config.getDomainDN()+"\"" , "sAMAccountName=" + username, constraints);
-                    if (answer.hasMore()) {                    
+                    if (answer.hasMore()) {
                         attrs = ((SearchResult) answer.next()).getAttributes();
                         userDN = attrs.get("distinguishedName").toString();
                         if (attrs.get("name")==null) {

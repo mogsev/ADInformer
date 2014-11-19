@@ -80,6 +80,18 @@ public class ADInformer extends javax.swing.JFrame {
             }
     }
     
+    /**
+     * output information to save log file
+     * @param str 
+     */
+    public static void saveLog(String str) {        
+        try {
+            log.writeLog(str);                
+        } catch (IOException ex1) {
+            JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
+        }
+    }
+    
     public static DefaultTableModel getTableIP(javax.swing.JTable jTable1, javax.swing.JScrollPane jScrollPane1) {
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
