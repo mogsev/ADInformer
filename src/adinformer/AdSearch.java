@@ -37,7 +37,7 @@ public class AdSearch {
         try {            
             Hashtable env = new Hashtable();
             env.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");
-            env.put(Context.SECURITY_AUTHENTICATION, "simple");
+            //env.put(Context.SECURITY_AUTHENTICATION, "simple");
             env.put(Context.SECURITY_PRINCIPAL, ADInformer.config.getDomainSN()+"\\"+ADInformer.config.getDomainLogin());   //Login Ldap
             env.put(Context.SECURITY_CREDENTIALS, ADInformer.config.getDomainPassword());          //Password Ldap
             env.put(Context.PROVIDER_URL, "ldap://"+ADInformer.config.getDomainName()+":389");
@@ -51,7 +51,7 @@ public class AdSearch {
     } 
    
     private String getUserBasicAttributes(String username, LdapContext ctx) {   
-        String user = null;
+        String user = null;        
         if (username.isEmpty() || username.equals("null")) {            
             return user;            
         } else {
@@ -60,74 +60,77 @@ public class AdSearch {
                 constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);
                 String[] attrIDs = { "distinguishedName", "sn", "givenname", "mail", "telephonenumber", "cn", "name", "mobile", "ipphone", "description", "title", "department", "company" };            
                 constraints.setReturningAttributes(attrIDs);                        
-                NamingEnumeration answer;                
-                answer = ctx.search("\""+ADInformer.config.getDomainDN()+"\"" , "sAMAccountName=" + username, constraints);
-                if (answer.hasMore()) {                    
-                    attrs = ((SearchResult) answer.next()).getAttributes();
-                    userDN = attrs.get("distinguishedName").toString();
-                    if (attrs.get("name")==null) {
-                        userName = "";
+                try {
+                    NamingEnumeration answer = ctx.search("\""+ADInformer.config.getDomainDN()+"\"" , "sAMAccountName=" + username, constraints);
+                    if (answer.hasMore()) {                    
+                        attrs = ((SearchResult) answer.next()).getAttributes();
+                        userDN = attrs.get("distinguishedName").toString();
+                        if (attrs.get("name")==null) {
+                            userName = "";
+                        } else {
+                            userName = attrs.get("name").toString().substring(6);
+                        }                    
+                        if (attrs.get("mail")==null) {
+                            userMail = "";                        
+                        } else {
+                            userMail = attrs.get("mail").toString().substring(6);
+                        }
+                        if (attrs.get("givenname")==null) {
+                            userGivenName = "";
+                        } else {
+                            userGivenName = attrs.get("givenname").toString();
+                        }
+                        if (attrs.get("sn")==null) {
+                            userSN = "";
+                        } else {
+                            userSN = attrs.get("sn").toString();
+                        }
+                        if (attrs.get("telephonenumber")==null) {
+                            userTelephoneNumber = "";
+                        } else {
+                            userTelephoneNumber = attrs.get("telephonenumber").toString().substring(17);
+                        }
+                        if (attrs.get("cn")==null) {
+                            userCN = "";
+                        } else {
+                            userCN = attrs.get("cn").toString();
+                        }
+                        if (attrs.get("mobile")==null) {
+                            userMobile = "";
+                        } else {
+                            userMobile = attrs.get("mobile").toString().substring(8);
+                        }                    
+                        if (attrs.get("ipphone")==null) {
+                            userIpPhone = "";
+                        } else {
+                            userIpPhone = attrs.get("ipphone").toString().substring(9);
+                        }
+                        if (attrs.get("description")==null) {
+                            userDescription = "";
+                        } else {
+                            userDescription = attrs.get("description").toString().substring(13);
+                        }
+                        if (attrs.get("title")==null) {
+                            userTitle = "";
+                        } else {
+                            userTitle = attrs.get("title").toString().substring(7);
+                        }
+                        if (attrs.get("department")==null) {
+                            userDepartment = "";
+                        } else {
+                            userDepartment = attrs.get("department").toString().substring(12);
+                        }
+                        if (attrs.get("company")==null) {
+                            userCompany = "";
+                        } else {
+                            userCompany = attrs.get("company").toString().substring(9);
+                        }
                     } else {
-                        userName = attrs.get("name").toString().substring(6);
-                    }                    
-                    if (attrs.get("mail")==null) {
-                        userMail = "";                        
-                    } else {
-                        userMail = attrs.get("mail").toString().substring(6);
+                        throw new Exception("Invalid User");
                     }
-                    if (attrs.get("givenname")==null) {
-                        userGivenName = "";
-                    } else {
-                        userGivenName = attrs.get("givenname").toString();
-                    }
-                    if (attrs.get("sn")==null) {
-                        userSN = "";
-                    } else {
-                        userSN = attrs.get("sn").toString();
-                    }
-                    if (attrs.get("telephonenumber")==null) {
-                        userTelephoneNumber = "";
-                    } else {
-                        userTelephoneNumber = attrs.get("telephonenumber").toString().substring(17);
-                    }
-                    if (attrs.get("cn")==null) {
-                        userCN = "";
-                    } else {
-                        userCN = attrs.get("cn").toString();
-                    }
-                    if (attrs.get("mobile")==null) {
-                        userMobile = "";
-                    } else {
-                        userMobile = attrs.get("mobile").toString().substring(8);
-                    }                    
-                    if (attrs.get("ipphone")==null) {
-                        userIpPhone = "";
-                    } else {
-                        userIpPhone = attrs.get("ipphone").toString().substring(9);
-                    }
-                    if (attrs.get("description")==null) {
-                        userDescription = "";
-                    } else {
-                        userDescription = attrs.get("description").toString().substring(13);
-                    }
-                    if (attrs.get("title")==null) {
-                        userTitle = "";
-                    } else {
-                        userTitle = attrs.get("title").toString().substring(7);
-                    }
-                    if (attrs.get("department")==null) {
-                        userDepartment = "";
-                    } else {
-                        userDepartment = attrs.get("department").toString().substring(12);
-                    }
-                    if (attrs.get("company")==null) {
-                        userCompany = "";
-                    } else {
-                        userCompany = attrs.get("company").toString().substring(9);
-                    }
-                } else {
-                    throw new Exception("Invalid User");
-                } 
+                } catch(Exception exs) {
+                    ADInformer.isError("Ошибка запроса LDAP", exs);
+                }
             } catch (Exception ex) {
                 ADInformer.isError("Ошибка получения атрибутов пользователя с LDAP", ex);                
             }
