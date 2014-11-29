@@ -63,7 +63,7 @@ public class AdSearch {
                 constraints.setReturningAttributes(attrIDs);                        
                 try {
                     NamingEnumeration answer = ctx.search("\""+ADInformer.config.getDomainDN()+"\"" , "sAMAccountName=" + username, constraints);
-                    if (answer.hasMore()) {
+                    if (answer.hasMore()) {                        
                         attrs = ((SearchResult) answer.next()).getAttributes();
                         userDN = attrs.get("distinguishedName").toString();
                         if (attrs.get("name")==null) {

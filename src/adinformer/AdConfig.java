@@ -14,8 +14,7 @@ import java.io.IOException;
 public class AdConfig {
     private static StringBuilder in;
     private static StringBuilder out;
-    private final String file = "adinformer.cfg";
-    
+    private final String file = "adinformer.cfg";    
     private static String logenable = "1";
     private static String xmlautosave = "0";
     private static String csvautosave = "0";    

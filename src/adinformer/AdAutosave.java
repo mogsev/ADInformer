@@ -14,7 +14,6 @@ import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
 
 /**
- *
  * @author zhenya mogsev@gmail.com
  */
 public class AdAutosave {
