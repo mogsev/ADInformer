@@ -12,10 +12,13 @@ import java.util.Date;
  * @author mogsev@gmail.com
  */
 public class AdLog {   
-    
-    private static StringBuilder out;
-    private static String fileLogName;    
-    private static String curentTime;
+        
+    private String fileLogName;    
+    private String curentTime;
+    private File fileLog;
+    private FileWriter fileWriteLog;
+    private BufferedWriter bufferWriteLog;
+    private StringBuilder outLog;
     
     AdLog () {
         fileLogName = "adinformer.log";
@@ -27,9 +30,9 @@ public class AdLog {
     
     /**
      * Return the time string
-     * @return String time "dd.MM.yyyy HH:mm:ss"
+     * @return String time "DD.MM.YYYY HH:MM:SS"
      */
-    private static String getTime() {
+    private String getTime() {
         Date now = new Date();
         DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         curentTime = formatter.format(now)+"\t";        
@@ -39,20 +42,20 @@ public class AdLog {
     /**
      * Write string to LOG file
      * @param str the result string
-     * @throws IOException 
      */
-    public void writeLog(String str) throws IOException {    
+    public void writeLog(String str)throws IOException {    
         if (ADInformer.config.getLog()) {
-            File filelog = new File(fileLogName);        
-            if (!filelog.exists()) {            
-                filelog.createNewFile();            
-            }
-            BufferedWriter wr = new BufferedWriter(new FileWriter(fileLogName,true)); //output file        
-            out = new StringBuilder();  //буфер для обработанного текста                                
-            out.append(getTime()).append(str).append("\r\n");        
-            wr.write(out.toString());
-            wr.flush();
-            wr.close();             
+            fileLog = new File(fileLogName);
         }
-    }    
-}
+        if (!fileLog.exists()) {            
+            fileLog.createNewFile();
+        }
+        fileWriteLog = new FileWriter(fileLogName, true);
+        bufferWriteLog = new BufferedWriter(fileWriteLog);        
+        outLog = new StringBuilder();                                
+        outLog.append(getTime()).append(str).append("\r\n");        
+        bufferWriteLog.write(outLog.toString());
+        bufferWriteLog.flush();                
+        bufferWriteLog.close();                        
+    }
+}    
