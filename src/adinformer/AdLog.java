@@ -11,12 +11,19 @@ import java.util.Date;
 /**
  * @author mogsev@gmail.com
  */
-public class AdLog {    
+public class AdLog {   
+    
     private static StringBuilder out;
-    private final String file = "adinformer.log";
-    private static String t = "\t";
-    private static String rn = "\r\n";
-    private static String time;    
+    private static String fileLogName;    
+    private static String curentTime;
+    
+    AdLog () {
+        fileLogName = "adinformer.log";
+    }
+    
+    AdLog(String str) {
+        fileLogName = str;
+    }
     
     /**
      * Return the time string
@@ -25,8 +32,8 @@ public class AdLog {
     private static String getTime() {
         Date now = new Date();
         DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-        time = formatter.format(now)+t;        
-        return time;                
+        curentTime = formatter.format(now)+"\t";        
+        return curentTime;                
     }   
     
     /**
@@ -36,13 +43,13 @@ public class AdLog {
      */
     public void writeLog(String str) throws IOException {    
         if (ADInformer.config.getLog()) {
-            File filelog = new File(file);        
+            File filelog = new File(fileLogName);        
             if (!filelog.exists()) {            
                 filelog.createNewFile();            
             }
-            BufferedWriter wr = new BufferedWriter(new FileWriter(file,true)); //output file        
+            BufferedWriter wr = new BufferedWriter(new FileWriter(fileLogName,true)); //output file        
             out = new StringBuilder();  //буфер для обработанного текста                                
-            out.append(getTime()).append(str).append(rn);        
+            out.append(getTime()).append(str).append("\r\n");        
             wr.write(out.toString());
             wr.flush();
             wr.close();             
