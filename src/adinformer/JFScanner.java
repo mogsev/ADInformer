@@ -22,7 +22,7 @@ public class JFScanner extends javax.swing.JFrame {
     private class Scanner extends SwingWorker<Void, Void> {
         @Override
         public Void doInBackground() {
-            redirectSystemStreams();
+            //redirectSystemStreams();
             isScanner();            
             return null;
         }        
@@ -41,11 +41,12 @@ public class JFScanner extends javax.swing.JFrame {
         SwingUtilities.invokeLater(new Runnable() { 
             @Override
             public void run() {                               
-                jTextArea1.append(text);                
+                jTextArea1.append(text + "\r\n");                
             }                 
         });                
     }
     
+    /**
     private void redirectSystemStreams() {  
         out = new OutputStream() {  
             @Override  
@@ -64,6 +65,7 @@ public class JFScanner extends javax.swing.JFrame {
         System.setOut(new PrintStream(out, true));  
         System.setErr(new PrintStream(out, true)); 
     }
+    */
     
     private void isScan() {
         try {
@@ -82,14 +84,16 @@ public class JFScanner extends javax.swing.JFrame {
     
     private void isScanner() {
         try {
-            long st, en;
-            st = System.nanoTime();
+            long startScanner, endScanner;
+            startScanner = System.nanoTime();
             ip=jTextField1.getText();
-            System.out.println("IPv4: "+ip);
+            updateTextArea("IPv4: " + ip);
+            //System.out.println("IPv4: "+ip);
             try {    
                 adinformer.AdUtil adu = new adinformer.AdUtil();
                 dnsname = adu.getDnsName(ip);
-                System.out.println("DNS name: " + dnsname);
+                updateTextArea("DNS name: " + dnsname);
+                //System.out.println("DNS name: " + dnsname);
                 //получаем пользователя                
                 if (ADInformer.config.getDomainConnection()) {                                    
                     username = adu.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
@@ -97,16 +101,19 @@ public class JFScanner extends javax.swing.JFrame {
                     username = adu.getUser(ip);
                 }                
                 if (username.isEmpty() || username.equals("") || username == null || username.equals(null) || username.equals("null")) {                
-                    username = "";            
-                    System.out.println("Имя пользователя не найдено\n");
+                    username = "";
+                    updateTextArea("Имя пользователя не найдено\n");
+                    //System.out.println("Имя пользователя не найдено\n");
                 } else {                    
                     int in = username.indexOf("\\");
                     username = username.substring(in+1);
-                    System.out.println("Login: " + username);
+                    updateTextArea("Login: " + username);
+                    //System.out.println("Login: " + username);
                     try {
                         AdSearch.getUser(username);
-                    } catch (NullPointerException ex) {
-                        System.out.println(ex);
+                    } catch(NullPointerException ex) {
+                        ADInformer.isError("Имя пользователя: null", ex);
+                        //System.out.println(ex);
                         username = "";
                     }                    
                     name = AdSearch.getUserName();
@@ -118,19 +125,29 @@ public class JFScanner extends javax.swing.JFrame {
                     title = AdSearch.getUserTitle();
                     department = AdSearch.getUserDepartment();
                     company = AdSearch.getUserCompany();
-                    System.out.println("name: "+name);
-                    System.out.println("Tel: "+telephonenumber);
-                    System.out.println("Mobile: "+mobile);
-                    System.out.println("Mail: "+mail);
-                    System.out.println("IpPhone: "+ipphone);
-                    System.out.println("Description: "+description);
-                    System.out.println("Title: "+title);
-                    System.out.println("Department: "+department);
-                    System.out.println("Company: "+company);
+                    updateTextArea("name: "+name);
+                    //System.out.println("name: "+name);
+                    updateTextArea("Tel: "+telephonenumber);
+                    //System.out.println("Tel: "+telephonenumber);
+                    updateTextArea("Mobile: "+mobile);
+                    //System.out.println("Mobile: "+mobile);
+                    updateTextArea("Mail: "+mail);
+                    //System.out.println("Mail: "+mail);
+                    updateTextArea("IpPhone: "+ipphone);
+                    //System.out.println("IpPhone: "+ipphone);
+                    updateTextArea("Description: "+description);
+                    //System.out.println("Description: "+description);
+                    updateTextArea("Title: "+title);
+                    //System.out.println("Title: "+title);
+                    updateTextArea("Department: "+department);
+                    //System.out.println("Department: "+department);
+                    updateTextArea("Company: "+company);
+                    //System.out.println("Company: "+company);
                     result.add(new Object[] { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone, description, title, department, company });                    
-                    en = System.nanoTime();
-                    System.out.println("Scan time: "+(en-st)/1000000 +" ms");
-                    System.out.println();                    
+                    endScanner = System.nanoTime();
+                    updateTextArea("Scan time: "+ (endScanner-startScanner)/1000000 +" ms\r\n");
+                    //System.out.println("Scan time: "+(endScanner-startScanner)/1000000 +" ms");
+                    //System.out.println();                    
                 }            
             } catch (UnknownHostException ex) {
                 ADInformer.isError("Ошибка обработки DNS name", ex);
