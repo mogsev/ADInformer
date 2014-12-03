@@ -33,7 +33,6 @@ public class ADInformer extends javax.swing.JFrame {
     private static ResultSet rs = null;
     
     /**
-     * 
      * @param obj 
      */
     public static void saveMySql(ArrayList<Object[]> obj) {
@@ -614,6 +613,5 @@ public class ADInformer extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
-
     
 }
