@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ADInformer extends javax.swing.JFrame {
     static final String PROGRAM_NAME = "Active Directory Informer";
-    static final String PROGRAM_VERSION = "1.3.1";
+    static final String PROGRAM_VERSION = "1.4.0";
     static final String EMAIL = "mogsev@gmail.com";
     static final String SF_URL = "http://sourceforge.net";
     static final String GIT_URL = "https://github.com/mogsev/ADInformer";
