@@ -22,10 +22,10 @@ public class JDialogAbout extends javax.swing.JDialog {
     public JDialogAbout(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        jLabel1.setText(ADInformer.programname + " " + ADInformer.programversion);
-        jLabel7.setText("EMail: " + ADInformer.email);
-        jLabel3.setText(ADInformer.sourceforgeurl);
-        jLabel4.setText(ADInformer.githuburl);
+        jLabel1.setText(ADInformer.PROGRAM_NAME + " " + ADInformer.PROGRAM_VERSION);
+        jLabel7.setText("EMail: " + ADInformer.EMAIL);
+        jLabel3.setText(ADInformer.SF_URL);
+        jLabel4.setText(ADInformer.GIT_URL);
         // display link to url https://github.com
         jLabel4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jLabel4.setForeground(new java.awt.Color(0, 0, 204));

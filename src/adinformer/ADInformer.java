@@ -14,11 +14,11 @@ import javax.swing.table.DefaultTableModel;
  * @author zhenya mogsev@gmail.com
  */
 public class ADInformer extends javax.swing.JFrame {
-    public static String programname = "Active Directory Informer";
-    public static String programversion = "1.3.1";
-    public static String email = "mogsev@gmail.com";
-    public static String sourceforgeurl = "http://sourceforge.net";
-    public static String githuburl = "https://github.com/mogsev/ADInformer";
+    static final String PROGRAM_NAME = "Active Directory Informer";
+    static final String PROGRAM_VERSION = "1.3.1";
+    static final String EMAIL = "mogsev@gmail.com";
+    static final String SF_URL = "http://sourceforge.net";
+    static final String GIT_URL = "https://github.com/mogsev/ADInformer";
     public static AdLog log;
     public static AdConfig config;
     public static AdAutosave autosave;
@@ -26,7 +26,7 @@ public class ADInformer extends javax.swing.JFrame {
     public static boolean isJFScanner = false;
     public static boolean isJFLanScanner = false;
     
-    private final String drivermysql = "com.mysql.jdbc.Driver";    //Имя драйвера MySql
+    private final String DRIVER_MYSQL = "com.mysql.jdbc.Driver";    //Имя драйвера MySql
     private static DefaultTableModel jModelIP;    
     private static String mysqlurl;    
     private static Connection conn = null;
@@ -54,8 +54,7 @@ public class ADInformer extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             ADInformer.isError("Error in saveMySql", ex);
-        }
-        finally { //Обязательно необходимо закрыть соединение
+        } finally { //Обязательно необходимо закрыть соединение
             try {
                 if (rs !=null ) { rs.close(); }
                 if(conn != null) { conn.close(); }
@@ -75,8 +74,8 @@ public class ADInformer extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, str + "\n" + ex);
         try {
             log.writeLog(str + ex.getMessage());                
-            } catch (IOException ex1) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
+            } catch (IOException exc) {
+                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n" + exc);                
             }
     }
     
@@ -172,7 +171,14 @@ public class ADInformer extends javax.swing.JFrame {
             conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД                        
             Statement st = conn.createStatement();    //Готовим запрос
             String search = jTextField1.getText();
-            rs = st.executeQuery("select * from `adinfo`.`history` where `ip` like '%"+search+"%' or `login` like '%"+search+"%' or `full_name` like '%"+search+"%' or `dns_name` like '%"+search+"%' or `telephonenumber` like '%"+search+"%' or `mobile` like '%"+search+"%' or `ipphone` like '%"+search+"%' or `mail` like '%"+search+"%' or `description` like '%"+search+"%' or `title` like '%"+search+"%'"); //Выполняем запрос к БД, результат в переменной rs            
+            rs = st.executeQuery("select * from `adinfo`.`history` where `ip`"
+                    + "like '%"+search+"%' or `login` like '%"+search+"%' or "
+                    + "`full_name` like '%"+search+"%' or `dns_name` like"
+                    + "'%"+search+"%' or `telephonenumber` like '%"+search+"%'"
+                    + "or `mobile` like '%"+search+"%' or `ipphone` like "
+                    + "'%"+search+"%' or `mail` like '%"+search+"%' or "
+                    + "`description` like '%"+search+"%' or `title` like "
+                    + "'%"+search+"%'"); //Выполняем запрос к БД, результат в переменной rs            
             while(rs.next()) {                
                 Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
                 jModelIP.addRow(row);                    
@@ -222,7 +228,7 @@ public class ADInformer extends javax.swing.JFrame {
         }        
         //Регистрируем драйвер MySql
         try {
-            Class.forName(drivermysql);  
+            Class.forName(DRIVER_MYSQL);  
         } catch (ClassNotFoundException ex) {
             ADInformer.isError("Ошибка иницилизации MySQL драйвера", ex);            
         }

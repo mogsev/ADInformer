@@ -11,8 +11,7 @@ import java.util.Date;
 /**
  * @author mogsev@gmail.com
  */
-public class AdLog {   
-        
+public class AdLog {
     private String fileLogName;    
     private String curentTime;
     private File fileLog;
