@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ADInformer extends javax.swing.JFrame {
     static final String PROGRAM_NAME = "Active Directory Informer";
-    static final String PROGRAM_VERSION = "1.4.0";
+    static final String PROGRAM_VERSION = "1.4.4";
     static final String EMAIL = "mogsev@gmail.com";
     static final String SF_URL = "http://sourceforge.net";
     static final String GIT_URL = "https://github.com/mogsev/ADInformer";
@@ -27,7 +27,8 @@ public class ADInformer extends javax.swing.JFrame {
     public static boolean isJFLanScanner = false;
     
     private final String DRIVER_MYSQL = "com.mysql.jdbc.Driver";    //Имя драйвера MySql
-    private static DefaultTableModel jModelIP;    
+    private static DefaultTableModel jModelIP;
+    private static DefaultTableModel jModelMember;
     private static String mysqlurl;    
     private static Connection conn = null;
     private static ResultSet rs = null;
@@ -148,22 +149,19 @@ public class ADInformer extends javax.swing.JFrame {
         }
         });
         jTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane.setViewportView(jTable);
-        /**
+        jScrollPane.setViewportView(jTable);        
         if (jTable.getColumnModel().getColumnCount() > 0) {
-            jTable.getColumnModel().getColumn(0).setMinWidth(75);
-            jTable.getColumnModel().getColumn(1).setMinWidth(110);
-            jTable.getColumnModel().getColumn(2).setMinWidth(90);
-            jTable.getColumnModel().getColumn(3).setMinWidth(190);
-            jTable.getColumnModel().getColumn(4).setMinWidth(110);
-            jTable.getColumnModel().getColumn(5).setMinWidth(80);
-            jTable.getColumnModel().getColumn(6).setMinWidth(90);
+            jTable.getColumnModel().getColumn(0).setMinWidth(85);
+            jTable.getColumnModel().getColumn(1).setMinWidth(170);
+            jTable.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable.getColumnModel().getColumn(3).setMinWidth(150);
+            jTable.getColumnModel().getColumn(4).setMinWidth(150);
+            jTable.getColumnModel().getColumn(5).setMinWidth(130);
+            jTable.getColumnModel().getColumn(6).setMinWidth(80);
             jTable.getColumnModel().getColumn(7).setMinWidth(80);
-            jTable.getColumnModel().getColumn(8).setMinWidth(140);
-            jTable.getColumnModel().getColumn(9).setMinWidth(140);
-            jTable.getColumnModel().getColumn(10).setMinWidth(140);
-            jTable.getColumnModel().getColumn(11).setMinWidth(140);
-        }*/
+            jTable.getColumnModel().getColumn(8).setMinWidth(80);
+            jTable.getColumnModel().getColumn(9).setMinWidth(160);           
+        }
         jModelIP = (DefaultTableModel) jTable.getModel();
         return jModelIP;
     }
@@ -180,7 +178,6 @@ public class ADInformer extends javax.swing.JFrame {
                 Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
                 jModelIP.addRow(row);
             }
-            jLabel1.setText("Найдено: "+jModelIP.getRowCount());
         } catch(Exception ex) { 
             ADInformer.isError("Ошибка в соединении с сервером MySql", ex);
         }
@@ -200,8 +197,7 @@ public class ADInformer extends javax.swing.JFrame {
      */
     private void getForm() {
         jModelIP = ADInformer.getTableIP(jTable1, jScrollPane1);
-        jTable1.setModel(jModelIP);        
-        jLabel1.setText("");        
+        jTable1.setModel(jModelIP);
         try {
             conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД            
             Statement st = conn.createStatement();  //Готовим запрос
@@ -209,8 +205,7 @@ public class ADInformer extends javax.swing.JFrame {
             while(rs.next()) {                
                 Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
                 jModelIP.addRow(row);
-            }
-            jLabel1.setText("Найдено: "+jModelIP.getRowCount());
+            }            
         } catch(Exception ex) { 
             ADInformer.isError("Ошибка в соединении с сервером MySql", ex);
         }
@@ -230,8 +225,7 @@ public class ADInformer extends javax.swing.JFrame {
      */
     private void getFormSearch() {
         jModelIP = ADInformer.getTableIP(jTable1, jScrollPane1);
-        jTable1.setModel(jModelIP);
-        jLabel1.setText("");                
+        jTable1.setModel(jModelIP);                        
         try {
             conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД                        
             Statement st = conn.createStatement();    //Готовим запрос
@@ -247,8 +241,7 @@ public class ADInformer extends javax.swing.JFrame {
             while(rs.next()) {                
                 Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
                 jModelIP.addRow(row);                    
-            }
-            jLabel1.setText("Найдено: "+jModelIP.getRowCount());
+            }            
         } catch(Exception ex){
             ADInformer.isError("Ошибка MySQL", ex);
         }
@@ -313,8 +306,8 @@ public class ADInformer extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
         jSeparator3 = new javax.swing.JSeparator();
+        jLabel2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
@@ -369,28 +362,28 @@ public class ADInformer extends javax.swing.JFrame {
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jLabel2.setText("jLabel2");
-
         jSeparator3.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("   ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(165, 165, 165)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(184, 184, 184))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
-            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 18, Short.MAX_VALUE)
             .addComponent(jSeparator3)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -431,6 +424,11 @@ public class ADInformer extends javax.swing.JFrame {
         );
 
         jTabbedPane1.setToolTipText("");
+        jTabbedPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTabbedPane1MouseClicked(evt);
+            }
+        });
 
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -443,6 +441,16 @@ public class ADInformer extends javax.swing.JFrame {
         ));
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable1KeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jTabbedPane1.addTab("Рабочие станции", jScrollPane1);
@@ -458,6 +466,17 @@ public class ADInformer extends javax.swing.JFrame {
 
             }
         ));
+        jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTable2KeyPressed(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable2);
 
         jTabbedPane1.addTab("Пользователи", jScrollPane2);
@@ -652,7 +671,7 @@ public class ADInformer extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jTabbedPane1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -690,8 +709,9 @@ public class ADInformer extends javax.swing.JFrame {
                 getFormSearch();
             }
             if (jTabbedPane1.getSelectedIndex()==1) {   
-                getFormSearchMember();
-            }            
+                getFormSearchMember();                
+            }
+            setLabel2Action();
         } catch (Exception ex) {
             ADInformer.isError("Error in Action Search", ex);
         }
@@ -699,7 +719,13 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         try {
-            getFormSearch();
+            if (jTabbedPane1.getSelectedIndex()==0) {
+                getFormSearch(); 
+            }
+            if (jTabbedPane1.getSelectedIndex()==1) {
+                getFormSearchMember();
+            }
+            setLabel2Action();
         } catch (Exception ex) {
             ADInformer.isError("Error getFormSearch", ex);
         }
@@ -777,7 +803,8 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         try {            
-            jTabbedPane1.setSelectedIndex(1);            
+            jTabbedPane1.setSelectedIndex(1);
+            setLabel2Action();
         } catch (Exception ex) {
             ADInformer.isError("Error open user table", ex);
         }        
@@ -785,7 +812,8 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {            
-            jTabbedPane1.setSelectedIndex(0);            
+            jTabbedPane1.setSelectedIndex(0);
+            setLabel2Action();
         } catch (Exception ex) {
             ADInformer.isError("Error open user table", ex);
         }
@@ -802,6 +830,46 @@ public class ADInformer extends javax.swing.JFrame {
             ADInformer.isError("Error open user table", ex);
         }
     }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        try {            
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error jTable1MouseClicked", ex);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        try {            
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error jTable1MouseClicked", ex);
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        try {            
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error jTable1MouseClicked", ex);
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
+        try {            
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error jTable1MouseClicked", ex);
+        }
+    }//GEN-LAST:event_jTable2KeyPressed
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        try {            
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error jTable1MouseClicked", ex);
+        }
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -882,18 +950,30 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void getFormSearchMember() {
         try {
-            jModelIP = ADInformer.getTableMember(jTable2, jScrollPane2);
-            jTable2.setModel(jModelIP);        
+            jModelMember = ADInformer.getTableMember(jTable2, jScrollPane2);
+            jTable2.setModel(jModelMember);        
             jLabel2.setText(""); 
             String search = jTextField1.getText();        
             ArrayList<AdMember> result = AdSearch.getSearchMember(search);
-            for (AdMember list:result) {
-                System.out.println(list.getCn());
-                jModelIP.addRow(list.getArrayStrings());
+            for (AdMember list:result) {                
+                jModelMember.addRow(list.getArrayStrings());
             }        
-            jModelIP.fireTableDataChanged();
+            jModelMember.fireTableDataChanged();
         } catch (Exception ex) {
-            ADInformer.isError("Error is getFormSearchMember", ex);
+            ADInformer.isError("Error in getFormSearchMember", ex);
+        }
+    }
+    
+    private void setLabel2Action() {
+        try {
+            if (jTabbedPane1.getSelectedIndex()==0) {
+                jLabel2.setText(jTable1.getSelectedRow()+1 + " : " + jTable1.getRowCount());
+            }
+            if (jTabbedPane1.getSelectedIndex()==1) {
+                jLabel2.setText(jTable2.getSelectedRow()+1 + " : " + jTable2.getRowCount());
+            }
+        } catch (Exception ex) {
+            ADInformer.isError("Error in setLabel2Action", ex);
         }
     }
 }

@@ -21,12 +21,17 @@ public class AdAutosave {
     private static String time;
     private static Element root;    
     
-    private void writeXml(Document savingDocument, String filePath) {
+    /**
+     * Save XML document to file
+     * @param savingDocument Document XML
+     * @param filePath String file name
+     */
+    private void writeXml(Document savingDocument, String filename) {
         try {
             XMLOutputter outputter = new XMLOutputter();
             outputter.setFormat(Format.getPrettyFormat());            
             try {
-                OutputStreamWriter out = new java.io.OutputStreamWriter(new java.io.FileOutputStream(filePath),"UTF-8");
+                OutputStreamWriter out = new java.io.OutputStreamWriter(new java.io.FileOutputStream(filename),"UTF-8");
                 out.write(outputter.outputString(savingDocument));
                 out.flush();
                 out.close();
@@ -56,8 +61,8 @@ public class AdAutosave {
     public void saveXML(ArrayList<Object[]> obj) {
         try {
             if (ADInformer.config.getXmlAutosave()) {
-                this.root = new Element("ipaddress");
-                this.doc = new Document(this.root);
+                root = new Element("ipaddress");
+                doc = new Document(root);
                 for (Object[] objto:obj) {            
                     Element ipxml = new Element("host");
                     for (int i = 0; i<ADInformer.names.length; i++) {
@@ -65,9 +70,9 @@ public class AdAutosave {
                         Object data = objto[i];
                         ipxml.addContent(new Element(name).addContent(data.toString()));
                     }
-                    this.root.addContent(ipxml);
+                    root.addContent(ipxml);
                 }
-                writeXml(this.doc, new String(getTime() + ".xml"));
+                writeXml(doc, new String(getTime() + ".xml"));
             }
         } catch (Exception ex) {
             ADInformer.isError("Error in saveXML", ex);
@@ -102,6 +107,11 @@ public class AdAutosave {
         }
     }
     
+    /**
+     * Save result to file 
+     * @param sb StringBuilder result
+     * @param filename String file name
+     */
     private void writeCsv(StringBuilder sb, String filename) {
         try {
             OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filename), "windows-1251");
