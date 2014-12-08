@@ -705,8 +705,7 @@ public class ADInformer extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            System.out.println(jTabbedPane1.getSelectedIndex());
+        try {            
             if(jTabbedPane1.getSelectedIndex()==0) { 
                 getFormSearch();
             }
