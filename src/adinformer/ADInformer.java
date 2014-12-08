@@ -261,6 +261,8 @@ public class ADInformer extends javax.swing.JFrame {
      */
     public ADInformer() {
         initComponents();
+        jPanel4.setVisible(false);
+        jCheckBoxMenuItem1.setSelected(false);
         //Загружаем конфигурацию
         config = new AdConfig();
         try {
