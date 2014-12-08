@@ -1,6 +1,7 @@
 package adinformer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
@@ -36,8 +37,7 @@ public class AdSearch {
         LdapContext ctx = null;
         try {            
             Hashtable env = new Hashtable();
-            env.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");
-            //env.put(Context.SECURITY_AUTHENTICATION, "simple");
+            env.put(Context.INITIAL_CONTEXT_FACTORY,"com.sun.jndi.ldap.LdapCtxFactory");            
             env.put(Context.SECURITY_PRINCIPAL, ADInformer.config.getDomainSN()+"\\"+ADInformer.config.getDomainLogin());   //Login Ldap
             env.put(Context.SECURITY_CREDENTIALS, ADInformer.config.getDomainPassword());          //Password Ldap
             env.put(Context.PROVIDER_URL, "ldap://"+ADInformer.config.getDomainName()+":389");
@@ -255,4 +255,63 @@ public class AdSearch {
     public static String getUserCompany() {
         return userCompany;
     }
+    
+    /**
+     * This method return search string for LDAP with operation OR
+     * @param search String you need to find
+     * @param arrgs String[] where to find
+     * @return result String
+     */
+    private String getSearchString(String search, String ... arrgs) {
+        String result = getSearchString(true, search, arrgs);
+        return result;
+    }
+    
+    /**
+     * This method return search string for LDAP
+     * @param oper which operation OR - true/AND - false
+     * @param search String you need to find
+     * @param arrgs String[] where to find
+     * @return result String
+     */
+    private String getSearchString(boolean oper, String search, String ... arrgs) {
+        StringBuilder result = new StringBuilder();
+        if (oper) {
+            result.append("(|");
+        } else {
+            result.append("(&");
+        }        
+        for (String str:arrgs) {
+            result.append("(").append(str).append("=*").append(search).append("*)");
+        }
+        result.append(")");        
+        return result.toString();
+    }
+    
+    public ArrayList<AdMember> getSearchAttributes(String search, LdapContext ctx) {        
+        NamingEnumeration results;
+        results = null;
+        ArrayList<AdMember> mem = new ArrayList<AdMember>();
+        try { 
+            SearchControls constraints = new SearchControls();
+            constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);            
+            constraints.setReturningAttributes(AdMember.listAttribute.getAttributeArray());
+            results = ctx.search("DC=RUD,DC=UA", getSearchString(search, AdMember.listAttribute.getAttributeArray()), constraints);
+            while (results.hasMoreElements()) {
+                SearchResult sr = (SearchResult) results.nextElement();
+                Attributes attrs = sr.getAttributes();
+                AdMember one = new AdMember();
+                for (AdMember.listAttribute list:AdMember.listAttribute.values()) {
+                    if (attrs.get(list.name()) !=null) {                 
+                        one.setAttribute(list, (String) attrs.get(list.name()).get());
+                    }
+                }                
+                mem.add(one);
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }        
+        return mem;        
+    }
+    
 }

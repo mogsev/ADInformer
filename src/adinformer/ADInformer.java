@@ -129,6 +129,33 @@ public class ADInformer extends javax.swing.JFrame {
         return jModelIP;
     }
     
+    private void getFormUser() {
+        jModelIP = ADInformer.getTableIP(jTable2, jScrollPane2);
+        jTable2.setModel(jModelIP);        
+        jLabel2.setText("");        
+        try {
+            conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД            
+            Statement st = conn.createStatement();  //Готовим запрос
+            rs = st.executeQuery("select * from `adinfo`.`history`");   //Выполняем запрос к БД, результат в переменной rs
+            while(rs.next()) {                
+                Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
+                jModelIP.addRow(row);
+            }
+            jLabel1.setText("Найдено: "+jModelIP.getRowCount());
+        } catch(Exception ex) { 
+            ADInformer.isError("Ошибка в соединении с сервером MySql", ex);
+        }
+        finally { //Обязательно необходимо закрыть соединение
+            try {
+                if (rs !=null) { rs.close(); }
+                if (conn != null) { conn.close(); }
+            } catch (SQLException ex) {
+                ADInformer.isError("Ошибка закрытия сединения", ex);
+            }
+        }
+        jModelIP.fireTableDataChanged();
+    }
+    
     /**
      * Display information
      */
@@ -354,10 +381,11 @@ public class ADInformer extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton1))))
         );
 
         jTabbedPane1.setToolTipText("");
@@ -590,7 +618,14 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            getFormSearch();
+            System.out.println(jTabbedPane1.getSelectedIndex());
+            if(jTabbedPane1.getSelectedIndex()==0) { 
+                getFormSearch();
+            }
+            if (jTabbedPane1.getSelectedIndex()==1) {   
+                getFormSearchMember();
+            }
+            
         } catch (Exception ex) {
             ADInformer.isError("Error getFormSearch", ex);
         }
@@ -763,5 +798,15 @@ public class ADInformer extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
-    
+
+    private void getFormSearchMember() {
+        jModelIP = ADInformer.getTableIP(jTable2, jScrollPane2);
+        jTable2.setModel(jModelIP);        
+        jLabel2.setText(""); 
+        String str = "zhen";
+        adinformer.AdSearch ad = new adinformer.AdSearch();
+        
+        
+        jModelIP.fireTableDataChanged();
+    }
 }
