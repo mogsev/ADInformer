@@ -285,6 +285,7 @@ public class ADInformer extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -295,6 +296,8 @@ public class ADInformer extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem8 = new javax.swing.JMenuItem();
@@ -420,7 +423,6 @@ public class ADInformer extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Пользователи", jScrollPane2);
 
-        jToolBar1.setFloatable(false);
         jToolBar1.setFocusable(false);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/pdf.png"))); // NOI18N
@@ -488,6 +490,19 @@ public class ADInformer extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton6);
 
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
         jMenu1.setText("Файл");
 
         jMenuItem9.setText("Открыть файл...");
@@ -503,6 +518,19 @@ public class ADInformer extends javax.swing.JFrame {
         jMenu1.add(jMenuItem1);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu5.setText("Вид");
+
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("Панель инструментов");
+        jCheckBoxMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu5.add(jCheckBoxMenuItem1);
+
+        jMenuBar1.add(jMenu5);
 
         jMenu4.setText("Инструменты");
 
@@ -584,21 +612,19 @@ public class ADInformer extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -725,6 +751,18 @@ public class ADInformer extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
+        try {
+            if (jCheckBoxMenuItem1.isSelected()) {
+                jPanel4.setVisible(true);
+            } else {
+                jPanel4.setVisible(false);
+            }
+        } catch (Exception ex) {
+            ADInformer.isError("Error open user table", ex);
+        }
+    }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -768,12 +806,14 @@ public class ADInformer extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -787,6 +827,7 @@ public class ADInformer extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
