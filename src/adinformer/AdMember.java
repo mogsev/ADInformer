@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package adinformer;
 
 /**
@@ -84,6 +79,35 @@ public class AdMember {
             case company: company = value;
                 break;
         }
+    }
+    
+    public String[] getArrayStrings() {
+        String[] result = new String[listAttribute.values().length];
+        for (listAttribute list: listAttribute.values()) {
+            switch(list) {
+            case sAMAccountName: result[0] = sAMAccountName;
+                break;
+            case cn: result[1] = cn;
+                break;
+            case mail: result[2] = mail;
+                break;
+            case title: result[3] = title;
+                break;
+            case description: result[4] = description;
+                break;
+            case department: result[5] = department;
+                break;
+            case telephoneNumber: result[6] = telephoneNumber;
+                break;
+            case ipPhone: result[7] = ipPhone;
+                break;
+            case mobile: result[8] = mobile;
+                break;
+            case company: result[9] = company;
+                break;            
+            }
+        }
+        return result;
     }
     
     public void setDescription(String description) {

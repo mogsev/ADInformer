@@ -129,6 +129,45 @@ public class ADInformer extends javax.swing.JFrame {
         return jModelIP;
     }
     
+    public static DefaultTableModel getTableMember(javax.swing.JTable jTable, javax.swing.JScrollPane jScrollPane) {
+        jTable.setAutoCreateRowSorter(true);
+        
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
+        new String [][] {}, AdMember.listAttribute.getAttributeArray()) {
+        Class[] types = new Class [] {
+            java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+        };
+        boolean[] canEdit = new boolean [] {
+            false, false, false, false, false, false, false, false, false, false, false, false
+        };
+        public Class getColumnClass(int columnIndex) {
+            return types [columnIndex];
+        }
+        public boolean isCellEditable(int rowIndex, int columnIndex) {
+            return canEdit [columnIndex];
+        }
+        });
+        jTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane.setViewportView(jTable);
+        /**
+        if (jTable.getColumnModel().getColumnCount() > 0) {
+            jTable.getColumnModel().getColumn(0).setMinWidth(75);
+            jTable.getColumnModel().getColumn(1).setMinWidth(110);
+            jTable.getColumnModel().getColumn(2).setMinWidth(90);
+            jTable.getColumnModel().getColumn(3).setMinWidth(190);
+            jTable.getColumnModel().getColumn(4).setMinWidth(110);
+            jTable.getColumnModel().getColumn(5).setMinWidth(80);
+            jTable.getColumnModel().getColumn(6).setMinWidth(90);
+            jTable.getColumnModel().getColumn(7).setMinWidth(80);
+            jTable.getColumnModel().getColumn(8).setMinWidth(140);
+            jTable.getColumnModel().getColumn(9).setMinWidth(140);
+            jTable.getColumnModel().getColumn(10).setMinWidth(140);
+            jTable.getColumnModel().getColumn(11).setMinWidth(140);
+        }*/
+        jModelIP = (DefaultTableModel) jTable.getModel();
+        return jModelIP;
+    }
+    
     private void getFormUser() {
         jModelIP = ADInformer.getTableIP(jTable2, jScrollPane2);
         jTable2.setModel(jModelIP);        
@@ -423,6 +462,7 @@ public class ADInformer extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Пользователи", jScrollPane2);
 
+        jToolBar1.setFloatable(false);
         jToolBar1.setFocusable(false);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/pdf.png"))); // NOI18N
@@ -495,12 +535,13 @@ public class ADInformer extends javax.swing.JFrame {
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jMenu1.setText("Файл");
@@ -650,10 +691,9 @@ public class ADInformer extends javax.swing.JFrame {
             }
             if (jTabbedPane1.getSelectedIndex()==1) {   
                 getFormSearchMember();
-            }
-            
+            }            
         } catch (Exception ex) {
-            ADInformer.isError("Error getFormSearch", ex);
+            ADInformer.isError("Error in Action Search", ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -841,13 +881,19 @@ public class ADInformer extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void getFormSearchMember() {
-        jModelIP = ADInformer.getTableIP(jTable2, jScrollPane2);
-        jTable2.setModel(jModelIP);        
-        jLabel2.setText(""); 
-        String str = "zhen";
-        adinformer.AdSearch ad = new adinformer.AdSearch();
-        
-        
-        jModelIP.fireTableDataChanged();
+        try {
+            jModelIP = ADInformer.getTableMember(jTable2, jScrollPane2);
+            jTable2.setModel(jModelIP);        
+            jLabel2.setText(""); 
+            String search = jTextField1.getText();        
+            ArrayList<AdMember> result = AdSearch.getSearchMember(search);
+            for (AdMember list:result) {
+                System.out.println(list.getCn());
+                jModelIP.addRow(list.getArrayStrings());
+            }        
+            jModelIP.fireTableDataChanged();
+        } catch (Exception ex) {
+            ADInformer.isError("Error is getFormSearchMember", ex);
+        }
     }
 }

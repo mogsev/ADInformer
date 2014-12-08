@@ -262,7 +262,7 @@ public class AdSearch {
      * @param arrgs String[] where to find
      * @return result String
      */
-    private String getSearchString(String search, String ... arrgs) {
+    private String getSearchString(String search, String... arrgs) {
         String result = getSearchString(true, search, arrgs);
         return result;
     }
@@ -288,15 +288,16 @@ public class AdSearch {
         return result.toString();
     }
     
-    public ArrayList<AdMember> getSearchAttributes(String search, LdapContext ctx) {        
-        NamingEnumeration results;
-        results = null;
-        ArrayList<AdMember> mem = new ArrayList<AdMember>();
+    public static ArrayList<AdMember> getSearchMember(String search) {        
+        NamingEnumeration results;        
+        ArrayList<AdMember> members = new ArrayList<>();
         try { 
+            AdSearch adsearch = new AdSearch();
+            LdapContext ctx = adsearch.getLdapContext();
             SearchControls constraints = new SearchControls();
             constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);            
             constraints.setReturningAttributes(AdMember.listAttribute.getAttributeArray());
-            results = ctx.search("DC=RUD,DC=UA", getSearchString(search, AdMember.listAttribute.getAttributeArray()), constraints);
+            results = ctx.search(ADInformer.config.getDomainDN(), adsearch.getSearchString(search, AdMember.listAttribute.getAttributeArray()), constraints);
             while (results.hasMoreElements()) {
                 SearchResult sr = (SearchResult) results.nextElement();
                 Attributes attrs = sr.getAttributes();
@@ -306,12 +307,12 @@ public class AdSearch {
                         one.setAttribute(list, (String) attrs.get(list.name()).get());
                     }
                 }                
-                mem.add(one);
+                members.add(one);
             }
         } catch (Exception ex) {
             System.out.println(ex);
         }        
-        return mem;        
+        return members;        
     }
     
 }
