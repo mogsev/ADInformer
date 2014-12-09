@@ -1,11 +1,13 @@
 package adinformer;
 
+import java.util.Arrays;
+
 /**
  * @author zhenya
  */
 public class AdHost extends AdMember {
        
-    enum listAttribute extends AdMember.list {
+    enum listAttribute {
         ipHost,
         dnsHost,
         sAMAccountName, 

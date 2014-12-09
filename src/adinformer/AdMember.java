@@ -1,9 +1,39 @@
 package adinformer;
 
+import java.util.ArrayList;
+import javax.naming.NamingEnumeration;
+import javax.naming.directory.Attributes;
+import javax.naming.directory.SearchControls;
+import javax.naming.directory.SearchResult;
+import javax.naming.ldap.LdapContext;
+
 /**
  * @author zhenya mogsev@rud.ua
  */
 public class AdMember {
+    
+    enum listAttribute {
+        sAMAccountName, 
+        name, 
+        mail, 
+        title,
+        description,
+        department,
+        telephoneNumber,
+        ipPhone,
+        mobile,
+        company;
+        
+        public static String[] getAttributeArray() {
+            String[] result = new String[listAttribute.values().length];
+            int i = 0;
+            for (listAttribute list:listAttribute.values()) {
+                result[i] = list.name();
+                i++;
+            }
+            return result;
+        }
+    }
     
     private String sAMAccountName;
     private String name;
@@ -34,7 +64,7 @@ public class AdMember {
      * @param list
      * @param value
      */
-    public void setAttribute(AdEnum.listMemberAttribute list, String value) {
+    public void setAttribute(listAttribute list, String value) {
         switch(list) {
             case sAMAccountName: sAMAccountName = value;
                 break;
@@ -60,8 +90,8 @@ public class AdMember {
     }
     
     public String[] getArrayStrings() {
-        String[] result = new String[AdEnum.listMemberAttribute.values().length];
-        for (AdEnum.listMemberAttribute list: AdEnum.listMemberAttribute.values()) {
+        String[] result = new String[listAttribute.values().length];
+        for (listAttribute list: listAttribute.values()) {
             switch(list) {
             case sAMAccountName: result[0] = sAMAccountName;
                 break;
@@ -166,5 +196,5 @@ public class AdMember {
 
     public String getTitle() {
         return title;
-    }
+    }    
 }

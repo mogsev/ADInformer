@@ -400,6 +400,7 @@ public class ADInformer extends javax.swing.JFrame {
         });
 
         jButton1.setText("Поиск");
+        jButton1.setToolTipText("Поиск");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -496,6 +497,11 @@ public class ADInformer extends javax.swing.JFrame {
         jButton2.setMaximumSize(new java.awt.Dimension(32, 32));
         jButton2.setMinimumSize(new java.awt.Dimension(32, 32));
         jButton2.setPreferredSize(new java.awt.Dimension(32, 32));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton2);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/excel.png"))); // NOI18N
@@ -912,6 +918,31 @@ public class ADInformer extends javax.swing.JFrame {
             ADInformer.isError("Error jButton4ActionPerformed", ex);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            if (jTabbedPane1.getSelectedIndex()==0) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        
+                        
+                    }
+                }).start();
+            }
+            if (jTabbedPane1.getSelectedIndex()==1) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        AdPdf pdf = new AdPdf();
+                        pdf.savePdf(resultMembers);                        
+                    }
+                }).start();
+            }
+        } catch (Exception ex) {
+            ADInformer.isError("Error jButton4ActionPerformed", ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
