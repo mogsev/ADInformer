@@ -6,7 +6,7 @@ package adinformer;
 public class AdMember {
     enum listAttribute { 
         sAMAccountName, 
-        cn, 
+        name, 
         mail, 
         title,
         description,
@@ -28,7 +28,7 @@ public class AdMember {
     }    
     
     private String sAMAccountName;
-    private String cn;
+    private String name;
     private String mail;
     private String title;
     private String description;    
@@ -40,7 +40,7 @@ public class AdMember {
     
     AdMember() {
         sAMAccountName = "";
-        cn = "";
+        name = "";
         mail = "";
         title = "";
         description = "";
@@ -60,7 +60,7 @@ public class AdMember {
         switch(list) {
             case sAMAccountName: sAMAccountName = value;
                 break;
-            case cn: cn = value;
+            case name: name = value;
                 break;
             case mail: mail = value;
                 break;
@@ -87,7 +87,7 @@ public class AdMember {
             switch(list) {
             case sAMAccountName: result[0] = sAMAccountName;
                 break;
-            case cn: result[1] = cn;
+            case name: result[1] = name;
                 break;
             case mail: result[2] = mail;
                 break;
@@ -122,8 +122,8 @@ public class AdMember {
         this.sAMAccountName = sAMAccountName;
     }
 
-    public void setCn(String cn) {
-        this.cn = cn;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setMail(String mail) {
@@ -178,8 +178,8 @@ public class AdMember {
         return company;
     }
     
-    public String getCn() {
-        return cn;
+    public String getName() {
+        return name;
     }
 
     public String getMail() {

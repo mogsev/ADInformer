@@ -277,14 +277,18 @@ public class AdSearch {
     private String getSearchString(boolean oper, String search, String ... arrgs) {
         StringBuilder result = new StringBuilder();
         if (oper) {
-            result.append("(|");
+            result.append("(&(objectCategory=user)(|");
         } else {
-            result.append("(&");
+            result.append("(&(objectCategory=user)");
         }        
         for (String str:arrgs) {
             result.append("(").append(str).append("=*").append(search).append("*)");
         }
-        result.append(")");        
+        if (oper) {
+            result.append("))");
+        } else {
+            result.append(")");
+        }
         return result.toString();
     }
     
