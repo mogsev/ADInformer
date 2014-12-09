@@ -3,6 +3,7 @@ package adinformer;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Member;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -122,4 +123,43 @@ public class AdAutosave {
             ADInformer.isError("Error in writeCsv", ex);
         }
     }
+    
+    public void saveXmlMembers(java.util.ArrayList<AdMember> arrs) {
+        try {
+            root = new Element("members");
+            doc = new Document(root);
+            for (AdMember admember:arrs) {            
+                Element member = new Element("member");
+                for (AdMember.listAttribute list : AdMember.listAttribute.values()) {
+                    switch(list) {
+                    case sAMAccountName: member.addContent(new Element(list.name()).addContent(admember.getsAMAccountName()));;
+                        break;
+                    case name: member.addContent(new Element(list.name()).addContent(admember.getName()));;
+                        break;
+                    case mail: member.addContent(new Element(list.name()).addContent(admember.getMail()));;
+                        break;
+                    case title: member.addContent(new Element(list.name()).addContent(admember.getTitle()));;
+                        break;
+                    case description: member.addContent(new Element(list.name()).addContent(admember.getDescription()));;
+                        break;
+                    case department: member.addContent(new Element(list.name()).addContent(admember.getDepartment()));;
+                        break;
+                    case telephoneNumber: member.addContent(new Element(list.name()).addContent(admember.getTelephoneNumber()));;
+                        break;
+                    case ipPhone: member.addContent(new Element(list.name()).addContent(admember.getIpPhone()));;
+                        break;
+                    case mobile: member.addContent(new Element(list.name()).addContent(admember.getMobile()));;
+                        break;
+                    case company: member.addContent(new Element(list.name()).addContent(admember.getCompany()));;
+                        break;
+                    }
+                }                
+                root.addContent(member);
+            }
+            writeXml(doc, new String(getTime() + ".xml"));
+        } catch (Exception ex) {
+            ADInformer.isError("Error in saveXML", ex);
+        }
+    }
+    
 }
