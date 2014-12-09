@@ -300,13 +300,13 @@ public class AdSearch {
             LdapContext ctx = adsearch.getLdapContext();
             SearchControls constraints = new SearchControls();
             constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);            
-            constraints.setReturningAttributes(AdMember.listAttribute.getAttributeArray());
-            results = ctx.search(ADInformer.config.getDomainDN(), adsearch.getSearchString(search, AdMember.listAttribute.getAttributeArray()), constraints);
+            constraints.setReturningAttributes(AdEnum.listMemberAttribute.getAttributeArray());
+            results = ctx.search(ADInformer.config.getDomainDN(), adsearch.getSearchString(search, AdEnum.listMemberAttribute.getAttributeArray()), constraints);
             while (results.hasMoreElements()) {
                 SearchResult sr = (SearchResult) results.nextElement();
                 Attributes attrs = sr.getAttributes();
                 AdMember one = new AdMember();
-                for (AdMember.listAttribute list:AdMember.listAttribute.values()) {
+                for (AdEnum.listMemberAttribute list:AdEnum.listMemberAttribute.values()) {
                     if (attrs.get(list.name()) !=null) {                 
                         one.setAttribute(list, (String) attrs.get(list.name()).get());
                     }

@@ -154,7 +154,7 @@ public class ADInformer extends javax.swing.JFrame {
         jTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane.setViewportView(jTable);        
         if (jTable.getColumnModel().getColumnCount() > 0) {
-            jTable.getColumnModel().getColumn(0).setMinWidth(85);
+            jTable.getColumnModel().getColumn(0).setMinWidth(100);
             jTable.getColumnModel().getColumn(1).setMinWidth(170);
             jTable.getColumnModel().getColumn(2).setMinWidth(100);
             jTable.getColumnModel().getColumn(3).setMinWidth(150);
@@ -171,8 +171,7 @@ public class ADInformer extends javax.swing.JFrame {
     
     private void getFormUser() {
         jModelIP = ADInformer.getTableIP(jTable2, jScrollPane2);
-        jTable2.setModel(jModelIP);        
-        jLabel2.setText("");        
+        jTable2.setModel(jModelIP);                
         try {
             conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД            
             Statement st = conn.createStatement();  //Готовим запрос
@@ -995,8 +994,7 @@ public class ADInformer extends javax.swing.JFrame {
     private void getFormSearchMember() {
         try {
             jModelMember = ADInformer.getTableMember(jTable2, jScrollPane2);
-            jTable2.setModel(jModelMember);        
-            jLabel2.setText(""); 
+            jTable2.setModel(jModelMember);            
             String search = jTextField1.getText();        
             resultMembers = AdSearch.getSearchMember(search);
             for (AdMember list:resultMembers) {                
