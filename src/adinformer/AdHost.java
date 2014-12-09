@@ -1,7 +1,5 @@
 package adinformer;
 
-import java.util.Arrays;
-
 /**
  * @author zhenya
  */
@@ -53,7 +51,30 @@ public class AdHost extends AdMember {
 
     public void setAttribute(listAttribute list, String value) {
         switch(list) {
-        
+            case ipHost: ipHost = value;
+                break;
+            case dnsHost: dnsHost = value;
+                break;
+            case sAMAccountName: sAMAccountName = value;
+                break;
+            case name: name = value;
+                break;
+            case mail: mail = value;
+                break;
+            case title: title = value;
+                break;
+            case description: description = value;
+                break;
+            case department: department = value;
+                break;
+            case telephoneNumber: telephoneNumber = value;
+                break;
+            case ipPhone: ipPhone = value;
+                break;
+            case mobile: mobile = value;
+                break;
+            case company: company = value;
+                break;        
         }
     }
     
