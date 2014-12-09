@@ -329,6 +329,7 @@ public class ADInformer extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -490,34 +491,35 @@ public class ADInformer extends javax.swing.JFrame {
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/pdf.png"))); // NOI18N
         jButton2.setText(" ");
         jButton2.setToolTipText("Save in PDF");
+        jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton2.setFocusable(false);
         jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton2.setMaximumSize(new java.awt.Dimension(28, 28));
-        jButton2.setMinimumSize(new java.awt.Dimension(28, 28));
-        jButton2.setPreferredSize(new java.awt.Dimension(28, 28));
+        jButton2.setMaximumSize(new java.awt.Dimension(32, 32));
+        jButton2.setMinimumSize(new java.awt.Dimension(32, 32));
+        jButton2.setPreferredSize(new java.awt.Dimension(32, 32));
         jToolBar1.add(jButton2);
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/excel.png"))); // NOI18N
         jButton3.setText(" ");
         jButton3.setToolTipText("Save in CSV");
         jButton3.setAlignmentX(0.5F);
-        jButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 8, 1, 1));
+        jButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton3.setFocusable(false);
         jButton3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton3.setMaximumSize(new java.awt.Dimension(28, 28));
-        jButton3.setMinimumSize(new java.awt.Dimension(28, 28));
-        jButton3.setPreferredSize(new java.awt.Dimension(28, 28));
+        jButton3.setMaximumSize(new java.awt.Dimension(32, 32));
+        jButton3.setMinimumSize(new java.awt.Dimension(32, 32));
+        jButton3.setPreferredSize(new java.awt.Dimension(32, 32));
         jToolBar1.add(jButton3);
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/xml.png"))); // NOI18N
         jButton4.setText(" ");
         jButton4.setToolTipText("Save in XML");
-        jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 2, 1, 1));
+        jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton4.setMaximumSize(new java.awt.Dimension(35, 28));
-        jButton4.setMinimumSize(new java.awt.Dimension(28, 28));
-        jButton4.setPreferredSize(new java.awt.Dimension(28, 28));
+        jButton4.setMaximumSize(new java.awt.Dimension(32, 32));
+        jButton4.setMinimumSize(new java.awt.Dimension(32, 32));
+        jButton4.setPreferredSize(new java.awt.Dimension(32, 32));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -528,12 +530,12 @@ public class ADInformer extends javax.swing.JFrame {
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/organisation.png"))); // NOI18N
         jButton5.setText(" ");
         jButton5.setToolTipText("Open workstations");
-        jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 2, 1, 1));
+        jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton5.setFocusable(false);
         jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton5.setMaximumSize(new java.awt.Dimension(30, 28));
-        jButton5.setMinimumSize(new java.awt.Dimension(28, 28));
-        jButton5.setPreferredSize(new java.awt.Dimension(28, 28));
+        jButton5.setMaximumSize(new java.awt.Dimension(32, 32));
+        jButton5.setMinimumSize(new java.awt.Dimension(32, 32));
+        jButton5.setPreferredSize(new java.awt.Dimension(32, 32));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
@@ -544,18 +546,28 @@ public class ADInformer extends javax.swing.JFrame {
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/user.png"))); // NOI18N
         jButton6.setText(" ");
         jButton6.setToolTipText("Open users");
-        jButton6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 4, 1, 1));
+        jButton6.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton6.setFocusable(false);
         jButton6.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButton6.setMaximumSize(new java.awt.Dimension(32, 28));
-        jButton6.setMinimumSize(new java.awt.Dimension(32, 28));
-        jButton6.setPreferredSize(new java.awt.Dimension(32, 28));
+        jButton6.setMaximumSize(new java.awt.Dimension(32, 32));
+        jButton6.setMinimumSize(new java.awt.Dimension(32, 32));
+        jButton6.setPreferredSize(new java.awt.Dimension(32, 32));
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton6ActionPerformed(evt);
             }
         });
         jToolBar1.add(jButton6);
+
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/email.png"))); // NOI18N
+        jButton7.setText(" ");
+        jButton7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton7.setFocusable(false);
+        jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton7.setMaximumSize(new java.awt.Dimension(32, 32));
+        jButton7.setMinimumSize(new java.awt.Dimension(32, 32));
+        jButton7.setPreferredSize(new java.awt.Dimension(32, 32));
+        jToolBar1.add(jButton7);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -945,6 +957,7 @@ public class ADInformer extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
