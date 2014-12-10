@@ -935,7 +935,7 @@ public class ADInformer extends javax.swing.JFrame {
                     @Override
                     public void run() {
                         AdPdf pdf = new AdPdf();
-                        pdf.savePdf(resultMembers);                        
+                        pdf.saveMembersPdf(resultMembers);                        
                     }
                 }).start();
             }

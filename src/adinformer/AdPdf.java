@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package adinformer;
 
 import com.itextpdf.text.BaseColor;
@@ -16,7 +11,6 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -27,8 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author zhenya
+ * @author zhenya mogsev@gmail.com
  */
 public class AdPdf {
     
@@ -46,7 +39,7 @@ public class AdPdf {
         return time;                
     }
     
-    public void savePdf(ArrayList<AdMember> result) {
+    public void saveMembersPdf(ArrayList<AdMember> result) {
         try {
             document = new Document(PageSize.A4, 20, 20, 20, 20);  
             PdfWriter writer = PdfWriter.getInstance(this.document, new FileOutputStream(new String(getTime()+".pdf")));
