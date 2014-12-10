@@ -299,7 +299,7 @@ public class AdSearch {
      */
     public static ArrayList<AdMember> getSearchMember(String search) {        
         NamingEnumeration results;        
-        ArrayList<AdMember> members = new ArrayList<>();
+        ArrayList<AdMember> members = new ArrayList<AdMember>();
         try { 
             AdSearch adsearch = new AdSearch();
             LdapContext ctx = adsearch.getLdapContext();
