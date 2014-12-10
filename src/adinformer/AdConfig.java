@@ -67,7 +67,7 @@ public class AdConfig {
             writeConfig();
         }
         //входной файл
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
             in = new StringBuilder(); //буфер для входного текста
             while (true) {   //цикл для вычитывания файла
                 String buffer = reader.readLine();
@@ -75,8 +75,7 @@ public class AdConfig {
                     break;
                 }
                 in.append(buffer).append(n); //заполняем буфер вычитанным текстом
-            }
-        } 
+            }         
         int i = 0;
         int e = in.length(); //вычисляем длину входного текста
         while (i!=e) {
