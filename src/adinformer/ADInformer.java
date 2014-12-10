@@ -932,7 +932,6 @@ public class ADInformer extends javax.swing.JFrame {
             }
             if (jTabbedPane1.getSelectedIndex()==1) {
                 new Thread(new Runnable() {
-                    @Override
                     public void run() {
                         AdPdf pdf = new AdPdf();
                         pdf.saveMembersPdf(resultMembers);                        
