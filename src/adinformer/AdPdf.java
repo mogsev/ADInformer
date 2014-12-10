@@ -40,8 +40,8 @@ public class AdPdf {
     }
     
     /**
-     * 
-     * @param result 
+     * This metod generete PDF document and save
+     * @param result input ArrayList object AdMember
      */
     public void saveMembersPdf(ArrayList<AdMember> result) {
         try {
