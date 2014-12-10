@@ -39,6 +39,10 @@ public class AdPdf {
         return time;                
     }
     
+    /**
+     * 
+     * @param result 
+     */
     public void saveMembersPdf(ArrayList<AdMember> result) {
         try {
             document = new Document(PageSize.A4, 20, 20, 20, 20);  
