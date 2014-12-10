@@ -3,7 +3,6 @@ package adinformer;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.Member;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -139,9 +138,7 @@ public class AdAutosave {
                     case mail: member.addContent(new Element(list.name()).addContent(admember.getMail()));;
                         break;
                     case title: member.addContent(new Element(list.name()).addContent(admember.getTitle()));;
-                        break;
-                    case description: member.addContent(new Element(list.name()).addContent(admember.getDescription()));;
-                        break;
+                        break;                    
                     case department: member.addContent(new Element(list.name()).addContent(admember.getDepartment()));;
                         break;
                     case telephoneNumber: member.addContent(new Element(list.name()).addContent(admember.getTelephoneNumber()));;

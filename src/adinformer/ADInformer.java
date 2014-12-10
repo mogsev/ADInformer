@@ -133,42 +133,6 @@ public class ADInformer extends javax.swing.JFrame {
         return jModelIP;
     }
     
-    public static DefaultTableModel getTableMember(javax.swing.JTable jTable, javax.swing.JScrollPane jScrollPane) {
-        jTable.setAutoCreateRowSorter(true);
-        
-        jTable.setModel(new javax.swing.table.DefaultTableModel(
-        new String [][] {}, AdMember.listAttribute.getAttributeArray()) {
-        Class[] types = new Class [] {
-            java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-        };
-        boolean[] canEdit = new boolean [] {
-            false, false, false, false, false, false, false, false, false, false, false, false
-        };
-        public Class getColumnClass(int columnIndex) {
-            return types [columnIndex];
-        }
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return canEdit [columnIndex];
-        }
-        });
-        jTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane.setViewportView(jTable);        
-        if (jTable.getColumnModel().getColumnCount() > 0) {
-            jTable.getColumnModel().getColumn(0).setMinWidth(100);
-            jTable.getColumnModel().getColumn(1).setMinWidth(170);
-            jTable.getColumnModel().getColumn(2).setMinWidth(100);
-            jTable.getColumnModel().getColumn(3).setMinWidth(150);
-            jTable.getColumnModel().getColumn(4).setMinWidth(150);
-            jTable.getColumnModel().getColumn(5).setMinWidth(130);
-            jTable.getColumnModel().getColumn(6).setMinWidth(80);
-            jTable.getColumnModel().getColumn(7).setMinWidth(80);
-            jTable.getColumnModel().getColumn(8).setMinWidth(80);
-            jTable.getColumnModel().getColumn(9).setMinWidth(160);           
-        }
-        jModelIP = (DefaultTableModel) jTable.getModel();
-        return jModelIP;
-    }
-    
     private void getFormUser() {
         jModelIP = ADInformer.getTableIP(jTable2, jScrollPane2);
         jTable2.setModel(jModelIP);                
@@ -1023,7 +987,7 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void getFormSearchMember() {
         try {
-            jModelMember = ADInformer.getTableMember(jTable2, jScrollPane2);
+            jModelMember = AdMember.getTableMember(jTable2, jScrollPane2);
             jTable2.setModel(jModelMember);            
             String search = jTextField1.getText();        
             resultMembers = AdSearch.getSearchMember(search);

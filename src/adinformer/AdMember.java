@@ -1,5 +1,7 @@
 package adinformer;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  * @author zhenya mogsev@rud.ua
  */
@@ -9,8 +11,7 @@ public class AdMember {
         sAMAccountName, 
         name, 
         mail, 
-        title,
-        description,
+        title,        
         department,
         telephoneNumber,
         ipPhone,
@@ -31,8 +32,7 @@ public class AdMember {
     private String sAMAccountName;
     private String name;
     private String mail;
-    private String title;
-    private String description;    
+    private String title;    
     private String department;
     private String telephoneNumber;
     private String ipPhone;
@@ -43,8 +43,7 @@ public class AdMember {
         sAMAccountName = "";
         name = "";
         mail = "";
-        title = "";
-        description = "";
+        title = "";        
         department = "";
         telephoneNumber = "";
         ipPhone = "";
@@ -66,9 +65,7 @@ public class AdMember {
             case mail: mail = value;
                 break;
             case title: title = value;
-                break;
-            case description: description = value;
-                break;
+                break;            
             case department: department = value;
                 break;
             case telephoneNumber: telephoneNumber = value;
@@ -82,6 +79,10 @@ public class AdMember {
         }
     }
     
+    /**
+     * 
+     * @return 
+     */
     public String[] getArrayStrings() {
         String[] result = new String[listAttribute.values().length];
         for (listAttribute list: listAttribute.values()) {
@@ -93,30 +94,61 @@ public class AdMember {
             case mail: result[2] = mail;
                 break;
             case title: result[3] = title;
+                break;            
+            case department: result[4] = department;
                 break;
-            case description: result[4] = description;
+            case telephoneNumber: result[5] = telephoneNumber;
                 break;
-            case department: result[5] = department;
+            case ipPhone: result[6] = ipPhone;
                 break;
-            case telephoneNumber: result[6] = telephoneNumber;
+            case mobile: result[7] = mobile;
                 break;
-            case ipPhone: result[7] = ipPhone;
-                break;
-            case mobile: result[8] = mobile;
-                break;
-            case company: result[9] = company;
+            case company: result[8] = company;
                 break;            
             }
         }
         return result;
     }
     
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getDescription() {
-        return description;
+    /**
+     * 
+     * @param jTable
+     * @param jScrollPane
+     * @return 
+     */
+    public static DefaultTableModel getTableMember(javax.swing.JTable jTable, javax.swing.JScrollPane jScrollPane) {
+        DefaultTableModel jModelMember;
+        jTable.setAutoCreateRowSorter(true);
+        
+        jTable.setModel(new javax.swing.table.DefaultTableModel(new String [][] {}, listAttribute.getAttributeArray()) {
+            Class[] types = new Class[] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false, false
+            };            
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });        
+        jTable.getTableHeader().setReorderingAllowed(false);
+        jScrollPane.setViewportView(jTable);        
+        if (jTable.getColumnModel().getColumnCount() > 0) {
+            jTable.getColumnModel().getColumn(0).setMinWidth(100);
+            jTable.getColumnModel().getColumn(1).setMinWidth(170);
+            jTable.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable.getColumnModel().getColumn(3).setMinWidth(150);            
+            jTable.getColumnModel().getColumn(4).setMinWidth(130);
+            jTable.getColumnModel().getColumn(5).setMinWidth(80);
+            jTable.getColumnModel().getColumn(6).setMinWidth(80);
+            jTable.getColumnModel().getColumn(7).setMinWidth(80);
+            jTable.getColumnModel().getColumn(8).setMinWidth(160);           
+        }
+        jModelMember = (DefaultTableModel) jTable.getModel();
+        return jModelMember;
     }
     
     public void setsAMAccountName(String sAMAccountName) {
