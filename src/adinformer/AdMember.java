@@ -18,6 +18,10 @@ public class AdMember {
         mobile,
         company;
         
+        /**
+         * Return array string value listAttibute name
+         * @return 
+         */
         public static String[] getAttributeArray() {
             String[] result = new String[listAttribute.values().length];
             int i = 0;
@@ -26,7 +30,7 @@ public class AdMember {
                 i++;
             }
             return result;
-        }
+        }        
     }
     
     private String sAMAccountName;
@@ -52,7 +56,7 @@ public class AdMember {
     }
     
     /**
-     *
+     * Set value attribute 
      * @param list
      * @param value
      */
@@ -80,30 +84,29 @@ public class AdMember {
     }
     
     /**
-     * 
-     * @return 
+     * @return String array value attribute name
      */
     public String[] getArrayStrings() {
         String[] result = new String[listAttribute.values().length];
         for (listAttribute list: listAttribute.values()) {
             switch(list) {
-            case sAMAccountName: result[0] = sAMAccountName;
+            case sAMAccountName: result[list.ordinal()] = sAMAccountName;
                 break;
-            case name: result[1] = name;
+            case name: result[list.ordinal()] = name;
                 break;
-            case mail: result[2] = mail;
+            case mail: result[list.ordinal()] = mail;
                 break;
-            case title: result[3] = title;
+            case title: result[list.ordinal()] = title;
                 break;            
-            case department: result[4] = department;
+            case department: result[list.ordinal()] = department;
                 break;
-            case telephoneNumber: result[5] = telephoneNumber;
+            case telephoneNumber: result[list.ordinal()] = telephoneNumber;
                 break;
-            case ipPhone: result[6] = ipPhone;
+            case ipPhone: result[list.ordinal()] = ipPhone;
                 break;
-            case mobile: result[7] = mobile;
+            case mobile: result[list.ordinal()] = mobile;
                 break;
-            case company: result[8] = company;
+            case company: result[list.ordinal()] = company;
                 break;            
             }
         }
@@ -111,22 +114,24 @@ public class AdMember {
     }
     
     /**
-     * 
+     * Return DefaultTableModel for Member
      * @param jTable
      * @param jScrollPane
-     * @return 
+     * @return DefaultTableModel
      */
     public static DefaultTableModel getTableMember(javax.swing.JTable jTable, javax.swing.JScrollPane jScrollPane) {
         DefaultTableModel jModelMember;
         jTable.setAutoCreateRowSorter(true);
         
-        jTable.setModel(new javax.swing.table.DefaultTableModel(new String [][] {}, listAttribute.getAttributeArray()) {
+        jTable.setModel(new javax.swing.table.DefaultTableModel(new String [][] {}, listAttribute.getAttributeArray()) {            
             Class[] types = new Class[] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class,
+                java.lang.String.class, java.lang.String.class, java.lang.String.class,
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false
-            };            
+            };
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
@@ -151,75 +156,147 @@ public class AdMember {
         return jModelMember;
     }
     
+    /**
+     * Set value attribute sAMAccountName
+     * @param sAMAccountName 
+     */
     public void setsAMAccountName(String sAMAccountName) {
         this.sAMAccountName = sAMAccountName;
     }
-
+    
+    /**
+     * Set value attribute Full Name
+     * @param name 
+     */
     public void setName(String name) {
         this.name = name;
     }
-
+    
+    /**
+     * Set value attribute Mail
+     * @param mail 
+     */
     public void setMail(String mail) {
         this.mail = mail;
     }
-
+    
+    /**
+     * Set value Title name
+     * @param title 
+     */
     public void setTitle(String title) {
         this.title = title;
     }
-
+    
+    /**
+     * Set value attribute Department name
+     * @param department 
+     */
     public void setDepartment(String department) {
         this.department = department;
     }
-
+    
+    /**
+     * Set value attribute Telephone number
+     * @param telephoneNumber 
+     */
     public void setTelephoneNumber(String telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
     }
-
+    
+    /**
+     * Set value VoIP phone number
+     * @param ipPhone 
+     */
     public void setIpPhone(String ipPhone) {
         this.ipPhone = ipPhone;
     }
-
+    
+    /**
+     * Set value attribute Mobile number
+     * @param mobile 
+     */
     public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 
+    /**
+     * Set value attribute Company name
+     * @param company 
+     */
     public void setCompany(String company) {
         this.company = company;
     }
-
+    
+    /**
+     * Return value attribute sAMAccountName
+     * @return String
+     */
     public String getsAMAccountName() {
         return sAMAccountName;
     }
-
+    
+    /**
+     * Return value attribute Department name
+     * @return String
+     */
     public String getDepartment() {
         return department;
     }
-
+    
+    /**
+     * Return value attribute Telephone number
+     * @return String
+     */
     public String getTelephoneNumber() {
         return telephoneNumber;
     }
-
+    
+    /**
+     * Return value attribute VoIP number
+     * @return String
+     */
     public String getIpPhone() {
         return ipPhone;
     }
-
+    
+    /**
+     * Return value attribute Mobile number
+     * @return String
+     */
     public String getMobile() {
         return mobile;
     }
 
+    /**
+     * Return value attribyte Company name
+     * @return String
+     */
     public String getCompany() {
         return company;
     }
     
+    /**
+     * Return value attribute Full Name
+     * @return String 
+     */
     public String getName() {
         return name;
     }
-
+    
+    /**
+     * Return value attribute Mail
+     * @return String
+     */
     public String getMail() {
         return mail;
     }
 
-    public String getTitle() {
+    /**
+     * Return value attribute Title 
+     * @return String
+     */
+    public String getTitle() {        
         return title;
     }    
 }
