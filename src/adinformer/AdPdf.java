@@ -11,6 +11,8 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -45,8 +47,9 @@ public class AdPdf {
      */
     public void saveMembersPdf(ArrayList<AdMember> result) {
         try {
-            document = new Document(PageSize.A4, 20, 20, 20, 20);  
-            PdfWriter writer = PdfWriter.getInstance(this.document, new FileOutputStream(new String(getTime()+".pdf")));
+            String filename = new String(getTime()+".pdf");
+            document = new Document(PageSize.A4, 20, 20, 20, 20);
+            PdfWriter writer = PdfWriter.getInstance(this.document, new FileOutputStream(filename));
             FontFactory.register("c:\\WINDOWS\\fonts\\tahoma.ttf");
             BaseFont baseFont = BaseFont.createFont("c:\\WINDOWS\\fonts\\tahoma.ttf", BaseFont.IDENTITY_H, true);
             Font font  = new Font(baseFont, 12);
@@ -101,12 +104,21 @@ public class AdPdf {
             document.close();
             writer.flush();
             writer.close();
-            
-            //saveDocument(document);
+            openPdfFile(filename);            
         } catch (DocumentException ex) {
-            Logger.getLogger(AdPdf.class.getName()).log(Level.SEVERE, null, ex);
+            ADInformer.isError("Error create PDF document", ex);
         } catch (IOException ex) {
-            Logger.getLogger(AdPdf.class.getName()).log(Level.SEVERE, null, ex);
+            ADInformer.isError("Error create PDF file", ex);
         }
+    }
+    
+    private void openPdfFile(String file) {
+        try {
+            Desktop desktop = Desktop.getDesktop();                
+            File myFile = new File(file);                            
+            desktop.open(myFile);
+        } catch (IOException ex) {
+            ADInformer.isError("Error open file", ex);                
+        }        
     }
 }

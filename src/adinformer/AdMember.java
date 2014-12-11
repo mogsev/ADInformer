@@ -22,7 +22,7 @@ public class AdMember {
          * Return array string value listAttibute name
          * @return 
          */
-        public static String[] getAttributeArray() {
+        public static String[] getListAttribute() {
             String[] result = new String[listAttribute.values().length];
             int i = 0;
             for (listAttribute list:listAttribute.values()) {
@@ -86,7 +86,7 @@ public class AdMember {
     /**
      * @return String array value attribute name
      */
-    public String[] getArrayStrings() {
+    public String[] getAttributes() {
         String[] result = new String[listAttribute.values().length];
         for (listAttribute list: listAttribute.values()) {
             switch(list) {
@@ -119,22 +119,14 @@ public class AdMember {
      * @param jScrollPane
      * @return DefaultTableModel
      */
-    public static DefaultTableModel getTableMember(javax.swing.JTable jTable, javax.swing.JScrollPane jScrollPane) {
+    public static DefaultTableModel getTableModelMember(javax.swing.JTable jTable, javax.swing.JScrollPane jScrollPane) {
         DefaultTableModel jModelMember;
         jTable.setAutoCreateRowSorter(true);
         
-        jTable.setModel(new javax.swing.table.DefaultTableModel(new String [][] {}, listAttribute.getAttributeArray()) {            
-            Class[] types = new Class[] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class,
-                java.lang.String.class, java.lang.String.class, java.lang.String.class,
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
+        jTable.setModel(new javax.swing.table.DefaultTableModel(new String [][] {}, listAttribute.getListAttribute()) {            
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false, false, false, false, false
-            };
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+            };            
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }

@@ -1,8 +1,11 @@
 package adinformer;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.file.Path;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,7 +37,7 @@ public class AdAutosave {
                 OutputStreamWriter out = new java.io.OutputStreamWriter(new java.io.FileOutputStream(filename),"UTF-8");
                 out.write(outputter.outputString(savingDocument));
                 out.flush();
-                out.close();
+                out.close();                
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(null, ex);
             }
@@ -123,12 +126,16 @@ public class AdAutosave {
         }
     }
     
+    /**
+     * 
+     * @param arrs 
+     */
     public void saveXmlMembers(java.util.ArrayList<AdMember> arrs) {
         try {
             root = new Element("members");
             doc = new Document(root);
             for (AdMember admember:arrs) {            
-                Element member = new Element("member");
+                Element member = new Element("member");                
                 for (AdMember.listAttribute list : AdMember.listAttribute.values()) {
                     switch(list) {
                     case sAMAccountName: member.addContent(new Element(list.name()).addContent(admember.getsAMAccountName()));;
@@ -153,10 +160,21 @@ public class AdAutosave {
                 }                
                 root.addContent(member);
             }
-            writeXml(doc, new String(getTime() + ".xml"));
+            String filename = getTime() + ".xml";
+            writeXml(doc, filename);
+            openFile(filename);            
         } catch (Exception ex) {
             ADInformer.isError("Error in saveXML", ex);
         }
     }
     
+    private void openFile(String file) {
+        try {
+            Desktop desktop = Desktop.getDesktop();                
+            File myFile = new File(file);                            
+            desktop.open(myFile);
+        } catch (IOException ex) {
+            ADInformer.isError("Error open file", ex);                
+        }        
+    }    
 }

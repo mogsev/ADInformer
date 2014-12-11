@@ -305,9 +305,9 @@ public class AdSearch {
             LdapContext ctx = adsearch.getLdapContext();
             SearchControls constraints = new SearchControls();
             constraints.setSearchScope(SearchControls.SUBTREE_SCOPE);            
-            constraints.setReturningAttributes(AdMember.listAttribute.getAttributeArray());
+            constraints.setReturningAttributes(AdMember.listAttribute.getListAttribute());
             results = ctx.search(ADInformer.config.getDomainDN(), 
-                    adsearch.getSearchString(search, AdMember.listAttribute.getAttributeArray()), constraints);
+                    adsearch.getSearchString(search, AdMember.listAttribute.getListAttribute()), constraints);
             while (results.hasMoreElements()) {
                 SearchResult sr = (SearchResult) results.nextElement();
                 Attributes attrs = sr.getAttributes();

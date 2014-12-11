@@ -987,12 +987,12 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void getFormSearchMember() {
         try {
-            jModelMember = AdMember.getTableMember(jTable2, jScrollPane2);
+            jModelMember = AdMember.getTableModelMember(jTable2, jScrollPane2);
             jTable2.setModel(jModelMember);            
             String search = jTextField1.getText();        
             resultMembers = AdSearch.getSearchMember(search);
             for (AdMember list:resultMembers) {                
-                jModelMember.addRow(list.getArrayStrings());
+                jModelMember.addRow(list.getAttributes());
             }        
             jModelMember.fireTableDataChanged();
         } catch (Exception ex) {
