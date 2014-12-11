@@ -43,7 +43,7 @@ public class AdMember {
     private String mobile;
     private String company;
     
-    AdMember() {
+    AdMember() {        
         sAMAccountName = "";
         name = "";
         mail = "";
@@ -52,7 +52,7 @@ public class AdMember {
         telephoneNumber = "";
         ipPhone = "";
         mobile = "";
-        company = "";        
+        company = "";          
     }
     
     /**
@@ -111,6 +111,34 @@ public class AdMember {
             }
         }
         return result;
+    }
+    
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        for (listAttribute list : listAttribute.values()) {
+            switch (list) {
+                case sAMAccountName: result.append(list).append(": ").append(sAMAccountName).append("\t");
+                    break;
+                case name: result.append(list).append(": ").append(name).append("\t");
+                    break;
+                case mail: result.append(list).append(": ").append(mail).append("\t");;
+                    break;
+                case title: result.append(list).append(": ").append(title).append("\t");;
+                    break;            
+                case department: result.append(list).append(": ").append(department).append("\t");;
+                    break;
+                case telephoneNumber: result.append(list).append(": ").append(telephoneNumber).append("\t");;
+                    break;
+                case ipPhone: result.append(list).append(": ").append(ipPhone).append("\t");;
+                    break;
+                case mobile: result.append(list).append(": ").append(mobile).append("\t");;
+                    break;
+                case company: result.append(list).append(": ").append(company).append("\t");;
+                    break;
+            }
+        }
+        return result.toString();
     }
     
     /**
