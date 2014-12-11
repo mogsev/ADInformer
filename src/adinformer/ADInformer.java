@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * @author zhenya mogsev@gmail.com
  */
-public class ADInformer extends javax.swing.JFrame {
+public class ADInformer extends javax.swing.JFrame {    
     static final String PROGRAM_NAME = "Active Directory Informer";
     static final String PROGRAM_VERSION = "1.5.4";
     static final String EMAIL = "mogsev@gmail.com";
@@ -42,7 +42,7 @@ public class ADInformer extends javax.swing.JFrame {
     public static void saveMySql(ArrayList<Object[]> obj) {
         try {
             if (ADInformer.config.getMysqlAutosave()) {
-                for (Object[] objto:obj) {            
+                for (Object[] objto:obj) {                            
                     conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД                        
                     Statement st = conn.createStatement(); //Готовим запрос                    
                     rs = st.executeQuery("select * from history where ip = '"+objto[0]+"'");
@@ -984,7 +984,10 @@ public class ADInformer extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
-
+    
+    /**
+     * 
+     */
     private void getFormSearchMember() {
         try {
             jModelMember = AdMember.getTableModelMember(jTable2, jScrollPane2);
@@ -1000,6 +1003,9 @@ public class ADInformer extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * 
+     */
     private void setLabel2Action() {
         try {
             if (jTabbedPane1.getSelectedIndex()==0) {
