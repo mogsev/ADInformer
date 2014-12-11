@@ -50,46 +50,55 @@ public class AdPdf {
             PdfWriter writer = PdfWriter.getInstance(this.document, new FileOutputStream(file));
             FontFactory.register("c:\\WINDOWS\\fonts\\tahoma.ttf");
             BaseFont baseFont = BaseFont.createFont("c:\\WINDOWS\\fonts\\tahoma.ttf", BaseFont.IDENTITY_H, true);
-            Font font  = new Font(baseFont, 12);
+            Font fontHead  = new Font(baseFont, 12);
+            BaseColor headColor = new BaseColor(163, 185, 240);
+            Font fontMember = new Font(baseFont, 10);
+            
             document.open();
             
+            
             PdfPTable table = new PdfPTable(1);
-            PdfPCell cell = new PdfPCell(new Phrase("Название отдела", font));
-            cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            PdfPCell cell = new PdfPCell(new Phrase("Название отдела", fontHead));
+            cell.setBackgroundColor(headColor);
             cell.setHorizontalAlignment(2);
             table.addCell(cell);
-            table.setWidthPercentage(100);
+            table.setWidthPercentage(95);
             
             PdfPTable tableResult = new PdfPTable(4);
-            tableResult.setWidthPercentage(100);
-            
+            tableResult.setWidthPercentage(95);            
             PdfPCell cellTitle = new PdfPCell(new Phrase("Title"));
-            cellTitle.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cellTitle.setBackgroundColor(headColor);
             cellTitle.setVerticalAlignment(1);
             tableResult.addCell(cellTitle).setHorizontalAlignment(1);
             
             PdfPCell cellName = new PdfPCell(new Phrase("Full Name"));
-            cellName.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cellName.setBackgroundColor(headColor);
             cellName.setVerticalAlignment(1);
             tableResult.addCell(cellName).setHorizontalAlignment(1);
             
             PdfPCell cellTelephone = new PdfPCell(new Phrase("Telephone"));
-            cellTelephone.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cellTelephone.setBackgroundColor(headColor);
             cellTelephone.setVerticalAlignment(1);
             tableResult.addCell(cellTelephone).setHorizontalAlignment(1);
             
             PdfPCell cellEmail = new PdfPCell(new Phrase("Email"));
-            cellEmail.setBackgroundColor(BaseColor.LIGHT_GRAY);
+            cellEmail.setBackgroundColor(headColor);
             cellEmail.setVerticalAlignment(1);
             tableResult.addCell(cellEmail).setHorizontalAlignment(1);
             
             for (AdMember member : result) {
-                tableResult.addCell(new Phrase(member.getTitle(), font));
-                tableResult.addCell(new Phrase(member.getName(), font));
-                tableResult.addCell("Tel: " + member.getTelephoneNumber() + "\r\n" + 
-                        "VoIP: " + member.getIpPhone() + "\r\n" +
-                        "Mob: " + member.getMobile());
-                tableResult.addCell(member.getMail());
+                Phrase title = new Phrase(member.getTitle(), fontMember);
+                tableResult.addCell(title);
+                Phrase name = new Phrase(member.getName(), fontMember);
+                tableResult.addCell(name);
+                StringBuilder telephone = new StringBuilder();
+                if (!member.getTelephoneNumber().equals("")) {telephone.append("Tel: ").append(member.getTelephoneNumber()).append("\r\n");}
+                if (!member.getIpPhone().equals("")) {telephone.append("Tel: ").append(member.getIpPhone()).append("\r\n");}
+                if (!member.getMobile().equals("")) {telephone.append("Tel: ").append(member.getMobile()).append("\r\n");}
+                Phrase telephon = new Phrase(telephone.toString(), fontMember);                
+                tableResult.addCell(telephon);
+                Phrase mail = new Phrase(member.getMail(), fontMember);
+                tableResult.addCell(mail);
             }
             /*
             tableResult.addCell(new Phrase("Администратор систем", font));
