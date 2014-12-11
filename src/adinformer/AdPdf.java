@@ -19,8 +19,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author zhenya mogsev@gmail.com
@@ -47,9 +45,9 @@ public class AdPdf {
      */
     public void saveMembersPdf(ArrayList<AdMember> result) {
         try {
-            String filename = new String(getTime()+".pdf");
-            document = new Document(PageSize.A4, 20, 20, 20, 20);
-            PdfWriter writer = PdfWriter.getInstance(this.document, new FileOutputStream(filename));
+            File file = File.createTempFile(getTime(),".pdf");
+            document = new Document(PageSize.A4, 20, 20, 20, 20);            
+            PdfWriter writer = PdfWriter.getInstance(this.document, new FileOutputStream(file));
             FontFactory.register("c:\\WINDOWS\\fonts\\tahoma.ttf");
             BaseFont baseFont = BaseFont.createFont("c:\\WINDOWS\\fonts\\tahoma.ttf", BaseFont.IDENTITY_H, true);
             Font font  = new Font(baseFont, 12);
@@ -104,7 +102,8 @@ public class AdPdf {
             document.close();
             writer.flush();
             writer.close();
-            openPdfFile(filename);            
+            openPdfFile(file.getAbsolutePath()); 
+            file.deleteOnExit();
         } catch (DocumentException ex) {
             ADInformer.isError("Error create PDF document", ex);
         } catch (IOException ex) {
@@ -118,7 +117,7 @@ public class AdPdf {
             File myFile = new File(file);                            
             desktop.open(myFile);
         } catch (IOException ex) {
-            ADInformer.isError("Error open file", ex);                
+            ADInformer.isError("Error open PDF file", ex);                
         }        
     }
 }

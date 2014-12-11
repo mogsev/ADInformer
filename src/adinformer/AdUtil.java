@@ -28,8 +28,7 @@ public class AdUtil {
         String result = "";
         String users = domain+"\\"+user;
         try {
-            File file = File.createTempFile("realhowto",".vbs");
-            file.deleteOnExit();
+            File file = File.createTempFile("userauth",".vbs");            
             FileWriter fw = new java.io.FileWriter(file);
             String vbs =             
             "strComputer = \"" + str + "\" \n" +            
@@ -52,6 +51,7 @@ public class AdUtil {
                 result += line;
             }
             input.close();
+            file.deleteOnExit();
         } catch(Exception ex)  {
             ADInformer.isError("Ошибка в получении пользователя", ex);            
         }
@@ -67,8 +67,8 @@ public class AdUtil {
     public String getUser(String str) {
         String result = "";        
         try {
-            File file = File.createTempFile("realhowto",".vbs");
-            file.deleteOnExit();
+            File file = File.createTempFile("user",".vbs");
+            
             FileWriter fw = new java.io.FileWriter(file);
             String vbs = 
             "strComputer = \"" + str + "\" \n" +
@@ -76,8 +76,7 @@ public class AdUtil {
             "& \"{impersonationLevel=impersonate}!\\\\\" & strComputer & \"\\root\\cimv2\") \n" +
             "Set colComputer = objWMIService.ExecQuery _ \n" +
             "(\"Select * from Win32_ComputerSystem\") \n" +
-            "For Each objComputer in colComputer \n" +
-            //"Wscript.Echo objComputer.UserName & \" | \" & objComputer.Name & \" | \" & objComputer.Domain & \" | \" & objComputer.TotalPhysicalMemory\n" +                
+            "For Each objComputer in colComputer \n" +            
             "Wscript.Echo objComputer.UserName \n" +                
             "Next";
             fw.write(vbs);
@@ -89,6 +88,7 @@ public class AdUtil {
                 result += line;
             }
             input.close();
+            file.deleteOnExit();
         } catch(Exception ex)  {
             ADInformer.isError("Ошибка в получении пользователя", ex);
         }           
