@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.TreeSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -998,9 +1001,23 @@ public class ADInformer extends javax.swing.JFrame {
                 jModelMember.addRow(list.getAttributes());
             }        
             jModelMember.fireTableDataChanged();
+            sortMember(resultMembers, "title");
         } catch (Exception ex) {
             ADInformer.isError("Error in getFormSearchMember", ex);
         }
+    }
+    
+    private void sortMember(ArrayList<? extends AdMember> list, String str) {
+        
+        TreeSet set = new TreeSet(list);
+        Iterator<AdMember> i = set.iterator();
+        while (i.hasNext()) {
+            AdMember mem = (AdMember) i.next();
+            mem.getTitle();
+            System.out.println(mem.getName());
+        }
+        System.out.println(set.toArray());
+        
     }
     
     /**
