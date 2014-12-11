@@ -15,7 +15,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ADInformer extends javax.swing.JFrame {
     static final String PROGRAM_NAME = "Active Directory Informer";
-    static final String PROGRAM_VERSION = "1.4.7";
+    static final String PROGRAM_VERSION = "1.5.4";
     static final String EMAIL = "mogsev@gmail.com";
     static final String SF_URL = "http://sourceforge.net";
     static final String GIT_URL = "https://github.com/mogsev/ADInformer";
@@ -77,15 +77,15 @@ public class ADInformer extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, str + "\n" + ex);
         try {
             log.writeLog(str + ex.getMessage());                
-            } catch (IOException exc) {
-                JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n" + exc);                
-            }
+        } catch (IOException exc) {
+            JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n" + exc);                
+        }
     }
     
     /**
      * output information to save log file
      * @param str 
-     */
+     */    
     public static void saveLog(String str) {        
         try {
             log.writeLog(str);                

@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author mogsev@gmail.com
@@ -42,19 +44,19 @@ public class AdLog {
      * Write string to LOG file
      * @param str the result string
      */
-    public void writeLog(String str)throws IOException {    
-        if (ADInformer.config.getLog()) {
-            fileLog = new File(fileLogName);
-        }
-        if (!fileLog.exists()) {            
-            fileLog.createNewFile();
-        }
-        fileWriteLog = new FileWriter(fileLogName, true);
-        bufferWriteLog = new BufferedWriter(fileWriteLog);        
-        outLog = new StringBuilder();                                
-        outLog.append(getTime()).append(str).append("\r\n");        
-        bufferWriteLog.write(outLog.toString());
-        bufferWriteLog.flush();                
-        bufferWriteLog.close();                        
+    public void writeLog(final String str) throws IOException {    
+            if (ADInformer.config.getLog()) {
+                fileLog = new File(fileLogName);
+            }
+            if (!fileLog.exists()) {
+                fileLog.createNewFile();
+            }
+            fileWriteLog = new FileWriter(fileLogName, true);
+            bufferWriteLog = new BufferedWriter(fileWriteLog);
+            outLog = new StringBuilder();
+            outLog.append(getTime()).append(str).append("\r\n");
+            bufferWriteLog.write(outLog.toString());
+            bufferWriteLog.flush();                        
+            bufferWriteLog.close();        
     }
 }    
