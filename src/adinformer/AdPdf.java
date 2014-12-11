@@ -93,8 +93,8 @@ public class AdPdf {
                 tableResult.addCell(name);
                 StringBuilder telephone = new StringBuilder();
                 if (!member.getTelephoneNumber().equals("")) {telephone.append("Tel: ").append(member.getTelephoneNumber()).append("\r\n");}
-                if (!member.getIpPhone().equals("")) {telephone.append("Tel: ").append(member.getIpPhone()).append("\r\n");}
-                if (!member.getMobile().equals("")) {telephone.append("Tel: ").append(member.getMobile()).append("\r\n");}
+                if (!member.getIpPhone().equals("")) {telephone.append("VoIP: ").append(member.getIpPhone()).append("\r\n");}
+                if (!member.getMobile().equals("")) {telephone.append("Mob: ").append(member.getMobile()).append("\r\n");}
                 Phrase telephon = new Phrase(telephone.toString(), fontMember);                
                 tableResult.addCell(telephon);
                 Phrase mail = new Phrase(member.getMail(), fontMember);
