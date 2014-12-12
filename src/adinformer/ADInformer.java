@@ -532,6 +532,7 @@ public class ADInformer extends javax.swing.JFrame {
 
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/png/email.png"))); // NOI18N
         jButton7.setText(" ");
+        jButton7.setToolTipText("Send to email");
         jButton7.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jButton7.setFocusable(false);
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
