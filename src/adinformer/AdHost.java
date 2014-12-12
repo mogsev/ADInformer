@@ -32,16 +32,7 @@ public class AdHost extends AdMember {
     }
     
     private String ipHost;
-    private String dnsHost;
-    private String sAMAccountName;
-    private String name;
-    private String mail;
-    private String title;    
-    private String department;
-    private String telephoneNumber;
-    private String ipPhone;
-    private String mobile;
-    private String company;
+    private String dnsHost;    
     
     AdHost() {
         super();
@@ -49,29 +40,29 @@ public class AdHost extends AdMember {
         dnsHost = "";        
     }
     
-    public void setAttribute(listAttribute list, String value) {        
+    public void setAttribute(listAttribute list, String value) {         
         switch(list) {
             case ipHost: ipHost = value;
                 break;
             case dnsHost: dnsHost = value;
                 break;
-            case sAMAccountName: sAMAccountName = value;
+            case sAMAccountName: this.setsAMAccountName(value);
                 break;
-            case name: name = value;
+            case name: this.setName(value);
                 break;
-            case mail: mail = value;
+            case mail: this.setMail(value);
                 break;
-            case title: title = value;
+            case title: this.setTitle(value);
                 break;            
-            case department: department = value;
+            case department: this.setDepartment(value);
                 break;
-            case telephoneNumber: telephoneNumber = value;
+            case telephoneNumber: this.setTelephoneNumber(value);
                 break;
-            case ipPhone: ipPhone = value;
+            case ipPhone: this.setIpPhone(value);
                 break;
-            case mobile: mobile = value;
+            case mobile: this.setMobile(value);
                 break;
-            case company: company = value;
+            case company: this.setCompany(value);
                 break;        
         }
     }
