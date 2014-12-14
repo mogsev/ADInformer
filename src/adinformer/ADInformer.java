@@ -346,7 +346,7 @@ public class ADInformer extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 601, Short.MAX_VALUE)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -817,11 +817,7 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
         try {
-            if (jCheckBoxMenuItem1.isSelected()) {
-                jPanel4.setVisible(true);
-            } else {
-                jPanel4.setVisible(false);
-            }
+            jPanel4.setVisible(jCheckBoxMenuItem1.isSelected());            
         } catch (Exception ex) {
             ADInformer.isError("Error open user table", ex);
         }
@@ -1012,18 +1008,6 @@ public class ADInformer extends javax.swing.JFrame {
         } catch (Exception ex) {
             ADInformer.isError("Error in getFormSearchMember", ex);
         }
-    }
-    
-    /**
-    private void sortMember(ArrayList<? extends AdMember> list, String str) {        
-        TreeSet set = new TreeSet(list);
-        Iterator<AdMember> i = set.iterator();
-        while (i.hasNext()) {
-            AdMember mem = (AdMember) i.next();
-            mem.toString();
-            System.out.println(mem.getName());
-        }
-        System.out.println(set.toArray());        
     }
     
     /**
