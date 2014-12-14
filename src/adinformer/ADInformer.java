@@ -896,8 +896,7 @@ public class ADInformer extends javax.swing.JFrame {
             if (jTabbedPane1.getSelectedIndex()==0) {
                 new Thread(new Runnable() {
                     @Override
-                    public void run() {
-                        
+                    public void run() {                        
                         
                     }
                 }).start();
