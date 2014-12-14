@@ -539,6 +539,11 @@ public class ADInformer extends javax.swing.JFrame {
         jButton7.setMaximumSize(new java.awt.Dimension(32, 32));
         jButton7.setMinimumSize(new java.awt.Dimension(32, 32));
         jButton7.setPreferredSize(new java.awt.Dimension(32, 32));
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButton7);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -909,6 +914,10 @@ public class ADInformer extends javax.swing.JFrame {
             ADInformer.isError("Error jButton4ActionPerformed", ex);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
