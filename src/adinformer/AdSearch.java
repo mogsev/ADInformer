@@ -262,9 +262,8 @@ public class AdSearch {
      * @param arrgs String[] where to find
      * @return result String
      */
-    private String getSearchString(String search, String... arrgs) {
-        String result = getSearchString(true, search, arrgs);
-        return result;
+    private String getSearchString(String search, String... arrgs) {        
+        return getSearchString(true, search, arrgs);
     }
     
     /**
@@ -276,19 +275,25 @@ public class AdSearch {
      */
     private String getSearchString(boolean oper, String search, String ... arrgs) {
         StringBuilder result = new StringBuilder();
+        result.append(oper ? "(&(objectCategory=user)(|" : "(&(objectCategory=user)");
+        /**
         if (oper) {
             result.append("(&(objectCategory=user)(|");
         } else {
             result.append("(&(objectCategory=user)");
-        }        
+        }  
+        * */
         for (String str:arrgs) {
             result.append("(").append(str).append("=*").append(search).append("*)");
         }
+        result.append(oper ? "))" : ")");
+        /**
         if (oper) {
             result.append("))");
         } else {
             result.append(")");
         }
+        * */
         return result.toString();
     }
     
