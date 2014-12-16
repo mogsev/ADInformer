@@ -919,8 +919,8 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jTable2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseReleased
         if (evt.isPopupTrigger()) {            
-            jPopupMenu1.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
-            jPopupMenu1.setVisible(true);
+            //jPopupMenu1.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
+            //jPopupMenu1.setVisible(true);
         }
     }//GEN-LAST:event_jTable2MouseReleased
 
