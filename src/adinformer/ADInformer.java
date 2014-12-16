@@ -407,6 +407,7 @@ public class ADInformer extends javax.swing.JFrame {
             }
         ));
         jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTable1.setComponentPopupMenu(jPopupMenu1);
         jTable1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTable1.setSelectionBackground(new java.awt.Color(164, 215, 248));
         jTable1.setSelectionForeground(new java.awt.Color(0, 0, 0));
@@ -437,12 +438,12 @@ public class ADInformer extends javax.swing.JFrame {
             }
         ));
         jTable2.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jTable2.setComponentPopupMenu(jPopupMenu1);
+        jTable2.setSelectionBackground(new java.awt.Color(164, 215, 248));
+        jTable2.setSelectionForeground(new java.awt.Color(0, 0, 0));
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable2MouseClicked(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jTable2MouseReleased(evt);
             }
         });
         jTable2.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -916,13 +917,6 @@ public class ADInformer extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         
     }//GEN-LAST:event_jButton7ActionPerformed
-
-    private void jTable2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseReleased
-        if (evt.isPopupTrigger()) {            
-            //jPopupMenu1.setLocation(evt.getXOnScreen(), evt.getYOnScreen());
-            //jPopupMenu1.setVisible(true);
-        }
-    }//GEN-LAST:event_jTable2MouseReleased
 
     /**
      * @param args the command line arguments
