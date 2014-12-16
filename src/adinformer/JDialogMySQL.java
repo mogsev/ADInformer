@@ -3,14 +3,14 @@ package adinformer;
 /**
  * @author zhenya mogsev@gmail.com
  */
-public class JDialogMySQL extends javax.swing.JDialog {    
-    
+public class JDialogMySQL extends javax.swing.JDialog {
+
     /**
      * Creates new form JDialogMySQL
      */
     public JDialogMySQL(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();                
+        initComponents();
         jTextField1.setText(ADInformer.config.getMysqlServer());
         jTextField2.setText(ADInformer.config.getMysqlServerPort());
         jTextField3.setText(ADInformer.config.getMysqlLogin());
@@ -203,7 +203,7 @@ public class JDialogMySQL extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            ADInformer.config.setMysqlServer(jTextField1.getText());        
+            ADInformer.config.setMysqlServer(jTextField1.getText());
             ADInformer.config.setMysqlServerPort(jTextField2.getText());
             ADInformer.config.setMysqlLogin(jTextField3.getText());
             ADInformer.config.setMysqlDatabase(jTextField4.getText());
@@ -251,7 +251,7 @@ public class JDialogMySQL extends javax.swing.JDialog {
         }
         //</editor-fold>
         //</editor-fold>
-        
+
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -287,4 +287,3 @@ public class JDialogMySQL extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
-

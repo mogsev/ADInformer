@@ -12,19 +12,20 @@ import java.io.IOException;
  * @author zhenya mogsev@gmail.com
  */
 public class AdConfig {
+
     private static StringBuilder in;
     private static StringBuilder out;
-    private final String file = "adinformer.cfg";    
+    private final String file = "adinformer.cfg";
     private static String logenable = "1";
     private static String xmlautosave = "0";
-    private static String csvautosave = "0";    
+    private static String csvautosave = "0";
     private static String jsonautosave = "0";
     private static String domainname = "";
     private static String domainsn = "";
     private static String domaindn = "";
     private static String domainlogin = "";
     private static String domainpassword = "";
-    private static String domainconnection = "0";    
+    private static String domainconnection = "0";
     private static String mysqlserver = "";
     private static String mysqlserverport = "3306";
     private static String mysqldatabase = "";
@@ -35,10 +36,10 @@ public class AdConfig {
     private static String mssqlserverport = "1433";
     private static String mssqllogin = "";
     private static String mssqlpassword = "";
-    
+
     private final String conf_log_enable = "log_enable";
     private final String conf_xml_autosave = "xml_autosave";
-    private final String conf_csv_autosave = "csv_autosave";    
+    private final String conf_csv_autosave = "csv_autosave";
     private final String conf_json_autosave = "json_autosave";
     private final String conf_domain_name = "domain_name";
     private final String conf_domain_sn = "domain_sn";
@@ -56,10 +57,10 @@ public class AdConfig {
     private final String conf_mssql_port = "mssql_port";
     private final String conf_mssql_login = "mssql_login";
     private final String conf_mssql_password = "mssql_password";
-    private final String n = "\n";    
+    private final String n = "\n";
     private final String an = "=";
     private final String rn = "\r\n";
-    
+
     public void readConfig() throws FileNotFoundException, IOException {
         File fileconf = new File(file);
         AdCrypt adc = new AdCrypt();
@@ -68,98 +69,99 @@ public class AdConfig {
         }
         //входной файл
         BufferedReader reader = new BufferedReader(new FileReader(file));
-            in = new StringBuilder(); //буфер для входного текста
-            while (true) {   //цикл для вычитывания файла
-                String buffer = reader.readLine();
-                if (buffer == null){
-                    break;
-                }
-                in.append(buffer).append(n); //заполняем буфер вычитанным текстом
-            }         
+        in = new StringBuilder(); //буфер для входного текста
+        while (true) {   //цикл для вычитывания файла
+            String buffer = reader.readLine();
+            if (buffer == null) {
+                break;
+            }
+            in.append(buffer).append(n); //заполняем буфер вычитанным текстом
+        }
         int i = 0;
         int e = in.length(); //вычисляем длину входного текста
-        while (i!=e) {
-            int a = (in.indexOf(n, i))+1;
+        while (i != e) {
+            int a = (in.indexOf(n, i)) + 1;
             String line = in.substring(i, a);
-            line = line.replace(" ", ""); 
-            line = line.replace("\t", ""); 
-            line = line.replace(n, ""); 
-            int l = line.length();            
-            if (line.indexOf(conf_domain_name)==0) {
-                domainname = line.substring(line.indexOf(an)+1, l);                
+            line = line.replace(" ", "");
+            line = line.replace("\t", "");
+            line = line.replace(n, "");
+            int l = line.length();
+            if (line.indexOf(conf_domain_name) == 0) {
+                domainname = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_domain_sn)==0) {
-                domainsn = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_domain_sn) == 0) {
+                domainsn = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_domain_dn)==0) {
-                domaindn = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_domain_dn) == 0) {
+                domaindn = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_domain_login)==0) {
-                if (!line.substring(line.indexOf(an)+1, l).isEmpty()) {
-                    domainlogin = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+            if (line.indexOf(conf_domain_login) == 0) {
+                if (!line.substring(line.indexOf(an) + 1, l).isEmpty()) {
+                    domainlogin = adc.decrypt(line.substring(line.indexOf(an) + 1, l));
                 }
             }
-            if (line.indexOf(conf_domain_password)==0) {
-                if (!line.substring(line.indexOf(an)+1, l).isEmpty()) {
-                    domainpassword = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+            if (line.indexOf(conf_domain_password) == 0) {
+                if (!line.substring(line.indexOf(an) + 1, l).isEmpty()) {
+                    domainpassword = adc.decrypt(line.substring(line.indexOf(an) + 1, l));
                 }
             }
-            if (line.indexOf(conf_domain_connection)==0) {
-                domainconnection = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_domain_connection) == 0) {
+                domainconnection = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_mysql_server)==0) {
-                mysqlserver = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_mysql_server) == 0) {
+                mysqlserver = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_mysql_port)==0) {                
-                mysqlserverport = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_mysql_port) == 0) {
+                mysqlserverport = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_mysql_database)==0) {
-                mysqldatabase = line.substring(line.indexOf(an)+1, l);                
-            }            
-            if (line.indexOf(conf_mysql_login)==0) { 
-                if (!line.substring(line.indexOf(an)+1, l).isEmpty()) {
-                    mysqllogin = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+            if (line.indexOf(conf_mysql_database) == 0) {
+                mysqldatabase = line.substring(line.indexOf(an) + 1, l);
+            }
+            if (line.indexOf(conf_mysql_login) == 0) {
+                if (!line.substring(line.indexOf(an) + 1, l).isEmpty()) {
+                    mysqllogin = adc.decrypt(line.substring(line.indexOf(an) + 1, l));
                 }
             }
-            if (line.indexOf(conf_mysql_password)==0) {
-                if (!line.substring(line.indexOf(an)+1, l).isEmpty()) {
-                    mysqlpassword = adc.decrypt(line.substring(line.indexOf(an)+1, l));
+            if (line.indexOf(conf_mysql_password) == 0) {
+                if (!line.substring(line.indexOf(an) + 1, l).isEmpty()) {
+                    mysqlpassword = adc.decrypt(line.substring(line.indexOf(an) + 1, l));
                 }
             }
-            if (line.indexOf(conf_mysql_autosave)==0) {
-                mysqlautosave = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_mysql_autosave) == 0) {
+                mysqlautosave = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_mssql_server)==0) {
-                mssqlserver = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_mssql_server) == 0) {
+                mssqlserver = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_mssql_port)==0) {
-                mssqlserverport = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_mssql_port) == 0) {
+                mssqlserverport = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_mssql_login)==0) {
-                mssqllogin = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_mssql_login) == 0) {
+                mssqllogin = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_mssql_password)==0) {
-                mssqlpassword = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_mssql_password) == 0) {
+                mssqlpassword = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_log_enable)==0) {
-                logenable = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_log_enable) == 0) {
+                logenable = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_xml_autosave)==0) {
-                xmlautosave = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_xml_autosave) == 0) {
+                xmlautosave = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_csv_autosave)==0) {
-                csvautosave = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_csv_autosave) == 0) {
+                csvautosave = line.substring(line.indexOf(an) + 1, l);
             }
-            if (line.indexOf(conf_json_autosave)==0) {
-                jsonautosave = line.substring(line.indexOf(an)+1, l);                
+            if (line.indexOf(conf_json_autosave) == 0) {
+                jsonautosave = line.substring(line.indexOf(an) + 1, l);
             }
-            i=a;
+            i = a;
         }
     }
-    
+
     /**
      * This method read and load configuration file
-     * @throws IOException 
+     *
+     * @throws IOException
      */
     public void writeConfig() throws IOException {
         AdCrypt adc = new AdCrypt();
@@ -171,14 +173,14 @@ public class AdConfig {
         out.append(conf_domain_name).append(an).append(domainname).append(rn);
         out.append(conf_domain_sn).append(an).append(domainsn).append(rn);
         out.append(conf_domain_dn).append(an).append(domaindn).append(rn);
-        out.append(conf_domain_login).append(an).append(adc.encrypt(domainlogin)).append(rn);        
+        out.append(conf_domain_login).append(an).append(adc.encrypt(domainlogin)).append(rn);
         out.append(conf_domain_password).append(an).append(adc.encrypt(domainpassword)).append(rn);
-        out.append(conf_domain_connection).append(an).append(domainconnection).append(rn);        
+        out.append(conf_domain_connection).append(an).append(domainconnection).append(rn);
         out.append("[MYSQL]").append(rn);
         out.append(conf_mysql_server).append(an).append(mysqlserver).append(rn);
         out.append(conf_mysql_port).append(an).append(mysqlserverport).append(rn);
-        out.append(conf_mysql_database).append(an).append(mysqldatabase).append(rn);        
-        out.append(conf_mysql_login).append(an).append(adc.encrypt(mysqllogin)).append(rn);        
+        out.append(conf_mysql_database).append(an).append(mysqldatabase).append(rn);
+        out.append(conf_mysql_login).append(an).append(adc.encrypt(mysqllogin)).append(rn);
         out.append(conf_mysql_password).append(an).append(adc.encrypt(mysqlpassword)).append(rn);
         out.append(conf_mysql_autosave).append(an).append(mysqlautosave).append(rn);
         out.append("[MSSQL]").append(rn);
@@ -187,18 +189,19 @@ public class AdConfig {
         out.append(conf_mssql_login).append(an).append(mssqllogin).append(rn);
         out.append(conf_mssql_password).append(an).append(mssqlpassword).append(rn);
         out.append("[ADInformer]").append(rn);
-        out.append(conf_log_enable).append(an).append(logenable).append(rn);        
+        out.append(conf_log_enable).append(an).append(logenable).append(rn);
         out.append(conf_xml_autosave).append(an).append(xmlautosave).append(rn);
-        out.append(conf_csv_autosave).append(an).append(csvautosave).append(rn);        
+        out.append(conf_csv_autosave).append(an).append(csvautosave).append(rn);
         out.append(conf_json_autosave).append(an).append(jsonautosave).append(rn);
         // save config file
         writer.write(out.toString());
         writer.flush();
         writer.close();
     }
-    
+
     /**
      * Return value is log enable or disable
+     *
      * @return String value logenable
      */
     public boolean getLog() {
@@ -206,91 +209,93 @@ public class AdConfig {
         if (logenable.equals("0")) {
             result = false;
         }
-        return result;        
+        return result;
     }
-    
-    public void  setLog(boolean result) {
+
+    public void setLog(boolean result) {
         if (result) {
             logenable = "1";
         } else {
             logenable = "0";
         }
     }
-    
+
     /**
      * @return config attribute "domain_name"
      */
-    public String getDomainName() {        
+    public String getDomainName() {
         return domainname;
     }
-    
+
     /**
-     * @param str 
+     * @param str
      */
     public void setDomainName(String str) {
-        domainname = str;        
+        domainname = str;
     }
-    
+
     /**
      * @return config attribute "domain_sn"
      */
-    public String getDomainSN() {        
+    public String getDomainSN() {
         return domainsn;
     }
-    
+
     /**
-     * @param str 
+     * @param str
      */
     public void setDomainSN(String str) {
         domainsn = str;
     }
-    
+
     /**
      * @return config attribute "domain_dn"
      */
-    public String getDomainDN() {        
+    public String getDomainDN() {
         return domaindn;
     }
-    
+
     /**
-     * @param str 
+     * @param str
      */
     public void setDomainDN(String str) {
         domaindn = str;
     }
-        
+
     /**
      * @return config attribute "domain_login"
      */
     public String getDomainLogin() {
         return domainlogin;
     }
-    
+
     /**
-     * @param str 
+     * @param str
      */
     public void setDomainLogin(String str) {
         domainlogin = str;
     }
-    
+
     /**
-     * Return config attribute "domain_password". Is value Domain password. 
+     * Return config attribute "domain_password". Is value Domain password.
+     *
      * @return String result
      */
     public String getDomainPassword() {
         return domainpassword;
     }
-    
+
     /**
-     * @param str 
+     * @param str
      */
     public void setDomainPassword(String str) {
         domainpassword = str;
     }
-    
+
     /**
-     * Return config attribute "mysql_autosave". Is value Domain connection. 
+     * Return config attribute "mysql_autosave". Is value Domain connection.
      * Default result true.
+     *
      * @return boolean result
      */
     public boolean getDomainConnection() {
@@ -300,10 +305,10 @@ public class AdConfig {
         }
         return result;
     }
-    
+
     /**
-     * 
-     * @param result 
+     *
+     * @param result
      */
     public void setDomainConnection(boolean result) {
         if (result) {
@@ -312,77 +317,77 @@ public class AdConfig {
             domainconnection = "0";
         }
     }
-    
+
     /**
      * @return config attribute "mysql_server"
      */
     public String getMysqlServer() {
         return mysqlserver;
     }
-    
+
     /**
-     * @param str 
+     * @param str
      */
     public void setMysqlServer(String str) {
         mysqlserver = str;
     }
-    
+
     /**
      * @return String config attribute "mysql_port"
      */
-    public String getMysqlServerPort() {        
+    public String getMysqlServerPort() {
         return mysqlserverport;
     }
-    
+
     /**
-     * @param str 
+     * @param str
      */
     public void setMysqlServerPort(String str) {
         mysqlserverport = str;
     }
-    
+
     /**
      * @return String config attribute "mysql_database"
      */
     public String getMysqlDatabase() {
         return mysqldatabase;
     }
-    
+
     /**
-     * @param str 
+     * @param str
      */
     public void setMysqlDatabase(String str) {
         mysqldatabase = str;
     }
-    
+
     /**
      * @return config attribute "mysql_login"
      */
     public String getMysqlLogin() {
         return mysqllogin;
     }
-    
+
     /**
-     * @param str 
+     * @param str
      */
     public void setMysqlLogin(String str) {
         mysqllogin = str;
     }
-    
+
     /**
      * @return config attribute "mysql_password"
      */
     public String getMysqlPassword() {
         return mysqlpassword;
     }
-    
+
     /**
-     * @param str 
+     * @param str
      */
     public void setMysqlPassword(String str) {
         mysqlpassword = str;
     }
-    
+
     public boolean getMysqlAutosave() {
         boolean result = true;
         if (mysqlautosave.equals("0")) {
@@ -390,7 +395,7 @@ public class AdConfig {
         }
         return result;
     }
-    
+
     public void setMysqlAutosave(boolean result) {
         if (result) {
             mysqlautosave = "1";
@@ -398,39 +403,39 @@ public class AdConfig {
             mysqlautosave = "0";
         }
     }
-    
+
     /**
      * @return config attribute "mssql_server"
      */
     public String getMssqlServer() {
         return mssqlserver;
     }
-    
+
     /**
      * @return config attribute "mssql_server_port"
      */
     public String getMssqlServerPort() {
         return mssqlserverport;
     }
-    
+
     /**
      * @return config attribute "mssql_login"
      */
     public String getMssqlLogin() {
         return mssqllogin;
     }
-    
+
     /**
      * @return config attribute "mssql_password"
      */
     public String getMssqlPassword() {
         return mssqlpassword;
     }
-    
+
     /**
-     * Return config attribute "xml_autosave"
-     * Is value enable or disable autosave result in xml file
-     * Default result false
+     * Return config attribute "xml_autosave" Is value enable or disable
+     * autosave result in xml file Default result false
+     *
      * @return boolean result
      */
     public boolean getXmlAutosave() {
@@ -440,9 +445,10 @@ public class AdConfig {
         }
         return result;
     }
-    
+
     /**
      * Set value enable or disable config attribute "xml_autosave"
+     *
      * @param result boolean
      */
     public void setXmlAutosave(boolean result) {
@@ -452,11 +458,11 @@ public class AdConfig {
             xmlautosave = "0";
         }
     }
-    
+
     /**
-     * Return config attribute "csv_autosave"
-     * Is value enable or disable autosave result in csv file
-     * Default result false
+     * Return config attribute "csv_autosave" Is value enable or disable
+     * autosave result in csv file Default result false
+     *
      * @return boolean result
      */
     public boolean getCsvAutosave() {
@@ -466,9 +472,10 @@ public class AdConfig {
         }
         return result;
     }
-    
+
     /**
      * Set value enable or disable config attribute "csv_autosave"
+     *
      * @param result boolean
      */
     public void setCsvAutosave(boolean result) {
@@ -477,25 +484,26 @@ public class AdConfig {
         } else {
             csvautosave = "0";
         }
-    }    
-    
+    }
+
     /**
-     * Return config attribute "json_autosave"
-     * Is value enable or disable autosave result in json file 
-     * Default result false
+     * Return config attribute "json_autosave" Is value enable or disable
+     * autosave result in json file Default result false
+     *
      * @return boolean result
      */
     public boolean getJsonAutosave() {
         boolean result = true;
         if (jsonautosave.equals("0")) {
             result = false;
-}
+        }
         return result;
     }
-    
+
     /**
      * Set value enable or disable config attribute "json_autosave"
-     * @param result boolean 
+     *
+     * @param result boolean
      */
     public void setJsonAutosave(boolean result) {
         if (result) {
@@ -505,4 +513,3 @@ public class AdConfig {
         }
     }
 }
-

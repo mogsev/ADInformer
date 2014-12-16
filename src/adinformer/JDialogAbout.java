@@ -1,6 +1,5 @@
 package adinformer;
 
-import java.awt.BorderLayout;
 import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.event.MouseAdapter;
@@ -8,14 +7,12 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  * @author zhenya mogsev@gmail.com
  */
 public class JDialogAbout extends javax.swing.JDialog {
-    
+
     /**
      * Creates new form NewJDialogAbout
      */
@@ -30,42 +27,42 @@ public class JDialogAbout extends javax.swing.JDialog {
         jLabel4.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jLabel4.setForeground(new java.awt.Color(0, 0, 204));
         jLabel4.addMouseListener(new MouseAdapter() {
-        public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() > 0) {
-                if (Desktop.isDesktopSupported()) {
-                    Desktop desktop = Desktop.getDesktop();
-                    try {
-                        URI uri = new URI(jLabel4.getText());
-                        desktop.browse(uri);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    } catch (URISyntaxException ex) {
-                        ex.printStackTrace();
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() > 0) {
+                    if (Desktop.isDesktopSupported()) {
+                        Desktop desktop = Desktop.getDesktop();
+                        try {
+                            URI uri = new URI(jLabel4.getText());
+                            desktop.browse(uri);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        } catch (URISyntaxException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 }
             }
-        }
         });
-        
+
         // display link to url http://sourceforge.net/
         jLabel3.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         jLabel3.setForeground(new java.awt.Color(0, 0, 204));
         jLabel3.addMouseListener(new MouseAdapter() {
-        public void mouseClicked(MouseEvent e) {
-            if (e.getClickCount() > 0) {
-                if (Desktop.isDesktopSupported()) {
-                    Desktop desktop = Desktop.getDesktop();
-                    try {                        
-                        URI uri = new URI(jLabel3.getText());
-                        desktop.browse(uri);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    } catch (URISyntaxException ex) {
-                        ex.printStackTrace();
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() > 0) {
+                    if (Desktop.isDesktopSupported()) {
+                        Desktop desktop = Desktop.getDesktop();
+                        try {
+                            URI uri = new URI(jLabel3.getText());
+                            desktop.browse(uri);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        } catch (URISyntaxException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 }
             }
-        }
         });
     }
 
@@ -240,7 +237,7 @@ public class JDialogAbout extends javax.swing.JDialog {
             java.util.logging.Logger.getLogger(JDialogAbout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -254,7 +251,7 @@ public class JDialogAbout extends javax.swing.JDialog {
                 dialog.setVisible(true);
             }
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

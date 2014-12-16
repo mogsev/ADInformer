@@ -10,18 +10,21 @@ import javax.swing.table.DefaultTableModel;
  * @author zhenya mogsev@gmail.com
  */
 public class JFLanScanner extends javax.swing.JFrame {
+
     private ArrayList<Object[]> result = new ArrayList<Object[]>();
     private static String lanbegin, lanend;
     private static DefaultTableModel jModelIP;
-    private static Scanner scan;    
+    private static Scanner scan;
     private String ip, dnsname, username, name, telephonenumber, mobile, mail, ipphone, description, title, department, company;
-    
+
     private class Scanner extends SwingWorker<Void, Void> {
+
         @Override
-        public Void doInBackground() {            
+        public Void doInBackground() {
             isScanner();
             return null;
-        }        
+        }
+
         @Override
         public void done() {
             Toolkit.getDefaultToolkit().beep();
@@ -32,87 +35,100 @@ public class JFLanScanner extends javax.swing.JFrame {
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             jLabel3.setText("Сканирование завершено");
             jProgressBar1.setValue(0);
-        }        
+        }
     }
-    
+
     private class Octets {
-        private int octet, octet1, octet2, octet3,octet4;
+
+        private int octet, octet1, octet2, octet3, octet4;
         private boolean result;
         private String lan, ip;
-        
+
         /**
          * This method checks ip address and shared on octets
+         *
          * @param str String ip address
          */
         private void check(String str) {
             //Check ip address 4 octet
             int i4 = str.lastIndexOf(".");
-            String ip4 = str.substring(i4+1);
+            String ip4 = str.substring(i4 + 1);
             octet4 = Integer.parseInt(ip4);
-            lan = str.substring(0, i4+1);
+            lan = str.substring(0, i4 + 1);
             //Check ip address 1 octet
             int i1 = str.indexOf(".");
-            String ip1 = str.substring(0,i1);
+            String ip1 = str.substring(0, i1);
             octet1 = Integer.parseInt(ip1);
             //Check ipaddress 2 octet
-            String oct = str.substring(i1+1,str.length());
+            String oct = str.substring(i1 + 1, str.length());
             int i2 = oct.indexOf(".");
-            String oct2 = oct.substring(0,i2);
+            String oct2 = oct.substring(0, i2);
             octet2 = Integer.parseInt(oct2);
             //check ipaddress 3 octet
-            String oct3 = str.substring(i1+1+i2+1, str.length());
+            String oct3 = str.substring(i1 + 1 + i2 + 1, str.length());
             int i3 = oct3.indexOf(".");
             String oct4 = oct3.substring(0, i3);
             octet3 = Integer.parseInt(oct4);
-            if( (octet1>0) && (octet1<255) &&
-                (octet2>0) && (octet2<255) &&
-                (octet3>=0) && (octet3<255) &&
-                (octet4>0) && (octet4<255) ) {
+            if ((octet1 > 0) && (octet1 < 255)
+                    && (octet2 > 0) && (octet2 < 255)
+                    && (octet3 >= 0) && (octet3 < 255)
+                    && (octet4 > 0) && (octet4 < 255)) {
                 result = true;
             } else {
                 result = false;
             }
         }
-        
+
         /**
          * Input String value IP address
-         * @param str 
+         *
+         * @param str
          */
         public void setIpAddress(String str) {
             ip = str;
             check(ip);
         }
-        
+
         /**
          * Return octets from ip address
+         *
          * @param i value {1,2,3,4}
          * @return value {octet1, octet2, octet3, octet4}
          */
         public int getOctet(int i) {
-            if (i==1) { octet = octet1; }
-            if (i==2) { octet = octet2; }
-            if (i==3) { octet = octet3; }
-            if (i==4) { octet = octet4; }
+            if (i == 1) {
+                octet = octet1;
+            }
+            if (i == 2) {
+                octet = octet2;
+            }
+            if (i == 3) {
+                octet = octet3;
+            }
+            if (i == 4) {
+                octet = octet4;
+            }
             return octet;
-        } 
-        
+        }
+
         /**
          * Return String value IPv4 LAN
+         *
          * @return String
          */
         public String getLan() {
             return lan;
         }
-        
+
         public String getIp() {
             return ip;
         }
-        
-        public boolean isIp() {              
+
+        public boolean isIp() {
             return result;
         }
     }
-    
+
     private void isScanner() {
         try {
             jModelIP = ADInformer.getTableIP(jTable2, jScrollPane2);
@@ -125,30 +141,30 @@ public class JFLanScanner extends javax.swing.JFrame {
             ip2.setIpAddress(lanend);
             jProgressBar1.setMinimum(ip1.getOctet(4));
             jProgressBar1.setMaximum(ip2.getOctet(4));
-            if (!(ip1.getLan().equals(ip2.getLan())) ||
-                    (ip1.getOctet(4)>ip2.getOctet(4)) ||
-                    !(ip1.isIp()) ||
-                    !(ip2.isIp())) {
+            if (!(ip1.getLan().equals(ip2.getLan()))
+                    || (ip1.getOctet(4) > ip2.getOctet(4))
+                    || !(ip1.isIp())
+                    || !(ip2.isIp())) {
                 jLabel3.setText("Is not a single network range");
-            } else {               
+            } else {
                 int ipb = ip1.getOctet(4);
-                while (ipb <= ip2.getOctet(4)) {                    
+                while (ipb <= ip2.getOctet(4)) {
                     jProgressBar1.setValue(ipb);
-                    ip = ip1.getLan()+ipb;
+                    ip = ip1.getLan() + ipb;
                     jLabel3.setText("Сканирование: " + ip);
                     adinformer.AdSearch ads = new adinformer.AdSearch();
                     adinformer.AdUtil adu = new adinformer.AdUtil();
-                    dnsname = adu.getDnsName(ip);                    
-                    if(ADInformer.config.getDomainConnection()) {
+                    dnsname = adu.getDnsName(ip);
+                    if (ADInformer.config.getDomainConnection()) {
                         username = adu.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
                     } else {
                         username = adu.getUser(ip);
-                    }                    
-                    if (username.isEmpty() || username.equals("") || username == null || username.equals(null) || username.equals("null")) {                
-                        username = "";                                    
+                    }
+                    if (username.isEmpty() || username.equals("") || username == null || username.equals(null) || username.equals("null")) {
+                        username = "";
                     } else {
                         int in = username.indexOf("\\");
-                        username = username.substring(in+1);
+                        username = username.substring(in + 1);
                         try {
                             AdSearch.getUser(username);
                         } catch (NullPointerException ex) {
@@ -164,32 +180,32 @@ public class JFLanScanner extends javax.swing.JFrame {
                         title = AdSearch.getUserTitle();
                         department = AdSearch.getUserDepartment();
                         company = AdSearch.getUserCompany();
-                        Object[] row = new Object[] { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone, description, title, department, company };
+                        Object[] row = new Object[]{ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone, description, title, department, company};
                         jModelIP.addRow(row);
                         result.add(row);
                     }
                     jModelIP.fireTableDataChanged();
-                    jLabel4.setText("Найдено: " + jTable2.getRowCount());                    
+                    jLabel4.setText("Найдено: " + jTable2.getRowCount());
                     ipb++;
                 }
-            }            
+            }
         } catch (Exception ex) {
             ADInformer.isError("Error ActionPerformed in Search LAN", ex);
         }
     }
-    
+
     private void isScan() {
         try {
             jLabel3.setText("Сканирование... подождите");
             jButton1.setEnabled(false);
             jButton2.setEnabled(false);
             jButton3.setEnabled(false);
-            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));            
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
             //run task
             scan = new Scanner();
             scan.execute();
-        } catch (Exception ex) {            
+        } catch (Exception ex) {
             ADInformer.isError("Ошибка в модуле сканирования", ex);
         }
     }
@@ -390,7 +406,7 @@ public class JFLanScanner extends javax.swing.JFrame {
 
     private void jButton1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton1FocusLost
         try {
-            jLabel3.setText("");            
+            jLabel3.setText("");
         } catch (Exception ex) {
             ADInformer.isError("FocusLost", ex);
         }
@@ -435,7 +451,7 @@ public class JFLanScanner extends javax.swing.JFrame {
             jLabel3.setText("The result is stored");
         } catch (Exception ex) {
             ADInformer.isError("Error in save", ex);
-        }        
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton3FocusLost

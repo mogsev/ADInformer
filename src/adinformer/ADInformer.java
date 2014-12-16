@@ -7,15 +7,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.TreeSet;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
  * @author zhenya mogsev@gmail.com
  */
-public class ADInformer extends javax.swing.JFrame {    
+public class ADInformer extends javax.swing.JFrame {
+
     static final String PROGRAM_NAME = "Active Directory Informer";
     static final String PROGRAM_VERSION = "1.5.4";
     static final String EMAIL = "mogsev@gmail.com";
@@ -24,36 +23,36 @@ public class ADInformer extends javax.swing.JFrame {
     public static AdLog log;
     public static AdConfig config;
     public static AdAutosave autosave;
-    public static String[] names = new String[] {"IP", "FQDN", "DomainLogin", "FullName", "Mail", "Telephone", "Mobile", "IpPhone", "Description", "Title", "Department", "Company" };
+    public static String[] names = new String[]{"IP", "FQDN", "DomainLogin", "FullName", "Mail", "Telephone", "Mobile", "IpPhone", "Description", "Title", "Department", "Company"};
     public static boolean isJFScanner = false;
     public static boolean isJFLanScanner = false;
-    
+
     private final String DRIVER_MYSQL = "com.mysql.jdbc.Driver";    //Имя драйвера MySql
     private static DefaultTableModel jModelIP;
     private static DefaultTableModel jModelMember;
-    private static String mysqlurl;    
+    private static String mysqlurl;
     private static Connection conn = null;
     private static ResultSet rs = null;
-    
+
     private ArrayList<Object[]> resultIP;
     private ArrayList<AdMember> resultMembers;
-    
+
     /**
-     * @param obj 
+     * @param obj
      */
     public static void saveMySql(ArrayList<Object[]> obj) {
         try {
             if (ADInformer.config.getMysqlAutosave()) {
-                for (Object[] objto:obj) {                            
+                for (Object[] objto : obj) {
                     conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД                        
                     Statement st = conn.createStatement(); //Готовим запрос                    
-                    rs = st.executeQuery("select * from history where ip = '"+objto[0]+"'");
+                    rs = st.executeQuery("select * from history where ip = '" + objto[0] + "'");
                     if (rs.next()) { // если запись уже существует в БД                        
                         Statement stupdate = conn.createStatement();
-                        stupdate.execute("UPDATE `adinfo`.`history` SET `login`='"+objto[2]+"', `full_name`='"+objto[3]+"', `dns_name`='"+objto[1]+"', `telephonenumber`='"+objto[5]+"', `mobile`='"+objto[6]+"', `mail`='"+objto[4]+"', `ipphone`='"+objto[7]+"', `description`='"+objto[8]+"', `title`='"+objto[9]+"', `department`='"+objto[10]+"', `company`='"+objto[11]+"' WHERE `history`.`ip`='"+objto[0]+"'");                    
+                        stupdate.execute("UPDATE `adinfo`.`history` SET `login`='" + objto[2] + "', `full_name`='" + objto[3] + "', `dns_name`='" + objto[1] + "', `telephonenumber`='" + objto[5] + "', `mobile`='" + objto[6] + "', `mail`='" + objto[4] + "', `ipphone`='" + objto[7] + "', `description`='" + objto[8] + "', `title`='" + objto[9] + "', `department`='" + objto[10] + "', `company`='" + objto[11] + "' WHERE `history`.`ip`='" + objto[0] + "'");
                     } else { // если записи в БД не найдено                        
                         Statement stins = conn.createStatement();
-                        stins.executeUpdate("INSERT INTO `adinfo`.`history` (`ip`, `login`, `full_name`, `dns_name`, `telephonenumber`, `mobile`, `mail`, `ipphone`, `description`, `title`, `department`, `company`) VALUES ('"+objto[0]+"', '"+objto[2]+"', '"+objto[3]+"', '"+objto[1]+"', '"+objto[5]+"', '"+objto[6]+"', '"+objto[4]+"', '"+objto[7]+"', '"+objto[8]+"', '"+objto[9]+"', '"+objto[10]+"', '"+objto[11]+"')");
+                        stins.executeUpdate("INSERT INTO `adinfo`.`history` (`ip`, `login`, `full_name`, `dns_name`, `telephonenumber`, `mobile`, `mail`, `ipphone`, `description`, `title`, `department`, `company`) VALUES ('" + objto[0] + "', '" + objto[2] + "', '" + objto[3] + "', '" + objto[1] + "', '" + objto[5] + "', '" + objto[6] + "', '" + objto[4] + "', '" + objto[7] + "', '" + objto[8] + "', '" + objto[9] + "', '" + objto[10] + "', '" + objto[11] + "')");
                     }
                 }
             }
@@ -61,62 +60,70 @@ public class ADInformer extends javax.swing.JFrame {
             ADInformer.isError("Error in saveMySql", ex);
         } finally { //Обязательно необходимо закрыть соединение
             try {
-                if (rs !=null ) { rs.close(); }
-                if(conn != null) { conn.close(); }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
                 ADInformer.isError("Ошибка закрытия сединения", ex);
             }
         }
     }
-    
+
     /**
      * output Error Description and Exception in JOptionPane.showMessageDialog
      * This result is write in log file
+     *
      * @param str String error description
-     * @param ex Exception 
+     * @param ex Exception
      */
     public static void isError(String str, Exception ex) {
         JOptionPane.showMessageDialog(null, str + "\n" + ex);
         try {
-            log.writeLog(str + ex.getMessage());                
+            log.writeLog(str + ex.getMessage());
         } catch (IOException exc) {
-            JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n" + exc);                
+            JOptionPane.showMessageDialog(null, "Ошибка записи в лог файл\n" + exc);
         }
     }
-    
+
     /**
      * output information to save log file
-     * @param str 
-     */    
-    public static void saveLog(String str) {        
+     *
+     * @param str
+     */
+    public static void saveLog(String str) {
         try {
-            log.writeLog(str);                
+            log.writeLog(str);
         } catch (IOException ex1) {
-            JOptionPane.showMessageDialog(null,"Ошибка записи в лог файл\n"+ex1);                
+            JOptionPane.showMessageDialog(null, "Ошибка записи в лог файл\n" + ex1);
         }
     }
-    
+
     public static DefaultTableModel getTableIP(javax.swing.JTable jTable1, javax.swing.JScrollPane jScrollPane1) {
         jTable1.setAutoCreateRowSorter(true);
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-        new Object [][] {},
-        new String [] {"IP", "FQDN", "Domain Login", "Full Name", "Mail", "Telephone", "Mobile", "IpPhone", "Description", "Job Title", "Department", "Company" }) {
-        Class[] types = new Class [] {
-            java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-        };
-        boolean[] canEdit = new boolean [] {
-            false, false, false, false, false, false, false, false, false, false, false, false
-        };
-        public Class getColumnClass(int columnIndex) {
-            return types [columnIndex];
-        }
-        public boolean isCellEditable(int rowIndex, int columnIndex) {
-            return canEdit [columnIndex];
-        }
-        });
+                new Object[][]{},
+                new String[]{"IP", "FQDN", "Domain Login", "Full Name", "Mail", "Telephone", "Mobile", "IpPhone", "Description", "Job Title", "Department", "Company"}) {
+                    Class[] types = new Class[]{
+                        java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                    };
+                    boolean[] canEdit = new boolean[]{
+                        false, false, false, false, false, false, false, false, false, false, false, false
+                    };
+
+                    public Class getColumnClass(int columnIndex) {
+                        return types[columnIndex];
+                    }
+
+                    public boolean isCellEditable(int rowIndex, int columnIndex) {
+                        return canEdit[columnIndex];
+                    }
+                });
         jTable1.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTable1);
-        
+
         if (jTable1.getColumnModel().getColumnCount() > 0) {
             jTable1.getColumnModel().getColumn(0).setMinWidth(75);
             jTable1.getColumnModel().getColumn(1).setMinWidth(110);
@@ -134,32 +141,35 @@ public class ADInformer extends javax.swing.JFrame {
         jModelIP = (DefaultTableModel) jTable1.getModel();
         return jModelIP;
     }
-    
+
     private void getFormUser() {
         jModelIP = ADInformer.getTableIP(jTable2, jScrollPane2);
-        jTable2.setModel(jModelIP);                
+        jTable2.setModel(jModelIP);
         try {
             conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД            
             Statement st = conn.createStatement();  //Готовим запрос
             rs = st.executeQuery("select * from `adinfo`.`history`");   //Выполняем запрос к БД, результат в переменной rs
-            while(rs.next()) {                
-                Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
-                jModelIP.addRow(row);                
+            while (rs.next()) {
+                Object[] row = {rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company")};
+                jModelIP.addRow(row);
             }
-        } catch(Exception ex) { 
+        } catch (Exception ex) {
             ADInformer.isError("Ошибка в соединении с сервером MySql", ex);
-        }
-        finally { //Обязательно необходимо закрыть соединение
+        } finally { //Обязательно необходимо закрыть соединение
             try {
-                if (rs !=null) { rs.close(); }
-                if (conn != null) { conn.close(); }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
                 ADInformer.isError("Ошибка закрытия сединения", ex);
             }
         }
         jModelIP.fireTableDataChanged();
     }
-    
+
     /**
      * Display information
      */
@@ -170,60 +180,66 @@ public class ADInformer extends javax.swing.JFrame {
             conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД            
             Statement st = conn.createStatement();  //Готовим запрос
             rs = st.executeQuery("select * from `adinfo`.`history`");   //Выполняем запрос к БД, результат в переменной rs
-            while(rs.next()) {                
-                Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
+            while (rs.next()) {
+                Object[] row = {rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company")};
                 jModelIP.addRow(row);
-            }            
-        } catch(Exception ex) { 
+            }
+        } catch (Exception ex) {
             ADInformer.isError("Ошибка в соединении с сервером MySql", ex);
-        }
-        finally { //Обязательно необходимо закрыть соединение
+        } finally { //Обязательно необходимо закрыть соединение
             try {
-                if (rs !=null) { rs.close(); }
-                if (conn != null) { conn.close(); }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
                 ADInformer.isError("Ошибка закрытия сединения", ex);
             }
         }
         jModelIP.fireTableDataChanged();
     }
-    
+
     /**
      * Search form
      */
     private void getFormSearch() {
         jModelIP = ADInformer.getTableIP(jTable1, jScrollPane1);
-        jTable1.setModel(jModelIP);                        
+        jTable1.setModel(jModelIP);
         try {
             conn = DriverManager.getConnection(mysqlurl); //Установка соединения с БД                        
             Statement st = conn.createStatement();    //Готовим запрос
             String search = jTextField1.getText();
             rs = st.executeQuery("select * from `adinfo`.`history` where `ip`"
-                    + "like '%"+search+"%' or `login` like '%"+search+"%' or "
-                    + "`full_name` like '%"+search+"%' or `dns_name` like"
-                    + "'%"+search+"%' or `telephonenumber` like '%"+search+"%'"
-                    + "or `mobile` like '%"+search+"%' or `ipphone` like "
-                    + "'%"+search+"%' or `mail` like '%"+search+"%' or "
-                    + "`description` like '%"+search+"%' or `title` like "
-                    + "'%"+search+"%'"); //Выполняем запрос к БД, результат в переменной rs            
-            while(rs.next()) {                
-                Object[] row = { rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company") };
-                jModelIP.addRow(row);                    
-            }            
-        } catch(Exception ex){
+                    + "like '%" + search + "%' or `login` like '%" + search + "%' or "
+                    + "`full_name` like '%" + search + "%' or `dns_name` like"
+                    + "'%" + search + "%' or `telephonenumber` like '%" + search + "%'"
+                    + "or `mobile` like '%" + search + "%' or `ipphone` like "
+                    + "'%" + search + "%' or `mail` like '%" + search + "%' or "
+                    + "`description` like '%" + search + "%' or `title` like "
+                    + "'%" + search + "%'"); //Выполняем запрос к БД, результат в переменной rs            
+            while (rs.next()) {
+                Object[] row = {rs.getString("ip"), rs.getString("dns_name"), rs.getString("login"), rs.getString("full_name"), rs.getString("mail"), rs.getString("telephonenumber"), rs.getString("mobile"), rs.getString("ipphone"), rs.getString("description"), rs.getString("title"), rs.getString("department"), rs.getString("company")};
+                jModelIP.addRow(row);
+            }
+        } catch (Exception ex) {
             ADInformer.isError("Ошибка MySQL", ex);
-        }
-        finally { //Обязательно необходимо закрыть соединение
+        } finally { //Обязательно необходимо закрыть соединение
             try {
-                if (rs != null) { rs.close(); }
-                if(conn != null) { conn.close(); }
+                if (rs != null) {
+                    rs.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
             } catch (SQLException ex) {
                 ADInformer.isError("Ошибка закрытия сединения", ex);
             }
         }
         jModelIP.fireTableDataChanged();
     }
-    
+
     /**
      * Creates new form ad
      */
@@ -240,28 +256,28 @@ public class ADInformer extends javax.swing.JFrame {
         }
         //Подключаем логирование
         log = new AdLog();
-        autosave = new AdAutosave();        
-        if (config.getDomainName().isEmpty() ||
-            config.getDomainSN().isEmpty() ||
-            config.getDomainDN().isEmpty() ||
-            config.getDomainLogin().isEmpty()) {
-                JOptionPane.showMessageDialog(null,"Отсутствуют настройки Active Directory\nВнесите данные в настройках - Active Directory и перезапустите приложение");                
+        autosave = new AdAutosave();
+        if (config.getDomainName().isEmpty()
+                || config.getDomainSN().isEmpty()
+                || config.getDomainDN().isEmpty()
+                || config.getDomainLogin().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Отсутствуют настройки Active Directory\nВнесите данные в настройках - Active Directory и перезапустите приложение");
         }
-        if (config.getMysqlServer().isEmpty() ||
-            config.getMysqlServerPort().isEmpty() ||
-            config.getMysqlDatabase().isEmpty() ||
-            config.getMysqlLogin().isEmpty() ||
-            config.getMysqlPassword().isEmpty()) {
-                JOptionPane.showMessageDialog(null,"Отсутствуют настройки MySql\nВнесите данные в настройках - База данных MySql и перезапустите приложение");
-        }        
+        if (config.getMysqlServer().isEmpty()
+                || config.getMysqlServerPort().isEmpty()
+                || config.getMysqlDatabase().isEmpty()
+                || config.getMysqlLogin().isEmpty()
+                || config.getMysqlPassword().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Отсутствуют настройки MySql\nВнесите данные в настройках - База данных MySql и перезапустите приложение");
+        }
         //Регистрируем драйвер MySql
         try {
-            Class.forName(DRIVER_MYSQL);  
+            Class.forName(DRIVER_MYSQL);
         } catch (ClassNotFoundException ex) {
-            ADInformer.isError("Ошибка иницилизации MySQL драйвера", ex);            
+            ADInformer.isError("Ошибка иницилизации MySQL драйвера", ex);
         }
-        mysqlurl = "jdbc:mysql://"+config.getMysqlServer()+"/"+config.getMysqlDatabase()+"?user="+config.getMysqlLogin()+"&password="+config.getMysqlPassword()+"";//URL адрес        
-        getForm(); 
+        mysqlurl = "jdbc:mysql://" + config.getMysqlServer() + "/" + config.getMysqlDatabase() + "?user=" + config.getMysqlLogin() + "&password=" + config.getMysqlPassword() + "";//URL адрес        
+        getForm();
     }
 
     /**
@@ -309,7 +325,6 @@ public class ADInformer extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
@@ -630,14 +645,6 @@ public class ADInformer extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem3);
-
-        jMenuItem5.setText("База данных MsSQL");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(jMenuItem5);
         jMenu3.add(jSeparator1);
 
         jMenuItem6.setText("Параметры");
@@ -699,17 +706,17 @@ public class ADInformer extends javax.swing.JFrame {
         try {
             System.exit(0);
         } catch (Exception ex) {
-            ADInformer.isError("Error system exit", ex);            
+            ADInformer.isError("Error system exit", ex);
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {            
-            if(jTabbedPane1.getSelectedIndex()==0) { 
+        try {
+            if (jTabbedPane1.getSelectedIndex() == 0) {
                 getFormSearch();
             }
-            if (jTabbedPane1.getSelectedIndex()==1) {   
-                getFormSearchMember();                
+            if (jTabbedPane1.getSelectedIndex() == 1) {
+                getFormSearchMember();
             }
             setLabel2Action();
         } catch (Exception ex) {
@@ -719,10 +726,10 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         try {
-            if (jTabbedPane1.getSelectedIndex()==0) {
-                getFormSearch(); 
+            if (jTabbedPane1.getSelectedIndex() == 0) {
+                getFormSearch();
             }
-            if (jTabbedPane1.getSelectedIndex()==1) {
+            if (jTabbedPane1.getSelectedIndex() == 1) {
                 getFormSearchMember();
             }
             setLabel2Action();
@@ -739,6 +746,157 @@ public class ADInformer extends javax.swing.JFrame {
             ADInformer.isError("Error jDialogAbout", ex);
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        try {
+            if (!isJFScanner) {
+                JFScanner ipScanner = new JFScanner();
+                ipScanner.setVisible(rootPaneCheckingEnabled);
+                isJFScanner = true;
+            }
+        } catch (Exception ex) {
+            ADInformer.isError("Error ipScanner", ex);
+        }
+
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        try {
+            if (!isJFLanScanner) {
+                JFLanScanner lanScanner = new JFLanScanner();
+                lanScanner.setVisible(rootPaneCheckingEnabled);
+                isJFLanScanner = true;
+            }
+        } catch (Exception ex) {
+            ADInformer.isError("Error lanScanner", ex);
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try {
+            jTabbedPane1.setSelectedIndex(1);
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error open user table", ex);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        try {
+            jTabbedPane1.setSelectedIndex(0);
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error open user table", ex);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
+        try {
+            jPanel4.setVisible(jCheckBoxMenuItem1.isSelected());
+        } catch (Exception ex) {
+            ADInformer.isError("Error open user table", ex);
+        }
+    }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        try {
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error jTable1MouseClicked", ex);
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        try {
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error jTable1MouseClicked", ex);
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
+        try {
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error jTable1MouseClicked", ex);
+        }
+    }//GEN-LAST:event_jTable1KeyPressed
+
+    private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
+        try {
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error jTable1MouseClicked", ex);
+        }
+    }//GEN-LAST:event_jTable2KeyPressed
+
+    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+        try {
+            setLabel2Action();
+        } catch (Exception ex) {
+            ADInformer.isError("Error jTable1MouseClicked", ex);
+        }
+    }//GEN-LAST:event_jTabbedPane1MouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            if (jTabbedPane1.getSelectedIndex() == 0) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //ADInformer.autosave.saveXml(resultIP);
+                    }
+                }).start();
+            }
+            if (jTabbedPane1.getSelectedIndex() == 1) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ADInformer.autosave.saveXmlMembers(resultMembers);
+                        jLabel1.setText("Saved in XML");
+                    }
+                }).start();
+            }
+        } catch (Exception ex) {
+            ADInformer.isError("Error jButton4ActionPerformed", ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        try {
+            if (jTabbedPane1.getSelectedIndex() == 0) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                    }
+                }).start();
+            }
+            if (jTabbedPane1.getSelectedIndex() == 1) {
+                new Thread(new Runnable() {
+                    public void run() {
+                        AdPdf pdf = new AdPdf();
+                        pdf.saveMembersPdf(resultMembers);
+                    }
+                }).start();
+            }
+        } catch (Exception ex) {
+            ADInformer.isError("Error jButton4ActionPerformed", ex);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        try {
+            JDParameter jDialogParameter = new JDParameter(new javax.swing.JFrame(), true);
+            jDialogParameter.setVisible(rootPaneCheckingEnabled);
+        } catch (Exception ex) {
+            ADInformer.isError("Error jDialogParameter", ex);
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         try {
@@ -757,166 +915,6 @@ public class ADInformer extends javax.swing.JFrame {
             ADInformer.isError("Error jDialogAD", ex);
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
-        try {
-            JDialogMsSQL jDialogMsSQL = new JDialogMsSQL(new javax.swing.JFrame(), true);
-            jDialogMsSQL.setVisible(rootPaneCheckingEnabled);
-        } catch (Exception ex) {
-            ADInformer.isError("Error jDialogMsSQL", ex);
-        }    
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
-
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
-        try {
-            JDParameter jDialogParameter = new JDParameter(new javax.swing.JFrame(),true);
-            jDialogParameter.setVisible(rootPaneCheckingEnabled);
-        } catch (Exception ex) {
-            ADInformer.isError("Error jDialogParameter", ex);
-        }
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
-
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        try {
-            if (!isJFScanner) {
-                JFScanner ipScanner = new JFScanner();            
-                ipScanner.setVisible(rootPaneCheckingEnabled);
-                isJFScanner = true;
-            }             
-        } catch (Exception ex) {
-            ADInformer.isError("Error ipScanner", ex);
-        }
-        
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
-
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
-        try {
-            if (!isJFLanScanner) {
-                JFLanScanner lanScanner = new JFLanScanner();
-                lanScanner.setVisible(rootPaneCheckingEnabled);
-                isJFLanScanner = true;
-            }
-        } catch (Exception ex) {
-            ADInformer.isError("Error lanScanner", ex);
-        }
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
-
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        try {            
-            jTabbedPane1.setSelectedIndex(1);
-            setLabel2Action();
-        } catch (Exception ex) {
-            ADInformer.isError("Error open user table", ex);
-        }        
-    }//GEN-LAST:event_jButton6ActionPerformed
-
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        try {            
-            jTabbedPane1.setSelectedIndex(0);
-            setLabel2Action();
-        } catch (Exception ex) {
-            ADInformer.isError("Error open user table", ex);
-        }
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jCheckBoxMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxMenuItem1ActionPerformed
-        try {
-            jPanel4.setVisible(jCheckBoxMenuItem1.isSelected());            
-        } catch (Exception ex) {
-            ADInformer.isError("Error open user table", ex);
-        }
-    }//GEN-LAST:event_jCheckBoxMenuItem1ActionPerformed
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        try {            
-            setLabel2Action();
-        } catch (Exception ex) {
-            ADInformer.isError("Error jTable1MouseClicked", ex);
-        }
-    }//GEN-LAST:event_jTable1MouseClicked
-
-    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
-        try {            
-            setLabel2Action();
-        } catch (Exception ex) {
-            ADInformer.isError("Error jTable1MouseClicked", ex);
-        }
-    }//GEN-LAST:event_jTable2MouseClicked
-
-    private void jTable1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable1KeyPressed
-        try {            
-            setLabel2Action();
-        } catch (Exception ex) {
-            ADInformer.isError("Error jTable1MouseClicked", ex);
-        }
-    }//GEN-LAST:event_jTable1KeyPressed
-
-    private void jTable2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTable2KeyPressed
-        try {            
-            setLabel2Action();
-        } catch (Exception ex) {
-            ADInformer.isError("Error jTable1MouseClicked", ex);
-        }
-    }//GEN-LAST:event_jTable2KeyPressed
-
-    private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
-        try {            
-            setLabel2Action();
-        } catch (Exception ex) {
-            ADInformer.isError("Error jTable1MouseClicked", ex);
-        }
-    }//GEN-LAST:event_jTabbedPane1MouseClicked
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        try {
-            if (jTabbedPane1.getSelectedIndex()==0) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //ADInformer.autosave.saveXml(resultIP);
-                    }
-                }).start();
-            }
-            if (jTabbedPane1.getSelectedIndex()==1) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ADInformer.autosave.saveXmlMembers(resultMembers);
-                        jLabel1.setText("Saved in XML");
-                    }
-                }).start();
-            }
-        } catch (Exception ex) {
-            ADInformer.isError("Error jButton4ActionPerformed", ex);
-        }
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        try {
-            if (jTabbedPane1.getSelectedIndex()==0) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {                        
-                        
-                    }
-                }).start();
-            }
-            if (jTabbedPane1.getSelectedIndex()==1) {
-                new Thread(new Runnable() {
-                    public void run() {
-                        AdPdf pdf = new AdPdf();
-                        pdf.saveMembersPdf(resultMembers);                        
-                    }
-                }).start();
-            }
-        } catch (Exception ex) {
-            ADInformer.isError("Error jButton4ActionPerformed", ex);
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        
-    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -977,7 +975,6 @@ public class ADInformer extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
@@ -997,35 +994,35 @@ public class ADInformer extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
-    
+
     /**
-     * 
+     *
      */
     private void getFormSearchMember() {
         try {
             jModelMember = AdMember.getTableModelMember(jTable2, jScrollPane2);
-            jTable2.setModel(jModelMember);            
-            String search = jTextField1.getText();        
+            jTable2.setModel(jModelMember);
+            String search = jTextField1.getText();
             resultMembers = AdSearch.getSearchMember(search);
-            for (AdMember list:resultMembers) {                
-                jModelMember.addRow(list.getAttributes());                
-            }        
-            jModelMember.fireTableDataChanged();            
+            for (AdMember list : resultMembers) {
+                jModelMember.addRow(list.getAttributes());
+            }
+            jModelMember.fireTableDataChanged();
         } catch (Exception ex) {
             ADInformer.isError("Error in getFormSearchMember", ex);
         }
     }
-    
+
     /**
-     * 
+     *
      */
     private void setLabel2Action() {
         try {
-            if (jTabbedPane1.getSelectedIndex()==0) {
-                jLabel2.setText(jTable1.getSelectedRow()+1 + " : " + jTable1.getRowCount());
+            if (jTabbedPane1.getSelectedIndex() == 0) {
+                jLabel2.setText(jTable1.getSelectedRow() + 1 + " : " + jTable1.getRowCount());
             }
-            if (jTabbedPane1.getSelectedIndex()==1) {
-                jLabel2.setText(jTable2.getSelectedRow()+1 + " : " + jTable2.getRowCount());
+            if (jTabbedPane1.getSelectedIndex() == 1) {
+                jLabel2.setText(jTable2.getSelectedRow() + 1 + " : " + jTable2.getRowCount());
             }
         } catch (Exception ex) {
             ADInformer.isError("Error in setLabel2Action", ex);

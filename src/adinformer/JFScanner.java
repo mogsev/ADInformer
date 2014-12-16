@@ -2,9 +2,7 @@ package adinformer;
 
 import java.awt.Cursor;
 import java.awt.Toolkit;
-import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.swing.SwingUtilities;
@@ -14,17 +12,20 @@ import javax.swing.SwingWorker;
  * @author zhenya mogsev@gmail.com
  */
 public class JFScanner extends javax.swing.JFrame {
+
     private ArrayList<Object[]> result = new ArrayList<Object[]>();
     private static OutputStream out;
     private static Scanner scan;
     private String ip, dnsname, username, name, telephonenumber, mobile, mail, ipphone, description, title, department, company;
-    
+
     private class Scanner extends SwingWorker<Void, Void> {
+
         @Override
         public Void doInBackground() {
-            isScanner();            
+            isScanner();
             return null;
-        }        
+        }
+
         @Override
         public void done() {
             Toolkit.getDefaultToolkit().beep();
@@ -33,87 +34,87 @@ public class JFScanner extends javax.swing.JFrame {
             setCursor(null);
             setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
             jLabel2.setText("Сканирование завершено");
-        }        
+        }
     }
-    
-    private void updateTextArea(final String text) {                            
-        SwingUtilities.invokeLater(new Runnable() { 
+
+    private void updateTextArea(final String text) {
+        SwingUtilities.invokeLater(new Runnable() {
             @Override
-            public void run() {                               
-                jTextArea1.append(text + "\r\n");                
-            }                 
-        });                
-    }    
-    
+            public void run() {
+                jTextArea1.append(text + "\r\n");
+            }
+        });
+    }
+
     private void isScan() {
         try {
             jLabel2.setText("Сканирование... подождите");
             jButton1.setEnabled(false);
             jButton2.setEnabled(false);
-            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));            
+            setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
             //run task
             scan = new Scanner();
             scan.execute();
-        } catch (Exception ex) {            
+        } catch (Exception ex) {
             ADInformer.isError("Ошибка в модуле сканирования", ex);
         }
     }
-    
+
     private void isScanner() {
         try {
             long startScanner, endScanner;
             startScanner = System.nanoTime();
-            ip=jTextField1.getText();
+            ip = jTextField1.getText();
             updateTextArea("IPv4: " + ip);
-            try {    
+            try {
                 adinformer.AdUtil adu = new adinformer.AdUtil();
                 dnsname = adu.getDnsName(ip);
                 updateTextArea("DNS name: " + dnsname);
                 //получаем пользователя                
-                if (ADInformer.config.getDomainConnection()) {                                    
+                if (ADInformer.config.getDomainConnection()) {
                     username = adu.getUserAuth(ip, ADInformer.config.getDomainSN(), ADInformer.config.getDomainLogin(), ADInformer.config.getDomainPassword());
                 } else {
                     username = adu.getUser(ip);
-                }                
-                if (username.isEmpty() || username.equals("") || username == null || username.equals(null) || username.equals("null")) {                
+                }
+                if (username.isEmpty() || username.equals("") || username == null || username.equals(null) || username.equals("null")) {
                     username = "";
                     updateTextArea("Имя пользователя не найдено\n");
-                } else {                    
+                } else {
                     int in = username.indexOf("\\");
-                    username = username.substring(in+1);
+                    username = username.substring(in + 1);
                     updateTextArea("Login: " + username);
                     try {
                         AdSearch.getUser(username);
-                    } catch(NullPointerException ex) {
+                    } catch (NullPointerException ex) {
                         ADInformer.isError("Имя пользователя: null", ex);
                         username = "";
-                    }                    
+                    }
                     name = AdSearch.getUserName();
-                    updateTextArea("name: "+name);
+                    updateTextArea("name: " + name);
                     telephonenumber = AdSearch.getUserTelephone();
-                    updateTextArea("Tel: "+telephonenumber);
+                    updateTextArea("Tel: " + telephonenumber);
                     mobile = AdSearch.getUserMobile();
-                    updateTextArea("Mobile: "+mobile);
+                    updateTextArea("Mobile: " + mobile);
                     mail = AdSearch.getUserMail();
-                    updateTextArea("Mail: "+mail);
+                    updateTextArea("Mail: " + mail);
                     ipphone = AdSearch.getUserIpPhone();
-                    updateTextArea("IpPhone: "+ipphone);
+                    updateTextArea("IpPhone: " + ipphone);
                     description = AdSearch.getUserDescription();
-                    updateTextArea("Description: "+description);
+                    updateTextArea("Description: " + description);
                     title = AdSearch.getUserTitle();
-                    updateTextArea("Title: "+title);
+                    updateTextArea("Title: " + title);
                     department = AdSearch.getUserDepartment();
-                    updateTextArea("Department: "+department);
+                    updateTextArea("Department: " + department);
                     company = AdSearch.getUserCompany();
-                    updateTextArea("Company: "+company);
-                    result.add(new Object[] { ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone, description, title, department, company });                    
+                    updateTextArea("Company: " + company);
+                    result.add(new Object[]{ip, dnsname, username, name, mail, telephonenumber, mobile, ipphone, description, title, department, company});
                     endScanner = System.nanoTime();
-                    updateTextArea("Scan time: "+ (endScanner-startScanner)/1000000 +" ms\r\n");                                        
-                }            
+                    updateTextArea("Scan time: " + (endScanner - startScanner) / 1000000 + " ms\r\n");
+                }
             } catch (UnknownHostException ex) {
                 ADInformer.isError("Ошибка обработки DNS name", ex);
-            }            
+            }
         } catch (Exception ex) {
             ADInformer.isError("Ошибка в модуле сканирования\n", ex);
         }
@@ -266,22 +267,22 @@ public class JFScanner extends javax.swing.JFrame {
         try {
             dispose();
         } catch (Exception ex) {
-            ADInformer.isError("Ошибка закрытия окна", ex);            
+            ADInformer.isError("Ошибка закрытия окна", ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             isScan();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ADInformer.isError("Ошибка сканирования", ex);
-        }        
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         try {
             isScan();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ADInformer.isError("Ошибка сканирования", ex);
         }
     }//GEN-LAST:event_jTextField1ActionPerformed
@@ -305,11 +306,11 @@ public class JFScanner extends javax.swing.JFrame {
                 public void run() {
                     ADInformer.saveMySql(result);
                 }
-            }).start();            
+            }).start();
             jLabel2.setText("The result is stored");
         } catch (Exception ex) {
             ADInformer.isError("Ошибка сохранения", ex);
-        }        
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton3FocusLost

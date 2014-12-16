@@ -3,14 +3,14 @@ package adinformer;
 /**
  * @author zhenya mogsev@gmail.com
  */
-public class JDialogAD extends javax.swing.JDialog {    
-    
+public class JDialogAD extends javax.swing.JDialog {
+
     /**
      * Creates new form JDialogAD
      */
     public JDialogAD(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();        
+        initComponents();
         jTextField1.setText(ADInformer.config.getDomainName());
         jTextField2.setText(ADInformer.config.getDomainSN());
         jTextField3.setText(ADInformer.config.getDomainLogin());
@@ -294,4 +294,3 @@ public class JDialogAD extends javax.swing.JDialog {
     private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }
-

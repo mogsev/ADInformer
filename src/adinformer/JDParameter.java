@@ -1,7 +1,6 @@
 package adinformer;
 
 import java.io.IOException;
-import javax.swing.JOptionPane;
 
 /**
  * @author zhenya mogsev@gmail.com
@@ -13,17 +12,17 @@ public class JDParameter extends javax.swing.JDialog {
      */
     public JDParameter(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        initComponents();  
-        if (ADInformer.config.getLog()) {            
+        initComponents();
+        if (ADInformer.config.getLog()) {
             jCheckBox1.doClick();
         }
-        if (ADInformer.config.getXmlAutosave()) {            
+        if (ADInformer.config.getXmlAutosave()) {
             jCheckBox2.doClick();
-        }        
-        if (ADInformer.config.getJsonAutosave()) {            
+        }
+        if (ADInformer.config.getJsonAutosave()) {
             jCheckBox3.doClick();
         }
-        if (ADInformer.config.getCsvAutosave()) {            
+        if (ADInformer.config.getCsvAutosave()) {
             jCheckBox4.doClick();
         }
     }
@@ -203,31 +202,31 @@ public class JDParameter extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try { 
-            if (jCheckBox1.isSelected()) {            
+        try {
+            if (jCheckBox1.isSelected()) {
                 ADInformer.config.setLog(true);
             } else {
-                ADInformer.config.setLog(false);            
-            } 
-            if (jCheckBox2.isSelected()) {            
+                ADInformer.config.setLog(false);
+            }
+            if (jCheckBox2.isSelected()) {
                 ADInformer.config.setXmlAutosave(true);
             } else {
-                ADInformer.config.setXmlAutosave(false);            
+                ADInformer.config.setXmlAutosave(false);
             }
-            if (jCheckBox3.isSelected()) {            
+            if (jCheckBox3.isSelected()) {
                 ADInformer.config.setJsonAutosave(true);
             } else {
-                ADInformer.config.setJsonAutosave(false);            
+                ADInformer.config.setJsonAutosave(false);
             }
-            if (jCheckBox4.isSelected()) {            
+            if (jCheckBox4.isSelected()) {
                 ADInformer.config.setCsvAutosave(true);
             } else {
                 ADInformer.config.setCsvAutosave(false);
             }
             ADInformer.config.writeConfig();
-            } catch (IOException ex) {
-                ADInformer.isError("Ошибка при сохранении файла конфигурации:", ex);            
-            }
+        } catch (IOException ex) {
+            ADInformer.isError("Ошибка при сохранении файла конфигурации:", ex);
+        }
         jLabel1.setText("Конфигурация сохранена.");
     }//GEN-LAST:event_jButton1ActionPerformed
 
