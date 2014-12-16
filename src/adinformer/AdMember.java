@@ -1,5 +1,6 @@
 package adinformer;
 
+import java.util.Objects;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -318,5 +319,62 @@ public class AdMember {
      */
     public String getTitle() {        
         return title;
-    }    
+    }  
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.sAMAccountName);
+        hash = 71 * hash + Objects.hashCode(this.name);
+        hash = 71 * hash + Objects.hashCode(this.mail);
+        hash = 71 * hash + Objects.hashCode(this.title);
+        hash = 71 * hash + Objects.hashCode(this.department);
+        hash = 71 * hash + Objects.hashCode(this.telephoneNumber);
+        hash = 71 * hash + Objects.hashCode(this.ipPhone);
+        hash = 71 * hash + Objects.hashCode(this.mobile);
+        hash = 71 * hash + Objects.hashCode(this.company);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final AdMember other = (AdMember) obj;
+        if (!Objects.equals(this.sAMAccountName, other.sAMAccountName)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.mail, other.mail)) {
+            return false;
+        }
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        if (!Objects.equals(this.department, other.department)) {
+            return false;
+        }
+        if (!Objects.equals(this.telephoneNumber, other.telephoneNumber)) {
+            return false;
+        }
+        if (!Objects.equals(this.ipPhone, other.ipPhone)) {
+            return false;
+        }
+        if (!Objects.equals(this.mobile, other.mobile)) {
+            return false;
+        }
+        if (!Objects.equals(this.company, other.company)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
 }
