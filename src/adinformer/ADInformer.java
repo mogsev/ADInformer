@@ -839,6 +839,7 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
         try {
+            jLabel3.setText("");
             setLabel2Action();
         } catch (Exception ex) {
             ADInformer.isError("Error jTable1MouseClicked", ex);
@@ -863,6 +864,7 @@ public class ADInformer extends javax.swing.JFrame {
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
         try {
+            jLabel3.setText("");
             setLabel2Action();
         } catch (Exception ex) {
             ADInformer.isError("Error jTable1MouseClicked", ex);
