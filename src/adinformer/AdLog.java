@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * @author mogsev@gmail.com
  */
-public class AdLog extends ADTime {
+public class AdLog extends AdTime {
 
     private String fileLogName;    
     private File fileLog;

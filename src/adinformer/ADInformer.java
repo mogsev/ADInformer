@@ -20,7 +20,7 @@ public class ADInformer extends javax.swing.JFrame {
     static final String EMAIL = "mogsev@gmail.com";
     static final String SF_URL = "http://sourceforge.net";
     static final String GIT_URL = "https://github.com/mogsev/ADInformer";
-    public static AdLog log;
+    
     public static AdConfig config;
     public static AdAutosave autosave;
     public static String[] names = new String[]{"IP", "FQDN", "DomainLogin", "FullName", "Mail", "Telephone", "Mobile", "IpPhone", "Description", "Title", "Department", "Company"};
@@ -36,6 +36,7 @@ public class ADInformer extends javax.swing.JFrame {
 
     private ArrayList<Object[]> resultIP;
     private ArrayList<AdMember> resultMembers;
+    private static AdLog log;
     
     /**
      * @param obj
@@ -258,7 +259,7 @@ public class ADInformer extends javax.swing.JFrame {
      * Creates new form ad
      */
     public ADInformer() {
-        initComponents();
+        initComponents();        
         jPanel4.setVisible(false);
         jCheckBoxMenuItem1.setSelected(false);
         //Загружаем конфигурацию
@@ -290,6 +291,9 @@ public class ADInformer extends javax.swing.JFrame {
         } catch (ClassNotFoundException ex) {
             ADInformer.isError("Ошибка иницилизации MySQL драйвера", ex);
         }
+        // Initialization AdLog
+        AdLog log = new AdLog();
+        
         mysqlurl = "jdbc:mysql://" + config.getMysqlServer() + "/" + config.getMysqlDatabase() + "?user=" + config.getMysqlLogin() + "&password=" + config.getMysqlPassword() + "";//URL адрес        
         getForm();
     }

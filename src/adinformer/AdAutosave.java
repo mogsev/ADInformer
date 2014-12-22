@@ -14,7 +14,7 @@ import org.jdom2.output.XMLOutputter;
 /**
  * @author zhenya mogsev@gmail.com
  */
-public class AdAutosave extends ADTime {
+public class AdAutosave extends AdTime {
 
     private static Document doc;
     private static Element root;
