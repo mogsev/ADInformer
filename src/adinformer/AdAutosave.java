@@ -5,11 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import javax.swing.JOptionPane;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.output.Format;
@@ -18,10 +14,9 @@ import org.jdom2.output.XMLOutputter;
 /**
  * @author zhenya mogsev@gmail.com
  */
-public class AdAutosave {
+public class AdAutosave extends ADTime {
 
     private static Document doc;
-    private static String time;
     private static Element root;
 
     /**
@@ -40,23 +35,11 @@ public class AdAutosave {
                 out.flush();
                 out.close();
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null, ex);
+                ADInformer.isError("Error in writeXml", ex);
             }
         } catch (Exception ex) {
             ADInformer.isError("Error in writeXml", ex);
         }
-    }
-
-    /**
-     * Return the system date format "ddMMyyyy-HHmmss"
-     *
-     * @return String value system date
-     */
-    private static String getTime() {
-        Date now = new Date();
-        DateFormat formatter = new SimpleDateFormat("ddMMyyyy-HHmmss");
-        time = formatter.format(now);
-        return time;
     }
 
     /**

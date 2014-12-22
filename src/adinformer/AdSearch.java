@@ -41,8 +41,7 @@ public class AdSearch {
             env.put(Context.SECURITY_CREDENTIALS, ADInformer.config.getDomainPassword());          //Password Ldap
             env.put(Context.PROVIDER_URL, "ldap://" + ADInformer.config.getDomainName() + ":389");
             ctx = new InitialLdapContext(env, null);
-            ADInformer.saveLog("LDAP connection Successful");
-            //System.out.println("Connection Successful.");            
+            ADInformer.saveLog("LDAP connection Successful");          
         } catch (NamingException ex) {
             ADInformer.isError("Ошибка соединения LDAP\nLDAP Connection: FAILED", ex);
         }

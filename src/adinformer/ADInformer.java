@@ -82,7 +82,7 @@ public class ADInformer extends javax.swing.JFrame {
     public static void isError(String str, Exception ex) {
         JOptionPane.showMessageDialog(null, str + "\n" + ex);
         try {
-            log.writeLog(str + ex.getMessage());
+            log.writeLog(str +"\t"+ ex);
         } catch (IOException exc) {
             JOptionPane.showMessageDialog(null, "Ошибка записи в лог файл\n" + exc);
         }
@@ -91,11 +91,25 @@ public class ADInformer extends javax.swing.JFrame {
     /**
      * output information to save log file
      *
-     * @param str
+     * @param str String
      */
     public static void saveLog(String str) {
         try {
             log.writeLog(str);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Ошибка записи в лог файл\n" + ex);
+        }
+    }
+    
+    /**
+     * output information to save log file
+     * 
+     * @param str String
+     * @param ex Exception
+     */
+    public static void saveLog(String str, Exception ex) {
+        try {
+            log.writeLog(str + "\t" + ex.getMessage());
         } catch (IOException ex1) {
             JOptionPane.showMessageDialog(null, "Ошибка записи в лог файл\n" + ex1);
         }
