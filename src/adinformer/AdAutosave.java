@@ -14,7 +14,7 @@ import org.jdom2.output.XMLOutputter;
 /**
  * @author zhenya mogsev@gmail.com
  */
-public class AdAutosave extends AdTime {
+public class AdAutosave {
 
     private static Document doc;
     private static Element root;
@@ -61,7 +61,7 @@ public class AdAutosave extends AdTime {
                     }
                     root.addContent(ipxml);
                 }
-                writeXml(doc, new String(getTime() + ".xml"));
+                writeXml(doc, new String(AdTime.getTime() + ".xml"));
             }
         } catch (Exception ex) {
             ADInformer.isError("Error in saveXML", ex);
@@ -90,7 +90,7 @@ public class AdAutosave extends AdTime {
                         }
                     }
                 }
-                writeCsv(out, new String(getTime() + ".csv"));
+                writeCsv(out, new String(AdTime.getTime() + ".csv"));
             }
         } catch (Exception ex) {
             ADInformer.isError("Error in saveCsv", ex);
@@ -128,45 +128,36 @@ public class AdAutosave extends AdTime {
                     switch (list) {
                         case sAMAccountName:
                             member.addContent(new Element(list.name()).addContent(admember.getsAMAccountName()));
-                            ;
                             break;
                         case name:
                             member.addContent(new Element(list.name()).addContent(admember.getName()));
-                            ;
                             break;
                         case mail:
                             member.addContent(new Element(list.name()).addContent(admember.getMail()));
-                            ;
                             break;
                         case title:
                             member.addContent(new Element(list.name()).addContent(admember.getTitle()));
-                            ;
                             break;
                         case department:
                             member.addContent(new Element(list.name()).addContent(admember.getDepartment()));
-                            ;
                             break;
                         case telephoneNumber:
                             member.addContent(new Element(list.name()).addContent(admember.getTelephoneNumber()));
-                            ;
                             break;
                         case ipPhone:
                             member.addContent(new Element(list.name()).addContent(admember.getIpPhone()));
-                            ;
                             break;
                         case mobile:
                             member.addContent(new Element(list.name()).addContent(admember.getMobile()));
-                            ;
                             break;
                         case company:
                             member.addContent(new Element(list.name()).addContent(admember.getCompany()));
-                            ;
                             break;
                     }
                 }
                 root.addContent(member);
             }
-            String filename = getTime() + ".xml";
+            String filename = AdTime.getTime() + ".xml";
             writeXml(doc, filename);
             openFile(filename);
         } catch (Exception ex) {

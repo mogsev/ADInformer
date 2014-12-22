@@ -15,32 +15,16 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 /**
  * @author zhenya mogsev@gmail.com
  */
 public class AdPdf {
 
-    private static String time;
     private Document document;
-
-    /**
-     * Return the system date format "ddMMyyyy-HHmmss"
-     *
-     * @return String value system date
-     */
-    private static String getTime() {
-        Date now = new Date();
-        DateFormat formatter = new SimpleDateFormat("ddMMyyyy-HHmmss");
-        time = formatter.format(now);
-        return time;
-    }
-
+    
     private PdfPTable getHeadTable(String department) throws IOException, DocumentException {
         BaseFont baseFont = BaseFont.createFont("c:\\WINDOWS\\fonts\\tahoma.ttf", BaseFont.IDENTITY_H, true);
         Font fontHead = new Font(baseFont, 12);
@@ -87,7 +71,7 @@ public class AdPdf {
      */
     public void saveMembersPdf(ArrayList<AdMember> result) {
         try {
-            File file = File.createTempFile(getTime(), ".pdf");
+            File file = File.createTempFile(AdTime.getTime(), ".pdf");
             document = new Document(PageSize.A4, 30, 30, 30, 30);
             PdfWriter writer = PdfWriter.getInstance(this.document, new FileOutputStream(file));
             FontFactory.register("c:\\WINDOWS\\fonts\\tahoma.ttf");

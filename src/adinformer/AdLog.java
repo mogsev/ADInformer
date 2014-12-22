@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * @author mogsev@gmail.com
  */
-public class AdLog extends AdTime {
+public class AdLog {
 
     private String fileLogName;    
     private File fileLog;
@@ -39,7 +39,7 @@ public class AdLog extends AdTime {
         fileWriteLog = new FileWriter(fileLogName, true);
         bufferWriteLog = new BufferedWriter(fileWriteLog);
         outLog = new StringBuilder();
-        outLog.append(getTime()).append(":\t").append(str).append("\r\n");
+        outLog.append(AdTime.getTime()).append(":\t").append(str).append("\r\n");
         bufferWriteLog.write(outLog.toString());
         bufferWriteLog.flush();
         bufferWriteLog.close();
