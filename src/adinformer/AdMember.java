@@ -148,31 +148,24 @@ public class AdMember {
                     break;
                 case mail:
                     result.append(list).append(": ").append(mail).append("\t");
-                    ;
                     break;
                 case title:
                     result.append(list).append(": ").append(title).append("\t");
-                    ;
                     break;
                 case department:
                     result.append(list).append(": ").append(department).append("\t");
-                    ;
                     break;
                 case telephoneNumber:
-                    result.append(list).append(": ").append(telephoneNumber).append("\t");
-                    ;
+                    result.append(list).append(": ").append(telephoneNumber).append("\t");                    
                     break;
                 case ipPhone:
-                    result.append(list).append(": ").append(ipPhone).append("\t");
-                    ;
+                    result.append(list).append(": ").append(ipPhone).append("\t");                    
                     break;
                 case mobile:
-                    result.append(list).append(": ").append(mobile).append("\t");
-                    ;
+                    result.append(list).append(": ").append(mobile).append("\t");                    
                     break;
                 case company:
-                    result.append(list).append(": ").append(company).append("\t");
-                    ;
+                    result.append(list).append(": ").append(company).append("\t");                    
                     break;
             }
         }
@@ -382,15 +375,15 @@ public class AdMember {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 71 * hash + Objects.hashCode(this.sAMAccountName);
-        hash = 71 * hash + Objects.hashCode(this.name);
-        hash = 71 * hash + Objects.hashCode(this.mail);
-        hash = 71 * hash + Objects.hashCode(this.title);
-        hash = 71 * hash + Objects.hashCode(this.department);
-        hash = 71 * hash + Objects.hashCode(this.telephoneNumber);
-        hash = 71 * hash + Objects.hashCode(this.ipPhone);
-        hash = 71 * hash + Objects.hashCode(this.mobile);
-        hash = 71 * hash + Objects.hashCode(this.company);
+        hash = 31 * hash + Objects.hashCode(this.sAMAccountName);
+        hash = 31 * hash + Objects.hashCode(this.name);
+        hash = 31 * hash + Objects.hashCode(this.mail);
+        hash = 31 * hash + Objects.hashCode(this.title);
+        hash = 31 * hash + Objects.hashCode(this.department);
+        hash = 31 * hash + Objects.hashCode(this.telephoneNumber);
+        hash = 31 * hash + Objects.hashCode(this.ipPhone);
+        hash = 31 * hash + Objects.hashCode(this.mobile);
+        hash = 31 * hash + Objects.hashCode(this.company);
         return hash;
     }
 
@@ -432,5 +425,4 @@ public class AdMember {
         }
         return true;
     }
-
 }

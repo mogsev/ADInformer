@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,7 +25,7 @@ public class ADInformer extends javax.swing.JFrame {
     public static AdAutosave autosave;
     public static String[] names = new String[]{"IP", "FQDN", "DomainLogin", "FullName", "Mail", "Telephone", "Mobile", "IpPhone", "Description", "Title", "Department", "Company"};
     public static boolean isJFScanner = false;
-    public static boolean isJFLanScanner = false;
+    public static boolean isJFLanScanner = false;    
 
     private final String DRIVER_MYSQL = "com.mysql.jdbc.Driver";    //Имя драйвера MySql
     private static DefaultTableModel jModelIP;

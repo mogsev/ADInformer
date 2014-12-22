@@ -84,7 +84,7 @@ public class AdHost extends AdMember {
      */
     public String[] getAttributes() {
         String[] result = new String[listAttribute.values().length];
-        super.getAttributes();
+        result = super.getAttributes();
         for (listAttribute list : listAttribute.values()) {
             switch (list) {
                 case ipHost:
