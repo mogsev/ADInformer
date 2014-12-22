@@ -21,7 +21,7 @@ public class AdLog {
     private StringBuilder outLog;
 
     AdLog() {
-        fileLogName = "adinformer.log";
+        fileLogName = "fileLog.log";
     }
 
     AdLog(String str) {

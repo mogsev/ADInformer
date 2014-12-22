@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -38,13 +37,6 @@ public class ADInformer extends javax.swing.JFrame {
     private ArrayList<Object[]> resultIP;
     private ArrayList<AdMember> resultMembers;
     
-    public static String getDate() {
-        StringBuilder result = new StringBuilder();
-        GregorianCalendar date = new GregorianCalendar();
-        
-        return result.toString();
-    }
-
     /**
      * @param obj
      */
