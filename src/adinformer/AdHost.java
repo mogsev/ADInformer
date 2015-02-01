@@ -8,7 +8,6 @@ import javax.swing.table.DefaultTableModel;
 public class AdHost extends AdMember {
 
     enum listAttribute {
-
         ipHost,
         dnsHost,
         sAMAccountName,
@@ -34,6 +33,7 @@ public class AdHost extends AdMember {
 
     private String ipHost;
     private String dnsHost;
+    //private IcmpScan icmp = new IcmpScan(ipHost);
 
     AdHost() {
         super();
