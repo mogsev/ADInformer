@@ -33,18 +33,19 @@ public class AdHost extends AdMember {
 
     private String ipHost;
     private String dnsHost;
-    //private IcmpScan icmp = new IcmpScan(ipHost);
+    private IcmpScan icmp;
 
     AdHost() {
         super();
         ipHost = "";
         dnsHost = "";
     }
-
+    
     public void setAttribute(listAttribute list, String value) {
         switch (list) {
             case ipHost:
                 ipHost = value;
+                icmp = new IcmpScan(ipHost);
                 break;
             case dnsHost:
                 dnsHost = value;
