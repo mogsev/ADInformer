@@ -5,8 +5,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * @author zhenya
@@ -27,6 +25,10 @@ public final class IcmpScan {
         this.isReachable();
     }
     
+    /**
+     * This metod check availability of the host.
+     * Uses the task scheduler with the timeout 1 minutes 
+     */
     private void isReachable() {
         timer.scheduleAtFixedRate(
             new TimerTask() {
@@ -41,17 +43,11 @@ public final class IcmpScan {
                 }, 0, 60000);
     }
     
+    /**
+     * Return value reachable or unreachable host
+     * @return 
+     */
     public boolean getIsReachable() {
         return isReachable;
-    }
-    
-    public static void main(String[] args) throws InterruptedException {
-        IcmpScan ip1 = new IcmpScan("127.0.0.1");
-        IcmpScan ip2 = new IcmpScan("127.0.0.2");
-        while (true) {        
-            System.out.println(ip1.getIsReachable());        
-            System.out.println(ip2.getIsReachable());  
-            Thread.sleep(60000);            
-        }         
     }
 }
