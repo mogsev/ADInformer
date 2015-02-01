@@ -1,6 +1,6 @@
 Active Directory Informer
 
-ver 1.3.0 Stable Release
+ver 1.5.0 Stable Release
 
 The program is intended for users and system administrators of enterprises and
 organizations with large IT network infrastructure. 
